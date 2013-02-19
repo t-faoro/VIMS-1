@@ -90,7 +90,6 @@ CREATE  TABLE IF NOT EXISTS `vims`.`Venue` (
   `VEN_Status_Chg` TIMESTAMP NULL ,
   `VEN_Can_Make_Owner` TINYINT UNSIGNED NOT NULL DEFAULT 0 ,
   `Region_REG_ID` INT UNSIGNED NOT NULL ,
-  `Venuecol` VARCHAR(45) NULL ,
   PRIMARY KEY (`VEN_ID`) ,
   INDEX `fk_Venue_Region1_idx` (`Region_REG_ID` ASC) ,
   CONSTRAINT `fk_Venue_Region1`
