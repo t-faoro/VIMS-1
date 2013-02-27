@@ -26,6 +26,7 @@ USE vims;
 
 -- Clear database
 
+DELETE FROM incident_entry;
 DELETE FROM var;
 DELETE FROM venue_user_assc;
 DELETE FROM venue;
@@ -228,3 +229,16 @@ INSERT INTO var (VAR_Date, VAR_Attend, VAR_Sec_Chklst, VAR_Supervisor, VAR_Event
 INSERT INTO var (VAR_Date, VAR_Attend, VAR_Sec_Chklst, VAR_Supervisor, VAR_Event, Venue_VEN_ID, User_USE_ID)
 		 VALUES ('2013-02-01 00:00:00', 140, 1, 'Maxwell Clyke', 'Reg. Op.', 101, 1003);
 		 
+-- ----------------------------------------------------------------------------
+-- Test data for vims.incident_entry
+-- ----------------------------------------------------------------------------
+
+ALTER TABLE incident_entry AUTO_INCREMENT=1;
+
+INSERT INTO incident_entry (Var_VAR_ID, INE_Time, INE_Police, INE_Content, INE_Damages, Incident_Level_Lookup_ILL_Level)
+					VALUES (1,'17:32:00',0,'Some guy walked into the bar and said ouch', 'Minor damage to bar', 1);
+
+INSERT INTO incident_entry (Var_VAR_ID, INE_Time, INE_Police, INE_Content, INE_Damages, Incident_Level_Lookup_ILL_Level)
+					VALUES (2,'17:32:00',0,'Duck walked into the bar and asked about grapes. Bartender nailed his stupid duck beak to the bar'
+					, 'Minor damage to bar', 1);
+
