@@ -1,0 +1,276 @@
+@charset "utf-8";
+/*==============Template Bracket Start=============*/
+/*==============Template Bracket End===============*/
+
+
+/* Main Style Sheet Developed by Excelsior Systems for
+ * ClubWatch's Venue Information Management System.
+ *
+ * This system is NOT open source and should be treated appropriately.
+ *
+ * Contributing Programmers:
+ *			Maxwell Clyke
+ *			James Smith
+ *			Justin Werre
+ *			Tylor Faoro
+*/
+
+
+/*==============Default Styles Start=============*/
+body{
+	background-color: #333;	
+}
+
+p{
+	margin-left: 10%;
+	color: #FFF;
+	font-family:Arial, Helvetica, sans-serif;
+		
+}
+
+.yellow{
+	color: yellow;	
+}
+
+/*==============Default Styles End===============*/
+
+/*
+ * Styles for Content Blocks of VIMS site
+*/
+
+/*==============Header Start=============*/
+#header_container{
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 2%;
+	display:box; 
+	width: 75%; 
+}
+
+#topLeft {
+	float: left;
+	width: 24%;
+	height: 100px;
+	background-color: #000;
+	border: solid;
+	border-color: #FF0;
+	border-width:1px;
+	 
+	
+}
+
+#topRight{
+	float: left;
+	width: 24%;
+	background-color: #000;
+	height: 100px;
+	border: solid;
+	border-color: #FF0; 
+	border-width:1px;
+}
+
+#topLeft img{
+	margin-left: 12%;
+	width: 100px;
+	height: 75px;
+}
+
+#topLeft p{
+	margin-top: -5px;
+	margin-left: 45px;
+	color: #FFF;
+}
+
+
+#topMiddle{
+	float: left;
+	width: 50%;
+	background-color: #000;
+	height: 100px;	
+	border: solid;
+	border-color: #FF0; 
+	border-width:1px;
+}
+#topMiddle h1, h2, h3, h4{
+	margin-left: 10%;
+	margin-top: 5%;
+	font-family:Arial, Helvetica, sans-serif;
+	color: #FFF;	
+}
+
+
+/*==============Header End===============*/
+
+/*==============Content Start=============*/
+#content{
+	margin-left: 10%; 
+	margin-right: 10%; 
+	width: 73.75%; 
+	height: 62%; 
+	background-color: #000; 
+	border: solid; 
+	border-color: #FF0; 
+	border-width: 1px;
+}
+/*==============Content End===============*/
+
+/*==============Footer Start=============*/
+#footer_container{
+	margin-left: 10%;
+	margin-right: 10%;
+	display:box; 
+	width: 75%; 
+}
+
+#bottomLeft {
+	float: left;
+	width: 24%;
+	height: 100px;
+	background-color: #000;
+	border: solid;
+	border-color: #FF0;
+	border-width:1px;	 
+	
+}
+
+#bottomLeft p{
+	margin-left: 10%;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+#bottomRight{
+	float: left;
+	width: 24%;
+	background-color: #000;
+	height: 100px;
+	border: solid;
+	border-color: #FF0; 
+	border-width:1px;
+}
+
+
+#bottomMiddle{
+	float: left;
+	width: 50%;
+	background-color: #000;
+	height: 100px;	
+	border: solid;
+	border-color: #FF0; 
+	border-width:1px;
+}
+
+#bottomMiddle h1{
+	margin-left: 15%;
+	color: #FFF;	
+}
+
+/*==============Footer End===============*/
+
+/*==============Navigation Start=============*/
+
+/*:: Admin Navigation Start ::*/
+#adminNavigation{
+	margin-left: 15%;
+	margin-right: 10%;
+	width: 100%;
+}
+
+#adminNavigation ul{
+	display: inline-block; 
+	list-style: none; 
+	width: 75%;
+	overflow: hidden;
+}
+
+#adminNavigation li{
+	margin-left: 5px;
+	float: left; 
+	width: 18%; 
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size: 16px;
+	border: solid;
+	border-color: #FF0;
+	background-color: #000;
+	border-width: 1px;
+	color: #FFF;
+}
+
+#adminNavigation a{
+	display: block;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+	/*margin-top: 4%;*/
+	height: 30px;
+	font-size:24px;
+	text-decoration: none;
+	color: #FF0;	
+}
+
+#adminNavigation a:hover{
+	background-color: #666;
+	
+}
+
+#adminNavigation a:active{
+	background-color: #009;
+}
+/*:: Admin Navigation End ::*/
+
+/*:: User Navigation Start ::*/
+#userNavigation{
+	margin-left: 23.5%;
+	margin-right: 10%;
+	width: 100%;
+}
+
+#userNavigation ul{
+	display: inline-block; 
+	list-style: none; 
+	width: 75%;
+	overflow: hidden;
+}
+
+#userNavigation li{
+	margin-left: 5px;
+	float: left; 
+	width: 18%; 
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size: 16px;
+	border: solid;
+	border-color: #FF0;
+	background-color: #000;
+	border-width: 1px;
+	color: #FFF;
+}
+
+#userNavigation a{
+	display: block;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+	/*margin-top: 4%;*/
+	height: 30px;
+	font-size:24px;
+	text-decoration: none;
+	color: #FF0;	
+}
+
+#userNavigation a:hover{
+	background-color: #666;
+	
+}
+
+#userNavigation a:active{
+	background-color: #009;
+}
+/*:: User Navigation End   ::*/
+
+/*:: No Navigation Start   ::*/
+#noNav div{
+	
+}
+
+/*:: No Navigation End     ::*/
+
+/*==============Navigation End===============*/
