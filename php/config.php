@@ -1,8 +1,8 @@
 <?php 
 
 //:: Define path constants for functions
-define('CSS_PATH', './style/') ;
-define('JS_PATH' , './script/');
+define('CSS_PATH', './css/') ;
+define('JS_PATH' , './js/');
 define('IMG_PATH', './images/');
 
 
@@ -13,7 +13,9 @@ define('SITE_TITLE', "Venue Information Management System");
 //include "VIMS_Login_System.class.php";
 //include "Form.class.php";
 //include "DB.class.php";
-include "snippets/navigation.php";
+include_once "php/header.php";
+include_once "php/navigation.php";
+include_once "php/AssistingFunctions.php";
 
 
 //:: Site Variable Declaration, for use within the application.
