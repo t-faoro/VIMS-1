@@ -21,7 +21,7 @@
 //								Functions
 // ============================================================================
 /* 
- *	userRead() builds and sql statement to search on username, password and 
+ *	userRead() builds an sql statement to search on username, password and 
  *		venue association for login
  *	Parameters:
  *		$user	contains login username STRING
@@ -29,7 +29,7 @@
  *		$venue	contains login venue INTEGER
  * 		$con 	connection resource
  *	Returns:
- *		$sql	string containing sql statememnt
+ *		$sql	string containing sql statement
  **/
 
 
@@ -50,8 +50,30 @@ function userRead($user, $pswd, $venue, $con)
 	return $sql;
 }
 // ============================================================================
+/* 
+ *	userList() builds an sql statement to list users search on venueID
+ *	Parameters:
+ *		$venueID contains venue ID number INTEGER
+ *	Returns:
+ *		$sql	string containing sql statement
+ **/
+
+
+function userList($venueID)
+{
+	// build statement
+	$sql  = "SELECT * FROM user";
+	$sql .= " JOIN venue_user_assc";
+	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
+	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID . "";
+	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
+
+	echo $sql;
+	return $sql;
+}
+// ============================================================================
 /*
- *	userCreate() builds and sql statement to insert a new user into the system
+ *	userCreate() builds an sql statement to insert a new user into the system
  *	Parameters:
  *		$username	 contains login username STRING
  *		$pswd		 contains login password STRING
@@ -60,7 +82,7 @@ function userRead($user, $pswd, $venue, $con)
  *		$currentUser contains ID of user currently logged in INTEGER
  * 		$con		 connection resource
  *	Returns:
- *		$sql	string containing sql statememnt
+ *		$sql	string containing sql statement
  **/
 function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 {
@@ -92,7 +114,7 @@ function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 
 // ============================================================================
 /*
- *	userUpdate() builds and sql statement to update user details
+ *	userUpdate() builds an sql statement to update user details
  *	Parameters:
  *		$field	  array contains field to be changed STRING
  *		$content  array contains new value STRING
@@ -100,7 +122,7 @@ function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
  * 		$con	  connection resource
  *
  *	Returns:
- *		$sql	string containing sql statememnt
+ *		$sql	string containing sql statement
  **/
 function userUpdate($field, $content, $username, $con)
 {
