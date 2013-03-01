@@ -35,7 +35,7 @@
 	    mysqli_close($con);				// Do once after each sql function
     }
 // ============================================================================
-    if(true){
+    if(FALSE){
         // Define variables to use
         $username    = "sgraham";
         $pswd        = "stephenpw";
@@ -59,18 +59,22 @@
 	    mysqli_close($con);
     }
 // ============================================================================	
-    if(false){
+    if(TRUE){
         // Define variables to use
-        $field    = "Fname";
-        $value    = "Phteven";
-        $username = "sgraham";
+        $field[0] 	= "Fname";
+		$field[1] 	= "Lname";
+		$field[2]	= "Passwd";
+        $content[0] = "Jams";
+		$content[1] = "Smit";
+		$content[2] = "jamespw";
+        $username 	= "jpsmith";
 	    //_________________________________________________________________________
 
 	    echo "<h3>Update Function</h3>";
 	    $con = $myCon->connect();
-	    echo "Update First Name<br>";
+	    
     
-	    $sql = userUpdate($field, $value, $username, $con);
+	    $sql = userUpdate($field, $content, $username, $con);
 
         if($sql=="error") echo "Error";
         else {

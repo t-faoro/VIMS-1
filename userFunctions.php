@@ -1,16 +1,36 @@
 <?php
+// ============================================================================
+/*
+ * userFunctions.php
+ * file contains library of functions for interfacing with the table 'User'
+ * in the 'vims' database
+ * Programed by James P. Smith March 2013
+ * 
+ * */
+// ============================================================================
+/*
+ * List of functions & parameters
+ * 
+ * userRead($user [string], $pswd [string], $venue [int], $con [resource])
+ * userCreate($username [string], $pswd [string], $Fname [string], $Lname [string], $currentUser [int], $con [resource])
+ * userUpdate($field [string array], $content [string array], $username [string], $con [resource])
+ * 
+ * */
 
 // ============================================================================
+//								Functions
+// ============================================================================
 /* 
-	userRead() builds and sql statement to search on username, password and 
-		venue association for login
-	Parameters:
-		$user	contains login username STRING
-		$pswd	contains login password STRING
-		$venue	contains login venue INTEGER
-	Returns:
-		$sql	string containing sql statememnt
-*/
+ *	userRead() builds and sql statement to search on username, password and 
+ *		venue association for login
+ *	Parameters:
+ *		$user	contains login username STRING
+ *		$pswd	contains login password STRING
+ *		$venue	contains login venue INTEGER
+ * 		$con 	connection resource
+ *	Returns:
+ *		$sql	string containing sql statememnt
+ **/
 
 
 function userRead($user, $pswd, $venue, $con)
@@ -31,16 +51,17 @@ function userRead($user, $pswd, $venue, $con)
 }
 // ============================================================================
 /*
-	userCreate() builds and sql statement to insert a new user into the system
-	Parameters:
-		$username	 contains login username STRING
-		$pswd		 contains login password STRING
-		$Fname		 contains user's First Name STRING
-		$Lname		 contains user's Last Name STRING
-		$currentUser contains ID of user currently logged in INTEGER
-	Returns:
-		$sql	string containing sql statememnt
-*/
+ *	userCreate() builds and sql statement to insert a new user into the system
+ *	Parameters:
+ *		$username	 contains login username STRING
+ *		$pswd		 contains login password STRING
+ *		$Fname		 contains user's First Name STRING
+ *		$Lname		 contains user's Last Name STRING
+ *		$currentUser contains ID of user currently logged in INTEGER
+ * 		$con		 connection resource
+ *	Returns:
+ *		$sql	string containing sql statememnt
+ **/
 function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 {
     // clean inputs
@@ -71,27 +92,36 @@ function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 
 // ============================================================================
 /*
-	userUpdate() builds and sql statement to update user details
-	Parameters:
-		$field	contains filed to be changed STRING
-		$user	contains user's login name STRING
-		$value	contains new value STRING
-
-	Returns:
-		$sql	string containing sql statememnt
-*/
-function userUpdate($field, $value, $username, $con)
+ *	userUpdate() builds and sql statement to update user details
+ *	Parameters:
+ *		$field	  array contains field to be changed STRING
+ *		$content  array contains new value STRING
+ * 		$username contains user's login name STRING
+ * 		$con	  connection resource
+ *
+ *	Returns:
+ *		$sql	string containing sql statememnt
+ **/
+function userUpdate($field, $content, $username, $con)
 {
-    //clean known input
-    $username = mysqli_real_escape_string($con, $username);
-	$sql  = "UPDATE user";
-	switch($field)
+	//buils sql string
+    $sql  = "UPDATE user SET";
+	$length = count($field);
+	
+	// loop through arrays
+	for($i = 0; $i < $length; $i++)
 	{
-		case "Fname": $value = mysqli_real_escape_string($con, $value);
-                      $sql .= " SET USE_Fname='" . $value . "'"; break;
-		case "Lname": $value = mysqli_real_escape_string($con, $value);
-                      $sql .= " SET USE_Lname='" . $value . "'"; break;
-		default:      $sql .= " SET USE_Passwd='" . MD5($value) . "'";
+		if($i != 0) $sql .= ",";
+		if($field[$i] != "Passwd")
+		{
+			// clean non-password inputs
+			$content[$i] = mysqli_real_escape_string($con, $content[$i]);
+			$sql .= " USE_" . $field[$i] . "='" . $content[$i] . "'";
+		}
+		else 
+		{
+			$sql .= " USE_" . $field[$i] . "='" . MD5($content[$i]) . "'";
+		}
 	}
 	
 	$sql .= " WHERE USE_Name='" . $username ."'";
@@ -100,11 +130,4 @@ function userUpdate($field, $value, $username, $con)
 }
 
 // ============================================================================
-/*
-	userDelete()
-*/
-function userDelete($user, $venue)
-{
-	// Stub
-}
 ?>
