@@ -47,7 +47,7 @@ echo setSiteInfo(SITE_TITLE);
 
 include "snippets/header.php"; 
 	
-	switch ($_GET['action']){
+	s witch ($_GET['action']){
 	    case "admin":
 	   		echo buildAdminNav();
 		break;
