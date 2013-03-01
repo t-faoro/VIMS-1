@@ -68,7 +68,6 @@ function userList($venueID)
 	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID . "";
 	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
 
-	echo $sql;
 	return $sql;
 }
 // ============================================================================
