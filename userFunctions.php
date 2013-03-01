@@ -116,6 +116,7 @@ function userUpdate($field, $content, $username, $con)
 		{
 			// clean non-password inputs
 			$content[$i] = mysqli_real_escape_string($con, $content[$i]);
+			if(strlen($content[$i]) > 45) return "error";
 			$sql .= " USE_" . $field[$i] . "='" . $content[$i] . "'";
 		}
 		else 
