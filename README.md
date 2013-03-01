@@ -4,21 +4,22 @@ I have gotten the initial load up on GitHub, fought with it for a little while b
 There are a few things that i've done here so I'll do my best to explain them and I'll answer any questions you have in person.
 I will do my best to give you guys a brief explanation of what I have going here.
 
+I've added to what Tylor has started, gone through and cleaned up some of the folder names, and generally cleaned things up. JW
+
 //::=========================================================================================================================
 
 [Folder] Images
 	  --> Contains any images that the application may require.
 
-[Folder] Include
-	  --> Any externally declared classes, functions, and scripts go into this folder
+[Folder] php
+	  --> Any externally declared php scripts go into this folder
 
-[Folder] Snippets
-	  --> Any small pieces of code to be included go in here
+[Folder] html
+	  --> Any html to be included go in here
 
-[Folder] Style
+[Folder] css
 	  --> All stylesheets will be placed in here, functions are created to add them to the site
 
-[Folder] VIMS <== DISREGARD!!
 
 	== Config.php
 		- All variables used by the application are declared.
@@ -26,9 +27,7 @@ I will do my best to give you guys a brief explanation of what I have going here
 		- Any Constants such as file paths are declared.
 	
 	== Index.php
-		- Content Block code is handled.
-		- At this time, several functions are declared to attempt to make things easier.
-		- Commenting is vast, if any changes are made please document appropriately. (Javadoc format)
+		-Changed to be the log in page for the site
 
 //::=========================================================================================================================
 
