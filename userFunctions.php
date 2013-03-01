@@ -7,21 +7,25 @@
 	Parameters:
 		$user	contains login username STRING
 		$pswd	contains login password STRING
-		$venue	contains login venue STRING
+		$venue	contains login venue INTEGER
 	Returns:
 		$sql	string containing sql statememnt
 */
 
 
-function userRead($user, $pswd, $venue)
+function userRead($user, $pswd, $venue, $con)
 {
+    // clean inputs
+	$user  = mysqli_real_escape_string($con, $user);
+    $venue = mysqli_real_escape_string($con, $venue);
+    
 	// build statement
-	$sql .= "SELECT * FROM user";
+	$sql  = "SELECT * FROM user";
 	$sql .= " JOIN venue_user_assc";
 	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
 	$sql .= " WHERE user.USE_Name='" . $user ."'";
 	$sql .= " AND user.USE_Passwd='" . MD5($pswd) . "'";
-	$sql .= " AND venue_user_assc.venue_VEN_ID='" . $venue . "'";
+	$sql .= " AND venue_user_assc.venue_VEN_ID=" . $venue . "";
 	
 	return $sql;
 }
@@ -37,17 +41,30 @@ function userRead($user, $pswd, $venue)
 	Returns:
 		$sql	string containing sql statememnt
 */
-function userCreate($username, $pswd, $Fname, $Lname, $currentUser)
+function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 {
-	$sql .= "INSERT INTO user";
-	$sql .= " (USE_Name, USE_Passwd, USE_Fname, USE_Lname, USE_Creator)";
-	$sql .= " VALUES (";
-	$sql .= " '" . $username . "',";
-	$sql .= " '" . MD5($pswd) . "',";
-	$sql .= " '" . $Fname . "',";
-	$sql .= " '" . $Lname . "',";
-	$sql .= " " . $currentUser . "";
-	$sql .= ")";
+    // clean inputs
+    $username    = mysqli_real_escape_string($con, $username);
+    $Fname       = mysqli_real_escape_string($con, $Fname);
+    $Lname       = mysqli_real_escape_string($con, $Lname);
+    
+    if((strlen($Fname) > 45)
+        || (strlen($Lname) > 45)
+        || (strlen($username) > 25)
+        ) $sql = "error";
+
+    else {
+        // build sql string
+	    $sql  = "INSERT INTO user";
+	    $sql .= " (USE_Name, USE_Passwd, USE_Fname, USE_Lname, USE_Creator)";
+	    $sql .= " VALUES (";
+	    $sql .= " '" . $username . "',";
+	    $sql .= " '" . MD5($pswd) . "',";
+	    $sql .= " '" . $Fname . "',";
+	    $sql .= " '" . $Lname . "',";
+	    $sql .= " " . $currentUser . "";
+	    $sql .= ")";
+    }
 	
 	return $sql;
 }
@@ -63,17 +80,21 @@ function userCreate($username, $pswd, $Fname, $Lname, $currentUser)
 	Returns:
 		$sql	string containing sql statememnt
 */
-function userUpdate($field, $value, $user)
+function userUpdate($field, $value, $username, $con)
 {
-	$sql .= "UPDATE user";
+    //clean known input
+    $username = mysqli_real_escape_string($con, $username);
+	$sql  = "UPDATE user";
 	switch($field)
 	{
-		case "Fname": $sql .= " SET USE_Fname='" . $value . "'"; break;
-		case "Lname": $sql .= " SET USE_Lname='" . $value . "'"; break;
-		default: $sql .= " SET USE_Passwd='" . MD5($value) . "'";
+		case "Fname": $value = mysqli_real_escape_string($con, $value);
+                      $sql .= " SET USE_Fname='" . $value . "'"; break;
+		case "Lname": $value = mysqli_real_escape_string($con, $value);
+                      $sql .= " SET USE_Lname='" . $value . "'"; break;
+		default:      $sql .= " SET USE_Passwd='" . MD5($value) . "'";
 	}
 	
-	$sql .= " WHERE USE_Name='" . $user ."'";
+	$sql .= " WHERE USE_Name='" . $username ."'";
 	
 	return $sql;
 }
