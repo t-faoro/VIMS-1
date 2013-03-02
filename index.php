@@ -20,11 +20,13 @@
 
 session_start();
 include_once "php/config.php";
-CSS("style.css"); 
-echo setSiteInfo(SITE_TITLE);
+
+//echo setSiteInfo(SITE_TITLE);
+createHead();
 include_once "php/header.php"; 
-echo "<div id='content'></div>";
-echo '<br />';
+echo "<div id='content'>\n";
+echo "<p>stuff</p>\n";
+echo"</div>\n";
 include_once "php/footer.php";
 
 // End of Site
