@@ -24,6 +24,7 @@ $venueNumber = "";
 $password = "";
 $venueName = "";
 $error = "";
+$myCon = new Connection();
 
 if(isset($_POST['submit']))
 {
@@ -54,6 +55,16 @@ if(isset($_POST['submit']))
 	else
 	{
 		$error = "You must enter a venue number.";
+	}
+	
+	//Find user in the database
+	$con = $myCon->connect();
+	$sql = userRead($userName, $password, $venueNumber, $con);
+	if($sql == "error") $error = "error";
+	else
+	{
+		$result = mysqli_query($con, $sql);
+		$row = mysqli_fetch_array($result)
 	}
 }
 
