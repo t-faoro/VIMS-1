@@ -63,8 +63,13 @@ if(isset($_POST['submit']))
 	if($sql == "error") $error = "error";
 	else
 	{
-		$result = mysqli_query($con, $sql);
-		$row = mysqli_fetch_array($result)
+		$result = mysqli_query($con, $sql); 
+		if($result == null)$error = "Invalid username or password.";
+		else
+		{
+			$row = mysqli_fetch_array($result);
+			$error = $row;
+		}
 	}
 }
 
@@ -79,7 +84,7 @@ echo "User Name: <input type='text' name='username' value='$userName'>\n";
 echo "<br />\n";
 echo "Password: <input type='password' name='password'>\n";
 echo "<br />\n";
-echo "Venue Number: <input type='number' name='venue' value='$venueNumber'>\n";
+echo "Venue Number: <input type='text' name='venue' value='$venueNumber'>\n";
 echo "<br />\n";
 echo "<input type='submit' value='submit' name='submit'>";
 echo "</form>\n";

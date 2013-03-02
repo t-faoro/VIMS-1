@@ -25,7 +25,7 @@
 		{
 			echo CSS($css);
 		}
-		echo "<meta charst='UTF-8'>\n";
+		echo "<meta charset='UTF-8'>\n";
 		echo "</head>\n";
 	}
 	
