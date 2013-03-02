@@ -11,16 +11,20 @@
 	
 	/*
 		Purpose: To create a html <head>
-		Preconditions: None
+		Preconditions: $css is an additional css file.
 		Postconditions: Echos the opening <html> tag, and nesisary <head> contents.
 	*/
-	function createHead()
+	function createHead($css = null)
 	{
 		echo "<!DOCTYPE html>\n";
 		echo "<html>\n";
 		echo "<head>\n";
 		echo "<title>".SITE_TITLE."</title>\n";
 		echo CSS("style.css"); 
+		if($css != null)
+		{
+			echo CSS($css);
+		}
 		echo "<meta charst='UTF-8'>\n";
 		echo "</head>\n";
 	}
