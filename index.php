@@ -23,11 +23,11 @@ include_once "php/config.php";
 
 //echo setSiteInfo(SITE_TITLE);
 createHead();
-include_once "php/header.php"; 
+createHeader();
 echo "<div id='content'>\n";
 echo "<p>stuff</p>\n";
 echo"</div>\n";
-include_once "php/footer.php";
+createFoot();
 
 // End of Site
 ?>
