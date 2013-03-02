@@ -15,8 +15,10 @@ define('SITE_TITLE', "Venue Information Management System");
 //include "DB.class.php";
 //include_once "php/header.php";
 //include_once "php/navigation.php";
+include_once "connection.php";
 include_once "php/pageFunctions.php";
 include_once "php/AssistingFunctions.php";
+include_once "php/userFunctions.php";
 
 
 //:: Site Variable Declaration, for use within the application.
