@@ -25,28 +25,12 @@ $password = "";
 $venueName = "";
 $error = "";
 $myCon = new Connection();
+$sql;
+$result;
 
 if(isset($_POST['submit']))
 {
 	//Verfiy user has entered all nesisary information
-	//Verify a username was entered
-	if($_POST['username'] != "")
-	{
-		$userName = $_POST['username'];
-	}
-	else
-	{
-		$error = "You must enter a username.";
-	}
-	//Verify a password was entered
-	if($_POST['password'] != "")
-	{
-		$password = $_POST['password'];
-	}
-	else
-	{
-		$error = "You must enter a password.";
-	}
 	//verify a venue number was entered.
 	if($_POST['venue'] != "")
 	{
@@ -57,18 +41,42 @@ if(isset($_POST['submit']))
 		$error = "You must enter a venue number.";
 	}
 	
-	//Find user in the database
-	$con = $myCon->connect();
-	$sql = userRead($userName, $password, $venueNumber, $con);
-	if($sql == "error") $error = "error";
+	//Verify a password was entered
+	if($_POST['password'] != "")
+	{
+		$password = $_POST['password'];
+	}
 	else
 	{
-		$result = mysqli_query($con, $sql); 
-		if($result == null)$error = "Invalid username or password.";
+		$error = "You must enter a password.";
+	}
+	
+	//Verify a username was entered
+	if( $_POST['username'] != "")
+	{
+		$userName = $_POST['username'];
+	}
+	else
+	{
+		$error = "You must enter a username.";
+	}
+	
+	//Find user in the database
+	$con = $myCon->connect();
+	if($error == "")
+	{
+		echo "test1";
+		$sql = userRead($userName, $password, $venueNumber, $con);
+		if($result = mysqli_query($con, $sql))
+		{
+			echo "test2";
+			$error = "Invalid username or password.";
+		}
 		else
 		{
+			echo "test3";
 			$row = mysqli_fetch_array($result);
-			$error = $row;
+			echo $row['USE_Name'];
 		}
 	}
 }
