@@ -65,18 +65,17 @@ if(isset($_POST['submit']))
 	$con = $myCon->connect();
 	if($error == "")
 	{
-		echo "test1";
 		$sql = userRead($userName, $password, $venueNumber, $con);
-		if($result = mysqli_query($con, $sql))
+		$result = mysqli_query($con, $sql);
+		$row = mysqli_fetch_assoc($result);
+		if($row == null)
 		{
 			echo "test2";
 			$error = "Invalid username or password.";
 		}
 		else
 		{
-			echo "test3";
-			$row = mysqli_fetch_array($result);
-			echo $row['USE_Name'];
+			var_dump($row);
 		}
 	}
 }

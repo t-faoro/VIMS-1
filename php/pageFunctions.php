@@ -11,10 +11,12 @@
 	
 	/*
 		Purpose: To create a html <head>
-		Preconditions: $css is an additional css file.
+		Preconditions: 
+			$css is an additional css file.
+			$js is an additinal javascript file.
 		Postconditions: Echos the opening <html> tag, and nesisary <head> contents.
 	*/
-	function createHead($css = null)
+	function createHead($css = null, $js = null)
 	{
 		echo "<!DOCTYPE html>\n";
 		echo "<html>\n";
@@ -24,6 +26,10 @@
 		if($css != null)
 		{
 			echo CSS($css);
+		}
+		if($js != null)
+		{
+			echo JS($js);
 		}
 		echo "<meta charset='UTF-8'>\n";
 		echo "</head>\n";
@@ -51,13 +57,21 @@
 		Preconditions: createHead() should be called BEFORE this function.
 		Postconditions:
 	*/
-	function createHeader()
+	function createHeader($name = null)
 	{
 		echo "<body>\n";
 		echo "<div id='header_container' >\n";    
 		echo "<div id='topLeft'>".IMG("logo_clubwatch_v4.1.png", "Clubwatch Logo")."<p>Powered By: <span class='yellow'>Clubwatch</span></p>\n"."</div>\n";
 		echo "<div id='topMiddle'><h2>Venue Information Management System</h2></div>\n";    
-		echo "<div id='topRight'><p>Welcome to VIMS, Please Log In</p></div>\n";
+		echo "<div id='topRight'>";
+		if($name == null)
+		{ 
+			echo "<p>Welcome to VIME, Please Log in</p></div>\n";
+		}
+		else 
+		{
+			echo "<p>Welcome <a href=''>$name</a></p>";
+		}
 		echo "</div>\n";
 	}
 ?>
