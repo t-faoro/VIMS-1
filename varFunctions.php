@@ -11,9 +11,13 @@
 /*
  * List of functions & parameters
  * 
- * userRead($user [string], $pswd [string], $venue [int], $con [resource])
- * userCreate($username [string], $pswd [string], $Fname [string], $Lname [string], $currentUser [int], $con [resource])
- * userUpdate($field [string array], $content [string array], $username [string], $con [resource])
+ * varRead($varID [int])
+ * varList($venueID [int], $startDate [datetime], $endDate [datetime])
+ * varCreate($date [datetime], $attend [int], $sec_chklst [int], 
+ * 		$supervisor [string], $event [string], $venueID [int], $userID [int], 
+ * 		$con [resource])
+ * varUpdate($field [string array], $content [string array], $varID [int], 
+ * 		$con [resource])
  * 
  * */
 
@@ -114,31 +118,31 @@ function varCreate($date, $attend, $sec_chklst, $supervisor, $event, $venueID, $
  *	Returns:
  *		$sql	string containing sql statement
  **/
-	function varUpdate($field, $content, $varID, $con)
-	{
-		// clean inputs
-		foreach ($content as $key => $value) {
-			$value = mysqli_real_escape_string($con, $value);
-		}
-		
-		$length = count($field);
-		
-		// build sql
-		$sql  = "UPDATE var SET ";
-		for($i = 0; $i < $length; $i++)
-		{
-			if ($field[$i] == "Attend" && (!is_numeric($content[$i]))) return "error";
-			if ($field[$i] == "Supervisor" && (strlen($content[$i] ) > 45)) return "error";
-			if ($field[$i] == "Event" && (strlen($content[$i] ) > 45)) return "error";
-			
-			
-			if($i != 0) $sql .= ",";
-			
-			$sql .= " VAR_" . $field[$i] . "='" . $content[$i] . "'";
-		}
-		
-		$sql .= " WHERE VAR_ID=" . $varID;
-		
-		return $sql;
+function varUpdate($field, $content, $varID, $con)
+{
+	// clean inputs
+	foreach ($content as $key => $value) {
+		$value = mysqli_real_escape_string($con, $value);
 	}
+	
+	$length = count($field);
+	
+	// build sql
+	$sql  = "UPDATE var SET ";
+	for($i = 0; $i < $length; $i++)
+	{
+		if ($field[$i] == "Attend" && (!is_numeric($content[$i]))) return "error";
+		if ($field[$i] == "Supervisor" && (strlen($content[$i] ) > 45)) return "error";
+		if ($field[$i] == "Event" && (strlen($content[$i] ) > 45)) return "error";
+		
+		
+		if($i != 0) $sql .= ",";
+		
+		$sql .= " VAR_" . $field[$i] . "='" . $content[$i] . "'";
+	}
+	
+	$sql .= " WHERE VAR_ID=" . $varID;
+	
+	return $sql;
+}
 ?>
