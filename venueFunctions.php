@@ -23,12 +23,11 @@
 //								Functions
 // ============================================================================
 /** 
-  *	userRead() builds an sql statement to search on VEN_ID 
-  * @param
-  *		$venID	contains venue ID number [int]
-  *	@return
-  *		$sql	string containing sql statement
-  **/
+ *	userRead() builds an sql statement to search on VEN_ID 
+ *	@param $venID	contains venue ID number [int]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function venueRead($venID)
@@ -42,12 +41,11 @@ function venueRead($venID)
 
 // ============================================================================
 /** 
-  *	venueList() builds an sql statement to list venues search on region ID
-  *	@param
-  *		$regID	contains region ID number [int]
-  *	@return
-  *		$sql	string containing sql statement
-  **/
+ *	venueList() builds an sql statement to list venues search on region ID
+ *	@param $regID	contains region ID number [int]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function venueList($regID)
@@ -61,21 +59,20 @@ function venueList($regID)
 }
 // ============================================================================
 /**
-  *	venueCreate() builds an sql statement to insert a new venue into the system
-  *	@param
-  *		$venueDetails	array[7] contains required fields in order of:
-  * 			VEN_Name
-  * 			VEN_Unit_Addr
-  *  			VEN_St_Addr
-  * 			VEN_City
-  * 			VEN_Pcode
-  * 			VEN_Phone
-  * 			VEN_Liason
-  * 			Region_REG_ID
-  * 	$con	database connection [resource]
-  *	@return
-  *		$sql	string containing sql statement
-  **/
+ *	venueCreate() builds an sql statement to insert a new venue into the system
+ *	@param $venueDetails	array[7] contains required fields in order of:
+ * 			VEN_Name
+ * 			VEN_Unit_Addr
+ *  		VEN_St_Addr
+ * 			VEN_City
+ * 			VEN_Pcode
+ * 			VEN_Phone
+ * 			VEN_Liason
+ * 			Region_REG_ID
+ * 	@param $con	database connection [resource]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 function venueCreate($venueDetails, $con)
 {
     // clean inputs
@@ -112,16 +109,14 @@ function venueCreate($venueDetails, $con)
 
 // ============================================================================
 /**
-  *	userUpdate() builds an sql statement to update user details
-  *	@param
-  *		$field	  array contains field to be changed [string]
-  *		$content  array contains new value [string]
-  * 	$venueID  contains venue ID [int]
-  * 	$con	  connection [resource]
-  *
-  *	@return
-  *		$sql	string containing sql statement
-  **/
+ *	userUpdate() builds an sql statement to update user details
+ *	@param $field	 array contains field to be changed [string]
+ *	@param $content  array contains new value [string]
+ * 	@param $venueID  contains venue ID [int]
+ * 	@param $con	  	 connection [resource]
+ *
+ *	@return $sql	string containing sql statement
+ */
 function venueUpdate($field, $content, $venueID, $con)
 {
 	// clean inputs

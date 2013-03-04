@@ -20,16 +20,15 @@
 //								Functions
 // ============================================================================
 /** 
-  *	venue_user_asscCreate()) builds an sql statement to create an entry in the
-  * 			venue_user_assc table
-  *	@param
-  *		$venue	contains venue ID [int]
-  * 		$user	contains user ID [int]
-  * 		$auth	containt auth level [int]
-  * 		$con 	connection [resource]
-  *	@return
-  *		$sql	string containing sql statement
-  **/
+ *	venue_user_asscCreate()) builds an sql statement to create an entry in the
+ * 			venue_user_assc table
+ *	@param $venue	contains venue ID [int]
+ * 	@param $user	contains user ID [int]
+ * 	@param $auth	containt auth level [int]
+ * 	@param $con 	connection [resource]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function venue_user_asscCreate($venue, $user, $auth)
@@ -45,17 +44,16 @@ function venue_user_asscCreate($venue, $user, $auth)
 
 // ============================================================================
 /**
-  *	venue_user_asscUpdate() builds an sql statement to update this association
-  * 		table in the 'vims' database
-  *	@param
-  *		$field		 array contains field names for updating [string]
-  *		$content	 array contains new values [string]
-  *		$venueID	 contains venue ID [int]
-  *		$userID	 	 contains user ID [int]
-  * 	$con		 database connection [resource]]
-  *	@return
-  *		$sql	string containing sql statement
-  **/
+ *	venue_user_asscUpdate() builds an sql statement to update this association
+ * 		table in the 'vims' database
+ *	@param $field		 array contains field names for updating [string]
+ *	@param $content	 array contains new values [string]
+ *	@param $venueID	 contains venue ID [int]
+ *	@param $userID	 	 contains user ID [int]
+ * 	@param $con		 database connection [resource]]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 function venue_user_asscUpdate($field, $content, $venueID, $userID)
 {
 

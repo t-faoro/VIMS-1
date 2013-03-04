@@ -19,11 +19,12 @@
 //								Functions
 // ============================================================================
 /** 
-  *	auth_level_lookupRead() builds an sql statement to read the auth_level_lookup
-  * 		table
-  *	@param none
-  *	@return	$sql  containing sql statement
-  **/
+ *	auth_level_lookupRead() builds an sql statement to read the auth_level_lookup
+ * 		table
+ *	@param none
+ * 
+ *	@return	$sql  containing sql statement
+ */
 
 
 function auth_level_lookupRead()
