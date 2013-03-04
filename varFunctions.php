@@ -120,12 +120,13 @@ function varCreate($date, $attend, $sec_chklst, $supervisor, $event, $venueID, $
  **/
 function varUpdate($field, $content, $varID, $con)
 {
-	// clean inputs
-	foreach ($content as $key => $value) {
-		$value = mysqli_real_escape_string($con, $value);
-	}
-	
 	$length = count($field);
+	
+	// clean inputs
+	for($i = 0; $i < $length; $i++)
+	{
+		$content[$i] = mysqli_real_escape_string($con, $content[$i]);
+	}
 	
 	// build sql
 	$sql  = "UPDATE var SET ";
