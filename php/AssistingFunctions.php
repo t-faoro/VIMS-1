@@ -43,7 +43,7 @@ function siteContent(){
 * @return $styleSheet
 */
 function CSS($styleName){
-global $styleSheet;
+	$styleSheet = "";
 
 	$styleSheet .= '<link rel="stylesheet" type="text/css" href="'.CSS_PATH.$styleName.'">';
 	$styleSheet .= "\n";
@@ -61,7 +61,7 @@ global $styleSheet;
 * @return $javaScript
 */
 function JS($scriptName){
-global $javaScript;	
+$javaScript = "";	
 
 	$javaScript .= '<script type="text/javascript" src="'.JS_PATH.$scriptName.'">';
 	$javaScript .= '</script>';
@@ -81,7 +81,7 @@ global $javaScript;
 * @return $image
 */
 function IMG($imgName, $alt){
-global $image;
+$image;
 
 	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />';
 	return $image;
