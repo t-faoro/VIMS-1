@@ -13,9 +13,14 @@ define('SITE_TITLE', "Venue Information Management System");
 //include "VIMS_Login_System.class.php";
 //include "Form.class.php";
 //include "DB.class.php";
-include_once "php/header.php";
-include_once "php/navigation.php";
+//include_once "php/header.php";
+//include_once "php/navigation.php";
+include_once "php/connection.php";
+include_once "php/pageFunctions.php";
 include_once "php/AssistingFunctions.php";
+include_once "php/userFunctions.php";
+include_once "php/venue_user_asscFunctions.php";
+include_once "php/VenueFunctions.php";
 
 
 //:: Site Variable Declaration, for use within the application.
