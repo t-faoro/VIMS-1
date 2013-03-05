@@ -22,7 +22,7 @@ body{
 }
 
 p{
-	margin-left: 10%;
+	/*margin-left: 10%;*/
 	color: #FFF;
 	font-family:Arial, Helvetica, sans-serif;
 		
@@ -69,6 +69,10 @@ p{
 	border-width:1px;
 }
 
+#topRight p{
+	margin-left: 25px;
+}
+
 #topLeft img{
 	margin-left: 12%;
 	width: 100px;
@@ -77,7 +81,7 @@ p{
 
 #topLeft p{
 	margin-top: -5px;
-	margin-left: 45px;
+	margin-left: 25px;
 	color: #FFF;
 }
 
@@ -92,9 +96,8 @@ p{
 	border-width:1px;
 }
 #topMiddle h1, h2, h3, h4{
-	margin-left: 10%;
-	margin-top: 5%;
 	font-family:Arial, Helvetica, sans-serif;
+	text-align: center;
 	color: #FFF;	
 }
 
@@ -162,6 +165,10 @@ p{
 #bottomMiddle h1{
 	margin-left: 15%;
 	color: #FFF;	
+}
+
+#bottomMiddle p{
+	font-family:Arial, Helvetica, sans-serif;
 }
 
 /*==============Footer End===============*/
