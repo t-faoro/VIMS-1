@@ -20,17 +20,16 @@
 // ============================================================================
 //								Functions
 // ============================================================================
-/* 
+/** 
  *	userRead() builds an sql statement to search on username, password and 
  *		venue association for login
- *	Parameters:
- *		$user	contains login username STRING
- *		$pswd	contains login password STRING
- *		$venue	contains login venue INTEGER
- * 		$con 	connection resource
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@param $user	contains login username [string]
+ *	@param $pswd	contains login password [string]
+ *	@param $venue	contains login venue [int]
+ * 	@param $con 	database connection [resource]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function userRead($user, $pswd, $venue, $con)
@@ -50,13 +49,12 @@ function userRead($user, $pswd, $venue, $con)
 	return $sql;
 }
 // ============================================================================
-/* 
+/** 
  *	userList() builds an sql statement to list users search on venueID
- *	Parameters:
- *		$venueID contains venue ID number INTEGER
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@param $venueID contains venue ID number [int]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function userList($venueID)
@@ -71,18 +69,17 @@ function userList($venueID)
 	return $sql;
 }
 // ============================================================================
-/*
+/**
  *	userCreate() builds an sql statement to insert a new user into the system
- *	Parameters:
- *		$username	 contains login username STRING
- *		$pswd		 contains login password STRING
- *		$Fname		 contains user's First Name STRING
- *		$Lname		 contains user's Last Name STRING
- *		$currentUser contains ID of user currently logged in INTEGER
- * 		$con		 connection resource
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@param $username	 contains login username [string]
+ *	@param $pswd		 contains login password [string]
+ *	@param $Fname		 contains user's First Name [string]
+ *	@param $Lname		 contains user's Last Name [string]
+ *	@param $currentUser contains ID of user currently logged in [int]
+ * 	@param $con		 database connection [resource]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 {
     // clean inputs
@@ -112,17 +109,15 @@ function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 }
 
 // ============================================================================
-/*
+/**
  *	userUpdate() builds an sql statement to update user details
- *	Parameters:
- *		$field	  array contains field to be changed STRING
- *		$content  array contains new value STRING
- * 		$username contains user's login name STRING
- * 		$con	  connection resource
+ *	@param $field	  array contains field to be changed [string]
+ *	@param $content  array contains new value [string]
+ * 	@param $username contains user's login name [string]
+ * 	@param $con	  database connection [resource]
  *
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@return $sql	string containing sql statement
+ */
 function userUpdate($field, $content, $username, $con)
 {
 	//buils sql string
@@ -151,5 +146,4 @@ function userUpdate($field, $content, $username, $con)
 	return $sql;
 }
 
-// ============================================================================
 ?>
