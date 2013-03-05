@@ -94,6 +94,7 @@ $image;
 	
 	This code will verify the session is set properly and redirect
 	the user to index.php to authentificate if their are any issues
+	
 	if(!verifyUser()) header('location:index.php');
 	
 	@return true if session variables are set, false otherwise
