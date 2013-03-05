@@ -66,7 +66,7 @@
 		echo "<div id='topRight'>";
 		if($name == null)
 		{ 
-			echo "<p>Welcome to VIME, Please Log in</p></div>\n";
+			echo "<p>Welcome to VIMS, Please Log in</p></div>\n";
 		}
 		else 
 		{
