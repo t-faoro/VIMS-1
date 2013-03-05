@@ -82,8 +82,8 @@ if(isset($_POST['submit']))
 				//Set the session variables
 				$_SESSION['userId'] = $row['USE_ID'];
 				$_SESSION['userName'] = $row['USE_Name'];
-				$_SESSION['userFName'] = $row['USE_Fname'];
-				$_SESSION['userLName'] = $row['USE_Lname'];
+				$_SESSION['userFname'] = $row['USE_Fname'];
+				$_SESSION['userLname'] = $row['USE_Lname'];
 				$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
 				$_SESSION['venueId'] = $row['Venue_VEN_ID'];
 				$_SESSION['venueName'] = $venue['VEN_Name'];

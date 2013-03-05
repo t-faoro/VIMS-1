@@ -86,4 +86,28 @@ $image;
 	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />';
 	return $image;
 }
+
+
+/**
+	Verifies that all necessary session variables are set.
+	Session must be started before calling this function
+	
+	This code will verify the session is set properly and redirect
+	the user to index.php to authentificate if their are any issues
+	if(!verifyUser()) header('location:index.php');
+	
+	@return true if session variables are set, false otherwise
+*/
+function verifyUser()
+{
+	if(  isset($_SESSION['userName'])
+		&& isset($_SESSION['userId'])
+		&& isset($_SESSION['userFname'])
+		&& isset($_SESSION['userLname'])
+		&& isset($_SESSION['userAuth'])
+		&& isset($_SESSION['venueName'])
+		&& isset($_SESSION['venueId'])
+	) return true;
+	else return false;
+}
 ?>
