@@ -24,13 +24,12 @@
 // ============================================================================
 //								Functions
 // ============================================================================
-/* 
+/** 
  *	varRead() builds an sql statement to search on var ID
- *	Parameters:
- *		$varID	var ID INTEGER
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@param $varID	var ID [int]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function varRead($varID)
@@ -43,16 +42,15 @@ function varRead($varID)
 	return $sql;
 }
 // ============================================================================
-/* 
+/** 
  *	varList() builds an sql statement to list users search on venueID between 
  * 		a specified start and end date. Orders results on decending date
- *	Parameters:
- *		$venueID   contains venue ID number INTEGER
- * 		$startDate contains date of earliest report being requested [string]
- * 		$endDate   contains date of latest report being requested [string]
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@param $venueID   contains venue ID number [int]
+ *	@param $startDate contains date of earliest report being requested [string]
+ *	@param $endDate   contains date of latest report being requested [string]
+ * 
+ *	@return $sql	string containing sql statement
+ */
 
 
 function varList($venueID, $startDate, $endDate)
@@ -68,20 +66,19 @@ function varList($venueID, $startDate, $endDate)
 }
 
 // ============================================================================
-/* 
+/** 
  *	varCreate() builds an sql statement to create a new VAR record in the DB
- *	Parameters:
- *		$date		contains date of report value [datetime]
- * 		$attend		contains numeric value for attendace [int]
- * 		$sec_chklst contains true/false [int]
- * 		$supervisor	contains name of supervisor [string]
- * 		$event		contains name of event [string]
- * 		$venueID	contains venue ID [int]
- * 		$userID		contains user ID [int]
- * 		$con		contains database connection [resource]
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@param $date		contains date of report value [datetime]
+ *	@param $attend		contains numeric value for attendace [int]
+ *	@param $sec_chklst  contains true/false [int]
+ *	@param $supervisor	contains name of supervisor [string]
+ *	@param $event		contains name of event [string]
+ *	@param $venueID		contains venue ID [int]
+ *	@param $userID		contains user ID [int]
+ *	@param $con			contains database connection [resource]
+ * 
+ *	@return	$sql	string containing sql statement
+ */
 
 
 function varCreate($date, $attend, $sec_chklst, $supervisor, $event, $venueID, $userID, $con)
@@ -107,25 +104,24 @@ function varCreate($date, $attend, $sec_chklst, $supervisor, $event, $venueID, $
 	return $sql;
 }
 // ============================================================================
-/*
+/**
  *	varUpdate() builds an sql statement to update var details
- *	Parameters:
- *		$field	 array contains field to be changed [string]
- *		$content array contains new value [string]
- * 		$varID	 contains var ID [int]
- * 		$con	 connection resource [resource]
+ *	@param $field	 array contains field to be changed [string]
+ *	@param $content  array contains new value [string]
+ * 	@param $varID	 contains var ID [int]
+ * 	@param $con	     connection resource [resource]
  *
- *	Returns:
- *		$sql	string containing sql statement
- **/
+ *	@return $sql	string containing sql statement
+ */
 function varUpdate($field, $content, $varID, $con)
 {
-	// clean inputs
-	foreach ($content as $key => $value) {
-		$value = mysqli_real_escape_string($con, $value);
-	}
-	
 	$length = count($field);
+	
+	// clean inputs
+	for($i = 0; $i < $length; $i++)
+	{
+		$content[$i] = mysqli_real_escape_string($con, $content[$i]);
+	}
 	
 	// build sql
 	$sql  = "UPDATE var SET ";
