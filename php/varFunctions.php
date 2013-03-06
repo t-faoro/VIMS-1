@@ -57,9 +57,10 @@ function varList($venueID, $startDate, $endDate)
 {
 	// build statement
 	$sql  = "SELECT * FROM var";
-	$sql .= " WHERE (VAR_Date >= '" . $startDate ."'";
-	$sql .= " AND VAR_Date <= '" . $endDate . "'";
-	$sql .= " ) ORDER BY VAR_Date DESC";
+	$sql .= " WHERE (var.VAR_Date <= '" . $startDate ."'";
+	$sql .= " AND var.VAR_Date >= '" . $endDate . "'";
+	$sql .= " AND var.Venue_VEN_ID=" . $venueID;
+	$sql .= " ) ORDER BY var.VAR_Date DESC";
 
 	
 	return $sql;
@@ -141,4 +142,43 @@ function varUpdate($field, $content, $varID, $con)
 	
 	return $sql;
 }
+// ============================================================================
+/**
+ *	varAttend() builds an sql statement to return attendance numbers for past
+ * 		30 days
+ *	@param $venueID	 contains venue ID [int]
+ *	@param $date     array contains new value [datetime]
+ * 	@param $con	     connection resource [resource]
+ *
+ *	@return $sql	string containing sql statement
+ */
+ function varAttend($venueID, $date, $con)
+ {
+ 	$sql  = "SELECT VAR_Attend FROM var";
+	$sql .= " WHERE (Venue_VEN_ID=" . $venueID;
+	$sql .= " AND VAR_Date = '" . $date . "')";
+		
+	return $sql;
+ }
+ 
+ // ============================================================================
+/**
+ *	varIncidents() builds an sql statement to return incident count for past
+ * 		30 days
+ *	@param $venueID	 contains venue ID [int]
+ *	@param $date     array contains new value [datetime]
+ * 	@param $con	     connection resource [resource]
+ *
+ *	@return $sql	string containing sql statement
+ */
+ function varIncidents($venueID, $date, $con)
+ {
+ 	$sql  = "SELECT COUNT(*) FROM var";
+	$sql .= " JOIN incident_entry";
+	$sql .= " ON (var.VAR_ID = incident_entry.var_VAR_ID)";
+	$sql .= " WHERE (Venue_VEN_ID=" . $venueID;
+	$sql .= " AND VAR_Date = '" . $date . "')";
+		
+	return $sql;
+ }
 ?>
