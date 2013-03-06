@@ -293,32 +293,16 @@ DROP TABLE IF EXISTS `vims`.`Images` ;
 
 CREATE  TABLE IF NOT EXISTS `vims`.`Images` (
   `IMG_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `Incident_Entry_INE_ID` INT UNSIGNED NOT NULL ,
+  `Incident_Entry_Var_VAR_ID` INT UNSIGNED NOT NULL ,
   `IMG_Filename` VARCHAR(45) NOT NULL ,
   `IMG_Desc` TEXT NULL ,
   `IMG_Archived` DATETIME NULL ,
-  PRIMARY KEY (`IMG_ID`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `vims`.`Ine_Images_Assc`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `vims`.`Ine_Images_Assc` ;
-
-CREATE  TABLE IF NOT EXISTS `vims`.`Ine_Images_Assc` (
-  `Incident_Entry_INE_ID` INT UNSIGNED NOT NULL ,
-  `Incident_Entry_Var_VAR_ID` INT UNSIGNED NOT NULL ,
-  `Images_IMG_ID` INT UNSIGNED NOT NULL ,
-  PRIMARY KEY (`Incident_Entry_INE_ID`, `Incident_Entry_Var_VAR_ID`, `Images_IMG_ID`) ,
-  INDEX `fk_Ine_Images_Assc_Images1_idx` (`Images_IMG_ID` ASC) ,
-  CONSTRAINT `fk_Ine_Images_Assc_Incident_Entry1`
+  PRIMARY KEY (`IMG_ID`, `Incident_Entry_INE_ID`, `Incident_Entry_Var_VAR_ID`) ,
+  INDEX `fk_Images_Incident_Entry1_idx` (`Incident_Entry_INE_ID` ASC, `Incident_Entry_Var_VAR_ID` ASC) ,
+  CONSTRAINT `fk_Images_Incident_Entry1`
     FOREIGN KEY (`Incident_Entry_INE_ID` , `Incident_Entry_Var_VAR_ID` )
     REFERENCES `vims`.`Incident_Entry` (`INE_ID` , `Var_VAR_ID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Ine_Images_Assc_Images1`
-    FOREIGN KEY (`Images_IMG_ID` )
-    REFERENCES `vims`.`Images` (`IMG_ID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -19,7 +19,7 @@
 function getAttendValues($venueID, $date, $con)
 {
 	date_default_timezone_set('UTC');
-	for($i = 0; $i < 30; $i++){
+	for($i = 0; $i < 45; $i++){
 		$queryDate = $date . " 00:00:00";
 		$sql = varAttend($venueID, $queryDate, $con);
 		
@@ -40,8 +40,8 @@ function getAttendValues($venueID, $date, $con)
 		}
 	}
 	
-	echo $num[29];
-	for($i = 28; $i >= 0; $i--){
+	echo $num[44];
+	for($i = 43; $i >= 0; $i--){
 		echo "," . $num[$i];
 	}
 	
@@ -59,7 +59,7 @@ function getAttendValues($venueID, $date, $con)
 function getIncidentValues($venueID, $date, $con)
 {
 	date_default_timezone_set('UTC');
-	for($i = 0; $i < 30; $i++){
+	for($i = 0; $i < 45; $i++){
 		$queryDate = $date . " 00:00:00";
 		$sql = varIncidents($venueID, $queryDate, $con);
 		
@@ -80,8 +80,8 @@ function getIncidentValues($venueID, $date, $con)
 		}
 	}
 	
-	echo $num[29];
-	for($i = 28; $i >= 0; $i--){
+	echo $num[44];
+	for($i = 43; $i >= 0; $i--){
 		echo "," . $num[$i];
 	}
 	
@@ -139,5 +139,17 @@ function findPoliceInv($varID, $con)
 	
 	
 	return $num;
+}
+
+function getRegID($venueID, $con)
+{
+	$sql  ="SELECT Region_REG_ID FROM venue";
+	$sql .= " WHERE VEN_ID=" . $venueID;
+	
+	$results = mysqli_query($con, $sql);
+	if($row = mysqli_fetch_array($results)) $regID = $row[0];
+	
+	return $regID;
+	
 }
 ?>
