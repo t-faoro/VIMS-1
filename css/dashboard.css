@@ -31,4 +31,9 @@ table#DashReports {
 	color: #FFF;
 	width: 100%;
 }
+#AdminGraphs p {
+	float: left;
+	padding: 2.0em;
+	text-align: center;
+}
 /*==============Dashboard End===============*/

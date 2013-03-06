@@ -10,7 +10,7 @@
 session_start();
 include_once "php/config.php";
 
-verifyUser();
+if(!verifyUser()) header('location: index.php');
 
 $css = "dashboard.css";
 $js  = "sparkline.js";
@@ -71,7 +71,7 @@ $regID = getRegID($venueID, $con);
 mysqli_close($con);
 
 // create dashboard graphs
-if($userAuth < 0 && $userAuth > 99)			// User Dashboard
+if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 {
 	$graph  = "class='inlinesparkline' sparkWidth='250px'"; 
 	$graph .= " sparkHeight='125px' sparkLineColor='orange' sparkFillColor='yellow'";
@@ -100,18 +100,15 @@ if($userAuth < 0 && $userAuth > 99)			// User Dashboard
 	$type = 1;								// set type to retrive Industry news
 	$sql = getDashNews($regID, $date, $type);
 	
-	if($result = mysqli_query($con, $sql) != FALSE)
-		    {
+	$result = mysqli_query($con, $sql);
 		    	while($row = mysqli_fetch_array($result))
 		        {
 			        echo '	' . niceDate($row[1]) . "<br>\n";
 					echo '	' . $row[2];
 			        echo "<br />";
 		        }
-			}
-	else {
-		echo 'No Industry News found.';
-	} 
+			
+	
 	//_____________________________________________________________________________
 	//							Clubwatch Announcements Feed
 	//_____________________________________________________________________________
@@ -120,18 +117,15 @@ if($userAuth < 0 && $userAuth > 99)			// User Dashboard
 	$type = 2;								// set type to retrive Clubwatch news
 	$sql = getDashNews($regID, $date, $type);
 	
-	if($result = mysqli_query($con, $sql) != FALSE)
-		    {
+	$result = mysqli_query($con, $sql);
 		    	while($row = mysqli_fetch_array($result))
 		        {
 			        echo '	' . niceDate($row[1]) . "<br>\n";
 					echo '	' . $row[2];
 			        echo "<br />";
 		        }
-			}
-	else {
-		echo 'No Announcements found.';
-	} 
+			
+	
 	//_____________________________________________________________________________
 	//							Latest Activity Report Feed
 	//_____________________________________________________________________________
@@ -172,27 +166,33 @@ if($userAuth < 0 && $userAuth > 99)			// User Dashboard
 //_____________________________________________________________________________
 	mysqli_close($con);									// close db connection
 	}
+//*****************************************************************************
 //_____________________________________________________________________________
-else {											// Create Admin home view
-	echo '<div id="SystemMessages">' . "\n";
+else {
+	
+												// Create Admin home view
+	$graph  = "class='inlinesparkline' sparkWidth='250px'"; 
+	$graph .= " sparkHeight='125px' sparkLineColor='orange' sparkFillColor='yellow'";
+	$con = $myCon->connect();							// call db connection
+	echo '<div id="AdminGraphs">' . "\n";
+	
+	echo '<h3>Two week History by Region</h3>';
+	$sql = "SELECT * FROM region WHERE REG_ID > 99 ORDER BY REG_Name";
+	
+	$regions = mysqli_query($con, $sql);
+	while($regionID = mysqli_fetch_array($regions))
+	{
+		$regID = $regionID[0];
+		
+		echo '	<p>' . "\n";
+		echo '		<span ' . $graph . '>';
+		getRegionVars($regID, $date, $con);
+		echo '		</span><br>' . $regionID[1] . '<br><br>' . "\n";
+		echo '	</p>' . "\n";
+	}
 
-	echo '	<h3 class="left">System Messages</h3>' . "\n";;
-	
-	$type = 3;								// set type to retrive System msgs
-	$sql = getDashNews($regID, $date, $type);
-	
-	if($result = mysqli_query($con, $sql) != FALSE)
-		    {
-		    	while($row = mysqli_fetch_array($result))
-		        {
-			        echo '	' . niceDate($row[1]) . "<br>\n";
-					echo '	' . $row[2];
-			        echo "<br />";
-		        }
-			}
-	else {
-		echo 'No System Messages found.';
-	} 
+	echo '<div id="clear"></div>';
+	//echo '</div>' . "\n";
 	//_____________________________________________________________________________
 	//							Latest Activity Report Feed
 	echo '</div>' . "\n";

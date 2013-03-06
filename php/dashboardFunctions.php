@@ -88,10 +88,58 @@ function getIncidentValues($venueID, $date, $con)
 }
 // ============================================================================
 /**
- * getDashIndustryNews() return sql for retrieving Industry News for Dashboard
+ * getIncidentValues() gets gets number of incidents on vars for specified
+ * 		dates for last 30 days
+ * 
+ * @param $venueID contains venue ID [int]
+ * @param $date	   contains date value YYYY-MM-DD [date]
+ * @param $con 	   database connection [resource]
+ * 
+ */
+function getRegionVars($regID, $date, $con)
+{
+	date_default_timezone_set('UTC');
+	for($i = 0; $i < 14; $i++){
+		$queryDate = $date . " 00:00:00";
+		$sql  = "SELECT COUNT(*) FROM venue";
+		$sql .= " JOIN var ON";
+		$sql .= " (venue.VEN_ID = var.venue_VEN_ID)";
+		$sql .= " WHERE (venue.region_REG_ID=" . $regID;
+		$sql .= " AND var.VAR_Date='" . $date;
+		$sql .= "')";
+// select count(*) from venue join var on (venue.ven_id = var.venue_ven_id)
+// where (venue.region_reg_id = 101 and var.var_date = '2013-02-19');
+		if($sql == "error") echo "Error";
+		else {
+			$result = mysqli_query($con, $sql);
+			
+			
+			
+			if($row = mysqli_fetch_array($result))
+	        {
+		        $num[$i] = $row[0];
+		    } else $num[$i] = 0;
+			
+			$date_ts = strtotime($date);
+			$date_dt = strtotime('-1 day', $date_ts);
+			$date    = date('Y-m-d', $date_dt);
+		}
+	}
+	
+	echo $num[13];
+	for($i = 12; $i >= 0; $i--){
+		echo "," . $num[$i];
+	}
+	
+}
+// ============================================================================
+/**
+ * getDashNews() return sql for retrieving Industry News for Dashboard
  * @param $regID   contains region ID [int]
  * @param $date	   contains datetime value YYYY-MM-DD HH:MM:SS [datetime]
  * @param $type	   contains type of news to return [int]
+ * 
+ * @return $sql	   contains an sql statement
  * 
  */
 function getDashNews($regID, $date, $type)
