@@ -152,7 +152,7 @@ echo '		</tr>' . "\n";
 
 echo "\n" . '	</table>' . "\n";
 echo '</div>' . "\n";;
-echo '<div id="clear"><div>';
+echo '<div id="clear"></div>';
 
 //_____________________________________________________________________________
 mysqli_close($con);									// close db connection
