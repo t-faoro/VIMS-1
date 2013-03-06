@@ -1,8 +1,8 @@
 <?php
-/*
+/**
  * dashboardFunctions.php
  * contains library of functions for use in the dashboard
- * programmed by James P. Smith March 2013
+ * @author James P. Smith March 2013
  * */
 // ============================================================================
 //							Functions
@@ -88,10 +88,10 @@ function getIncidentValues($venueID, $date, $con)
 }
 // ============================================================================
 /**
- * getIncidentValues() gets gets number of incidents on vars for specified
- * 		dates for last 30 days
+ * getRegionVars() counts number of vars for specified region on specfied date
+ * 		and echos the values as a comma seperated list - for sparkline
  * 
- * @param $venueID contains venue ID [int]
+ * @param $regID   contains region ID [int]
  * @param $date	   contains date value YYYY-MM-DD [date]
  * @param $con 	   database connection [resource]
  * 
@@ -107,8 +107,7 @@ function getRegionVars($regID, $date, $con)
 		$sql .= " WHERE (venue.region_REG_ID=" . $regID;
 		$sql .= " AND var.VAR_Date='" . $date;
 		$sql .= "')";
-// select count(*) from venue join var on (venue.ven_id = var.venue_ven_id)
-// where (venue.region_reg_id = 101 and var.var_date = '2013-02-19');
+
 		if($sql == "error") echo "Error";
 		else {
 			$result = mysqli_query($con, $sql);
@@ -161,7 +160,15 @@ function getDashNews($regID, $date, $type)
 	return $sql;
 	
 }
- 
+// ============================================================================
+/**
+ * findIncidents() returns a count of incidents for a specified var ID
+ * @param $varID  contains var ID to search on [int]
+ * @param $con	  database conection [resource]
+ * 
+ * @return $sql	   contains an sql statement
+ * 
+ */
 function findIncidents($varID, $con)
 {
  	$sql  = "SELECT COUNT(*) FROM incident_entry";
@@ -174,7 +181,16 @@ function findIncidents($varID, $con)
 	
 	return $num;
 }
-
+// ============================================================================
+/**
+ * findPoliceInv() returns the number of incidents that had police involvement
+ * 		on a specified var ID
+ * @param $varID  contains var ID to search on [int]
+ * @param $con	  database conection [resource]
+ * 
+ * @return $sql	   contains an sql statement
+ * 
+ */
 function findPoliceInv($varID, $con)
 {
 	$sql  = "SELECT COUNT(*) FROM incident_entry";
@@ -188,7 +204,15 @@ function findPoliceInv($varID, $con)
 	
 	return $num;
 }
-
+// ============================================================================
+/**
+ * findRegID() returns the region ID of a venue
+ * @param $venueID  contains venue ID to search on [int]
+ * @param $con	    database conection [resource]
+ * 
+ * @return $sql	   contains an sql statement
+ * 
+ */
 function getRegID($venueID, $con)
 {
 	$sql  ="SELECT Region_REG_ID FROM venue";

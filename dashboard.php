@@ -1,10 +1,8 @@
 <?php 
 /**
-	index.php
-	Purpose: Login screen for the VIMS system. Validates user and stores user
-		information in the SESSION variable.
-	@author Justin Werre
-	March 4, 2013
+	dashboard.php
+	Purpose: Home page for all system users
+	@author James P. Smith March 2013
 */
 
 session_start();

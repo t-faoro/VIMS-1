@@ -1,10 +1,10 @@
 <?php
 // ============================================================================
-/*
+/**
  * varFunctions.php
  * file contains library of functions for interfacing with the table 'Var'
  * in the 'vims' database
- * Programed by James P. Smith March 2013
+ * @author James P. Smith March 2013
  * 
  * */
 // ============================================================================
