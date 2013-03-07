@@ -9,6 +9,52 @@
 	
 	include_once "php/config.php";
 	
+<<<<<<< HEAD
+=======
+	function createNav($authLevel)
+	{
+		//Clubwatch administrator
+		if(0 == $authLevel)
+		{
+			$adminNav = "<div id='adminNavigation' >\n";
+			$adminNav .= "<ul>\n";
+			$adminNav .= "<li><a href='#'>Home</a></li>\n";
+			$adminNav .= "<li><a href='#'>News</a></li>\n";
+			$adminNav .= "<li><a href='#'>Manage News</a></li>\n";
+			$adminNav .= "<li><a href='#'>Manage Venue</a></li>\n";
+			$adminNav .= "</ul>\n";
+			$adminNav .= "</div>\n";
+			echo $adminNav;
+		}
+		//Venue owner
+		else if(1 == $authLevel)
+		{
+			$userNav = "<div id='userNavigation' >\n";
+			$userNav  .= "<ul>\n";
+			$userNav  .= "<li><a href='#'>Home</a></li>\n";
+			$userNav  .= "<li><a href='#'>News</a></li>\n";
+			$userNav  .= "<li><a href='#'>Manage Venue</a></li>\n";
+			$userNav  .= "<li><a href='#'>Manage Reports</a></li>\n";
+			$userNav  .= "</ul>\n";
+			$userNav  .= "</div>\n";
+			echo $userNav;
+		}		
+		//Venue staff
+		else if(3 == $authLevel)
+		{
+			$userNav = "<div id='userNavigation' >\n";
+			$userNav  .= "<ul>\n";
+			$userNav  .= "<li><a href='#'>Home</a></li>\n";
+			$userNav  .= "<li><a href='#'>News</a></li>\n";
+			$userNav  .= "<li><a href='#'>Manage Report</a></li>\n";
+			$userNav  .= "<li><a href='#'>Create Report</a></li>\n";
+			$userNav  .= "</ul>\n";
+			$userNav  .= "</div>\n";
+			echo $userNav;
+		}
+	}
+	
+>>>>>>> master
 	/*
 		Purpose: To create a html <head>
 		Preconditions: 
@@ -27,6 +73,11 @@
 		{
 			echo CSS($css);
 		}
+<<<<<<< HEAD
+=======
+		echo "<script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>\n";
+		echo "<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js'></script>\n";
+>>>>>>> master
 		if($js != null)
 		{
 			echo JS($js);
@@ -70,7 +121,11 @@
 		}
 		else 
 		{
+<<<<<<< HEAD
 			echo "<p>Welcome <a href=''>$name</a></p></div>";
+=======
+			echo "<p>Welcome <a href=''>$name</a></p>";
+>>>>>>> master
 		}
 		echo "</div>\n";
 	}

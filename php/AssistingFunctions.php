@@ -111,6 +111,7 @@ function verifyUser()
 	) return true;
 	else return false;
 }
+<<<<<<< HEAD
 
 /**
  * returns a string containing a better format of a date than what 
@@ -126,4 +127,6 @@ function niceDate($date)
 	
 	return $showDate;
 }
+=======
+>>>>>>> master
 ?>
