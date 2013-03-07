@@ -16,6 +16,12 @@ include_once "php/AssistingFunctions.php";
 include_once "php/userFunctions.php";
 include_once "php/venue_user_asscFunctions.php";
 include_once "php/VenueFunctions.php";
+<<<<<<< HEAD
+include_once "php/dashboardFunctions.php";
+include_once "php/varFunctions.php";
+
+=======
+>>>>>>> master
 
 
 // Site Variable Declaration, for use within the application.

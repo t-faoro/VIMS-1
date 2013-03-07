@@ -111,4 +111,22 @@ function verifyUser()
 	) return true;
 	else return false;
 }
+<<<<<<< HEAD
+
+/**
+ * returns a string containing a better format of a date than what 
+ * 	you get from a mysql datetime
+ * @param $date	a date string
+ * 
+ * @return $showDate a better date string
+ */
+function niceDate($date)
+{
+	$date_ts    = strtotime($date);
+	$showDate    = date('Y-m-d', $date_ts);
+	
+	return $showDate;
+}
+=======
+>>>>>>> master
 ?>
