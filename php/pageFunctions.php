@@ -78,7 +78,13 @@
 
 		if($js != null)
 		{
-			echo JS($js);
+			if(is_array($js))
+			{
+				foreach($js as $script)
+					echo JS($script);
+			}
+			else 
+				echo JS($js);
 		}
 		echo "<meta charset='UTF-8'>\n";
 		echo "</head>\n";
@@ -119,8 +125,7 @@
 		}
 		else 
 		{
-			echo "<p>Welcome <a hrcreateef=''>$name</a></p></div>";
-			echo "<p>Welcome <a href=''>$name</a></p>";
+			echo "<p>Welcome <a href='accountManagement.php'>$name</a></p>";
 		}
 		echo "</div>\n";
 	}

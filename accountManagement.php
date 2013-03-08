@@ -96,7 +96,6 @@ else{
 }
 echo '<div id="content">\n';
  echo '<div class="headingDiv"><h2>Edit Account</h2></div>';
- echo 
 //:: Draws Content Blockso '<div id="leftContent">';
  echo '<div id="error">'.$error.'</div>';
  echo manageAccountForm();
