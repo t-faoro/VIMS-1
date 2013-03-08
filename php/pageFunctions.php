@@ -9,8 +9,7 @@
 	
 	include_once "php/config.php";
 	
-<<<<<<< HEAD
-=======
+
 	function createNav($authLevel)
 	{
 		//Clubwatch administrator
@@ -54,7 +53,7 @@
 		}
 	}
 	
->>>>>>> master
+
 	/*
 		Purpose: To create a html <head>
 		Preconditions: 
@@ -73,11 +72,10 @@
 		{
 			echo CSS($css);
 		}
-<<<<<<< HEAD
-=======
+		
 		echo "<script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>\n";
 		echo "<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js'></script>\n";
->>>>>>> master
+
 		if($js != null)
 		{
 			echo JS($js);
@@ -121,11 +119,8 @@
 		}
 		else 
 		{
-<<<<<<< HEAD
 			echo "<p>Welcome <a href=''>$name</a></p></div>";
-=======
 			echo "<p>Welcome <a href=''>$name</a></p>";
->>>>>>> master
 		}
 		echo "</div>\n";
 	}

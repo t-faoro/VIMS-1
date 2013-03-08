@@ -1,6 +1,6 @@
 <?php
 // ============================================================================
-<<<<<<< HEAD
+
 /**
  * Class containing database connection parameters
  * Instantiation initializes the variables
@@ -8,12 +8,12 @@
  */
 	
 
-=======
+
 /*
 	Class containing database connection parameters
 	Instantiation initializes the variables
 */
->>>>>>> master
+
 class Connection{
 	private $host;
 	private $user;
