@@ -86,7 +86,7 @@ else{
 						
 		}
 		else{
-			//Old Password entered doesn't match entry in database
+			//Old Password ented doesn't match entry in database
 			$error = "Update Failed: Password's do no match.";
 		}			
 		
@@ -96,7 +96,8 @@ else{
 }
 echo '<div id="content">\n';
  echo '<div class="headingDiv"><h2>Edit Account</h2></div>';
- echo '<div id="leftContent">';
+ echo 
+//:: Draws Content Blockso '<div id="leftContent">';
  echo '<div id="error">'.$error.'</div>';
  echo manageAccountForm();
  echo '</div>';
@@ -111,7 +112,9 @@ echo "</div>";
 
 function getUserPass($user, $con){		
 	global $userName;
-	$result = "";	
+	$result = "";
+//:: Draws the Footer Content	
+
 		
 		$query  = "SELECT USE_Passwd ";
 		$query .= "FROM User ";
