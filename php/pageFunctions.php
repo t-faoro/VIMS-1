@@ -20,7 +20,7 @@
 			$adminNav .= "<li><a href='#'>Home</a></li>\n";
 			$adminNav .= "<li><a href='#'>News</a></li>\n";
 			$adminNav .= "<li><a href='#'>Manage News</a></li>\n";
-			$adminNav .= "<li><a href='#'>Manage Venue</a></li>\n";
+			$adminNav .= "<li><a href='manageVenues.php'>Manage Venue</a></li>\n";
 			$adminNav .= "</ul>\n";
 			$adminNav .= "</div>\n";
 			echo $adminNav;
