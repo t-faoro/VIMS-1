@@ -16,40 +16,56 @@ $con = $con->connect();
 	
 	}
 
-$userName  		    = "tfaoro";//$_SESSION['userName'];
-$userFname  		= "Tylor";//$_SESSION['fName'];
-$userLname  		= "Faoro";//$_SESSION['lName'];
+//:: Program Variable Declarations
+$userName  		    = $_SESSION['userName'];
+$userFname  		= $_SESSION['userFname'];
+$userLname  		= $_SESSION['userLname'];
+$userAuth   		= $_SESSION['userAuth'];
+$venueID  		    = $_SESSION['venueId'];
+$venueName  		= $_SESSION['venueName'];
+
+//:: Password Field Declarations
 $currentPassword 	= NULL;
 $oldPass    		= NULL;
 $newPassOne 		= NULL;
 $newPassTwo 		= NULL;
-$userAuth   		= "";//$_SESSION['userAuth'];
-$venue_id  		    = "";//$_SESSION['venueID'];
-$venueName  		= "";//$_SESSION['venueName'];
 
-$error = "";
+//:: Misc. Variables
+$error = " ";
+$css = "";
+$js = "";
 
 //TEST VALUE
 $verifyUser = TRUE;
 
+//:: Draws Head HTML with Stylesheets, Javascript, Doctype, and Title already implemented.
+createHead($css, $js);
+
+//:: Draws Header for UI 
+createHeader($userName);
 
 
 
-if ($verifyUser == FALSE){
+//:: Verify that the user is logged in
+// If the user is not logged in, send back to index.php
+if (!verifyUser()){
 		echo "Forbidden: You do not have access to view that page";
 		header('Location: index.php');	
 }
+// Else the user must be authenticated
 else{
 	
+	//:: Post Back Functionality
 	if(isset($_POST['submit'])){		
 		
+		// Retrieve user's current password from database as a HASH
 		$currentPassword = getUserPass($userName, $con);
 		
 		$newPassOne = $_POST['New_Passwd1'];
 		$newPassTwo = $_POST['New_Passwd2'];
 		$oldPass    = $_POST['Old_Passwd'];
 		
-		
+		//:: Password reset bounds testing
 		if($newPassOne == NULL || $newPassTwo == NULL ||  $oldPass == NULL){
 				$error = "Error: All fields are mandatory.";
 				
@@ -61,24 +77,34 @@ else{
 						  Passwords must be between 8 and 32 characters in length, with no whitespace.";									
 			}
 			else{
+				//:: If all tests have been passed, update the USER table with a new password and redirect to dashboard.
 				//Problem with User Update query function				
-				userUpdate("USE_Passwd", MD5($newPassTwo), $userName, $con);
+				userUpdate("USE_Passwd", $newPassTwo, $userName, $con);
 				$error = "Account updated successfully.";
 				//header('Location: dashboard.php');
 			}
 						
 		}
 		else{
+			//Old Password entered doesn't match entry in database
 			$error = "Update Failed: Password's do no match.";
 		}			
-		//createHead();
-		//createHeader($userName);
-		//createNav($authLevel);			
-		//createFoot();			
+		
 	}
 	
-	echo manageAccountForm($con);
-}	
+	
+}
+echo '<div id="content">\n';
+ echo '<div class="headingDiv"><h2>Edit Account</h2></div>';
+ echo '<div id="leftContent">';
+ echo '<div id="error">'.$error.'</div>';
+ echo manageAccountForm();
+ echo '</div>';
+ echo '<div id="rightContent">';
+ echo IMG("spotlights.jpg", "Spotlights");
+ echo '</div>';
+echo "</div>";
+	createFoot();
 
 
 //Start Functions
@@ -100,41 +126,46 @@ function getUserPass($user, $con){
 		return $result;
 }
 
-function manageAccountForm($con){
+
+function manageAccountForm(){
 	global $error;
 	global $userName;
 	global $userFname, $userLname;
 	
+	$form  = '<div id="accountManage" >';
+	$form .= '<form method="POST" action="accountManagement.php">'."\n";	
 	
-	$form  = '<form method="POST" action="accountManagement.php">'."\n";	
-	
-	$form .= '<label>Username: </label>';
-	$form .= '<span>'.$userName.'</span><br />'."\n";
-	
-	$form .= '<label>First Name: </label>';
-	$form .= '<span>'.$userFname.'</span><br />'."\n";
+	$form .= '<label>Name: </label>';
+	$form .= '<span class="readOnly">'.$userFname.'</span><br />'."\n";
 	
 	$form .= '<label>Last Name: </label>';
-	$form .= '<span>'.$userLname.'</span><br />'."\n";
+	$form .= '<span class="readOnly">'.$userLname.'</span><br />'."\n";
 	
-	$form .= "<br /><br />";
+	$form .= "<br />";
+	
+	$form .= '<br /><label>Username: </label>';
+	$form .= '<span class="readOnly"><b><u>'.$userName.'</u></b></span><br />'."\n";
+	
+$form .= "<br />";
 	
 	$form .= '<label>Old Password: </label>';
-	$form .= '<input type="password" name="Old_Passwd" /><br />'."\n";
+	$form .= '<input type="password" name="Old_Passwd" class="passField"/><br />'."\n";
 	
 	$form .= '<label>New Password: </label>';
-	$form .= '<input type="password" name="New_Passwd1" /><br />'."\n";
+	$form .= '<input type="password" name="New_Passwd1" class="passField" /><br />'."\n";
 	
 	$form .= '<label>Confirm Password: </label>';
-	$form .= '<input type="password" name="New_Passwd2" /><br />'."\n";
+	$form .= '<input type="password" name="New_Passwd2" class="passField" /><br />'."\n";
 	
 	$form .= "<br /><br />";
-	$form .= '<input type="submit" value="Save Changes" name="submit" />';
+	$form .= '<input type="submit" value="Save Changes" name="submit" class="button" />';
 	
 	$form .= "<br /><br />";
-	$form .= '<div id="error">'.$error.'</div>'."\n";
+	
 	
 	$form .= '</form>';
+	
+	$form .= '</div>';
 	
 	return $form;
 }
