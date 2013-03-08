@@ -1,9 +1,19 @@
 <?php
 // ============================================================================
+
+/**
+ * Class containing database connection parameters
+ * Instantiation initializes the variables
+ * @author James P. Smith March 2013
+ */
+	
+
+
 /*
 	Class containing database connection parameters
 	Instantiation initializes the variables
 */
+
 class Connection{
 	private $host;
 	private $user;

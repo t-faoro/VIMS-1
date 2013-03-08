@@ -1,0 +1,36 @@
+/*
+ * news.css
+ * stylesheet for news page elements
+ * Programmed by James P. Smith March 2013  
+ * */
+
+/*==============Report List Start===============*/
+#content {
+	color: #FFF;
+	margin-left: 10%; 
+	margin-right: 10%; 
+	min-height: 62%; 
+	text-align: center;	
+}
+
+div#NewsPeriod {
+	text-align: right;
+	float: right;
+	margin: 2em;
+}
+
+div#NewsReel {
+	text-align: left;
+	margin: 2em;
+}
+
+#NewsReel h4 {
+	color: #FF0;
+	text-align: left;
+}
+
+#clear {
+	clear: both;
+}
+
+/*==============Report List End===============*/

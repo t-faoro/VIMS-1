@@ -1,10 +1,10 @@
 <?php
 // ============================================================================
-/*
+/**
  * venueFunctions.php
  * file contains library of functions for interfacing with the table 'Venue'
  * in the 'vims' database
- * Programmed by James P. Smith March 2013
+ * @author James P. Smith March 2013
  * 
  * */
 // ============================================================================

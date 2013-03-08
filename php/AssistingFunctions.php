@@ -64,7 +64,7 @@ function JS($scriptName){
 $javaScript = "";	
 
 	$javaScript .= '<script type="text/javascript" src="'.JS_PATH.$scriptName.'">';
-	$javaScript .= '</script>';
+	$javaScript .= "</script>\n";
 	return $javaScript;
 }
 
@@ -83,7 +83,7 @@ $javaScript = "";
 function IMG($imgName, $alt){
 $image;
 
-	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />';
+	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />\n';
 	return $image;
 }
 
@@ -111,4 +111,20 @@ function verifyUser()
 	) return true;
 	else return false;
 }
+
+/**
+ * returns a string containing a better format of a date than what 
+ * 	you get from a mysql datetime
+ * @param $date	a date string
+ * 
+ * @return $showDate a better date string
+ */
+function niceDate($date)
+{
+	$date_ts    = strtotime($date);
+	$showDate    = date('Y-m-d', $date_ts);
+	
+	return $showDate;
+}
+
 ?>
