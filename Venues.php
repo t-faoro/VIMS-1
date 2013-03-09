@@ -37,26 +37,42 @@ if(isset($_GET) && 'new' != $_GET['id'])
 //if post back create or update venue
 if(isset($_POST['name']))
 {
-	var_dump($_POST);
+	$venue = array(
+		mysqli_real_escape_string($con, $_POST['name']),
+		mysqli_real_escape_string($con, $_POST['unit']),
+		mysqli_real_escape_string($con, $_POST['address']),
+		mysqli_real_escape_string($con, $_POST['city']),
+		mysqli_real_escape_string($con, $_POST['post']),
+		mysqli_real_escape_string($con, $_POST['phone']),
+		mysqli_real_escape_string($con, $_POST['liason']),
+		mysqli_real_escape_string($con, $_POST['region']),
+	);
 	if('' == $_POST['name'])
 	{
 		echo "error";
 	}
 	else if('New' == $_POST['id'])
 	{
-		$venue = array(
-			$_POST['name'],
-			$_POST['unit'],
-			$_POST['address'],
-			$_POST['city'],
-			$_POST['post'],
-			$_POST['phone'],
-			$_POST['liason'],
-			$_POST['region'],
-		);
 		$sql = venueCreate($venue, $con);
-		echo $sql;
 		mysqli_query($con, $sql);
+		header('Location: manageVenues.php');
+	}
+	else
+	{
+		$fields = array(
+			'Name',
+			'Unit_Addr',
+			'St_Addr',
+			'City',
+			'Pcode',
+			'phone',
+			'Liason',
+			'Region_ID'
+		);
+		$sql = venueUpdate($fields, $venue, $_POST['id'], $con);
+		mysqli_query($con, $sql);
+		echo mysqli_error($con);
+		header('Location: manageVenues.php');
 	}
 }
 	

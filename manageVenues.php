@@ -9,10 +9,10 @@
 	session_start();
 	if(!verifyUser()) header("Location: index.php");
 	
-	createHead();
+	createHead(null, "manageVenue.js");
 	createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 	createNav($_SESSION['userAuth']);
-	echo "<div style='clear:both;'></div>\n";
+	echo "<div style='clear:both; color: red;' id='error'></div>\n";
 	echo "<div id ='content' style='color: white;'>\n";
 	
 	//Link to create a new venue
@@ -44,7 +44,7 @@
 		echo "<td>$regName[REG_Name]</td>\n";
 		echo "<td>$venue[VEN_Phone]</td>\n";
 		echo "<td>\n";
-			echo "<select>\n";
+			echo "<select id='$venue[VEN_ID]' onchange='updateStatus($venue[VEN_ID])'>\n";
 				echo "<option value='1'>Active</option>\n";
 				echo "<option value='0' ";
 				if(0 == $venue['VEN_Status']) echo "selected";
