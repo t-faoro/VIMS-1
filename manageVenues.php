@@ -13,7 +13,7 @@
 	createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 	createNav($_SESSION['userAuth']);
 	echo "<div style='clear:both;'></div>\n";
-	echo "<div id ='content' style='color:white';>\n";
+	echo "<div id ='content' style='color: white;'>\n";
 	
 	//Link to create a new venue
 	echo "<a href='Venues.php?id=new'><button>New venue</button></a>\n";
@@ -34,10 +34,13 @@
 	echo "</tr>\n";
 	foreach($result as $venue)
 	{
+		$sql = "SELECT REG_Name from Region where REG_ID = $venue[Region_REG_ID];";
+		$region = mysqli_query($con, $sql);
+		$regName = mysqli_fetch_array($region);
 		echo "<tr>\n";
 		echo "<td>$venue[VEN_Name]</td>\n";
 		echo "<td>$venue[VEN_City]</td>\n";
-		echo "<td>$venue[Region_REG_ID]</td>\n";
+		echo "<td>$regName[REG_Name]</td>\n";
 		echo "<td>$venue[VEN_Phone]</td>\n";
 		echo "<td>\n";
 			echo "<select>\n";
