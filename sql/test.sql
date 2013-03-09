@@ -145,6 +145,9 @@ INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Pcode, VE
 		   
 INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID)
 		   VALUES ('The Party Room', '3B', '4040 5th Ave SW', 'Calgary', 'T1H1R1', '4033101010', 'Roose Bolton', 102);
+			 
+INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID, VEN_Status)
+		   VALUES ('Pulse', '18', '415 1st street south', 'Lethbridge', 'T1K1N5', '4033101010', 'Mick Bolton', 101, 0);
 		   
 -- ----------------------------------------------------------------------------
 -- Test data for vims.venue_user_assc

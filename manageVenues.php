@@ -34,6 +34,7 @@
 	echo "</tr>\n";
 	foreach($result as $venue)
 	{
+		//var_dump($venue);
 		$sql = "SELECT REG_Name from Region where REG_ID = $venue[Region_REG_ID];";
 		$region = mysqli_query($con, $sql);
 		$regName = mysqli_fetch_array($region);
@@ -45,7 +46,9 @@
 		echo "<td>\n";
 			echo "<select>\n";
 				echo "<option value='1'>Active</option>\n";
-				echo "<option value='0'>Deactive</option>\n";
+				echo "<option value='0' ";
+				if(0 == $venue['VEN_Status']) echo "selected";
+				echo">Deactive</option>\n";
 			echo "</select>\n";
 		echo "</td>\n";
 		echo "<td><a href='venues.php?id=$venue[VEN_ID]'><button>Modify</button></a></td>\n";
