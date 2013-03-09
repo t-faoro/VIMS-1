@@ -12,9 +12,11 @@
 	createHead();
 	createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 	createNav($_SESSION['userAuth']);
-	echo "<div ></div>\n";
-	echo "<div id ='content'>\n";
+	echo "<div style='clear:both;'></div>\n";
+	echo "<div id ='content' style='color:white';>\n";
 	
+	echo "<button>New venue</button>\n";
+	//create table of existing venues
 	$myCon = new Connection();
 	$con = $myCon->connect();
 	$sql = "select * from venue;";
@@ -27,6 +29,25 @@
 	echo "<th>Phone</th>\n";
 	echo "<th>Status</th>\n";
 	echo "<th></th>\n";
+	echo "</tr>\n";
+	foreach($result as $venue)
+	{
+		echo "<tr>\n";
+		echo "<td>$venue[VEN_Name]</td>\n";
+		echo "<td>$venue[VEN_City]</td>\n";
+		echo "<td>$venue[Region_REG_ID]</td>\n";
+		echo "<td>$venue[VEN_Phone]</td>\n";
+		echo "<td>\n";
+			echo "<select>\n";
+				echo "<option value='1'>Active</option>\n";
+				echo "<option value='0'>Deactive</option>\n";
+			echo "</select>\n";
+		echo "</td>\n";
+		echo "<td><button>Modify</button></td>\n";
+		echo "</tr>\n";
+	}
+	echo "</table>\n";
+	mysqli_close($con);
 	
 	echo "</div>\n";
 	createFoot();

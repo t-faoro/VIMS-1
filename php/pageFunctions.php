@@ -39,7 +39,7 @@
 			echo $userNav;
 		}		
 		//Venue staff
-		else if(3 == $authLevel)
+		else if(2 == $authLevel)
 		{
 			$userNav = "<div id='userNavigation' >\n";
 			$userNav  .= "<ul>\n";
