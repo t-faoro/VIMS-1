@@ -15,7 +15,9 @@
 	echo "<div style='clear:both;'></div>\n";
 	echo "<div id ='content' style='color:white';>\n";
 	
-	echo "<button>New venue</button>\n";
+	//Link to create a new venue
+	echo "<a href='Venues.php?id=new'><button>New venue</button></a>\n";
+	
 	//create table of existing venues
 	$myCon = new Connection();
 	$con = $myCon->connect();
@@ -43,7 +45,7 @@
 				echo "<option value='0'>Deactive</option>\n";
 			echo "</select>\n";
 		echo "</td>\n";
-		echo "<td><button>Modify</button></td>\n";
+		echo "<td><a href='venues.php?id=$venue[VEN_ID]'><button>Modify</button></a></td>\n";
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
