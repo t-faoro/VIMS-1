@@ -126,6 +126,7 @@
 		else 
 		{
 			echo "<p>Welcome <a href='accountManagement.php'>$name</a></p>";
+			echo "<p><a href='index.php'>Log out</a></p>\n";
 		}
 		echo "</div>\n";
 	}
