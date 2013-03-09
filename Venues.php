@@ -26,7 +26,7 @@ $con = $myCon->connect();
 
 //Get existing data from the data base
 
-if('new' != $_GET['id'])
+if(isset($_GET['id']) && 'new' != $_GET['id'])
 {
 	$sql = venueRead($_GET['id']);
 	$result = mysqli_query($con, $sql);
@@ -34,6 +34,7 @@ if('new' != $_GET['id'])
 	$venInfo['button'] = 'Save Changes';
 }
 
+var_dump($_POST);
 	
 createHead();
 createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
