@@ -10,6 +10,7 @@
 		
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
+		echo "<input type='hidden' name='id' value=$info[VEN_ID] />\n";
 		echo "<label>Name: </label>\n";
 		echo "<input type='text' name='name' value='$info[VEN_Name]' />\n<br />\n";
 		echo "<label>Unit: </label>\n";
@@ -28,7 +29,7 @@
 			$results = mysqli_query($con, $sql);
 			foreach($results as $region)
 			{
-				echo "<option value='$region[REG_ID]'";
+				echo "<option value='$region[REG_ID]' ";
 				if($region['REG_ID'] == $info['Region_REG_ID']) echo "selected";
 				echo ">$region[REG_Name]</option>\n";
 			}
