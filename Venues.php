@@ -38,24 +38,27 @@ if(isset($_GET) && 'new' != $_GET['id'])
 if(isset($_POST['name']))
 {
 	$venue = array(
-		'name'=>mysqli_real_escape_string($con, $_POST['name']),
-		'unit'=>mysqli_real_escape_string($con, $_POST['unit']),
-		'address'=>mysqli_real_escape_string($con, $_POST['address']),
-		'city'=>mysqli_real_escape_string($con, $_POST['city']),
-		'post'=>mysqli_real_escape_string($con, $_POST['post']),
-		'phone'=>mysqli_real_escape_string($con, $_POST['phone']),
-		'liasion'=>mysqli_real_escape_string($con, $_POST['liason']),
-		'region'=>mysqli_real_escape_string($con, $_POST['region']),
+		$_POST['name'],
+		$_POST['unit'],
+		$_POST['address'],
+		$_POST['city'],
+		$_POST['post'],
+		$_POST['phone'],
+		$_POST['liason'],
+		$_POST['region'],
 	);
 	if('' == $_POST['name'])
 	{
 		echo "error";
 	}
 	else if('New' == $_POST['id'])
-	{
+	{	
 		$sql = venueCreate($venue, $con);
+		var_dump($venue);
+		echo $sql;
 		mysqli_query($con, $sql);
-		header('Location: manageVenues.php');
+		echo mysqli_error($con);
+		//header('Location: manageVenues.php');
 	}
 	else
 	{
