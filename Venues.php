@@ -38,14 +38,14 @@ if(isset($_GET) && 'new' != $_GET['id'])
 if(isset($_POST['name']))
 {
 	$venue = array(
-		mysqli_real_escape_string($con, $_POST['name']),
-		mysqli_real_escape_string($con, $_POST['unit']),
-		mysqli_real_escape_string($con, $_POST['address']),
-		mysqli_real_escape_string($con, $_POST['city']),
-		mysqli_real_escape_string($con, $_POST['post']),
-		mysqli_real_escape_string($con, $_POST['phone']),
-		mysqli_real_escape_string($con, $_POST['liason']),
-		mysqli_real_escape_string($con, $_POST['region']),
+		'name'=>mysqli_real_escape_string($con, $_POST['name']),
+		'unit'=>mysqli_real_escape_string($con, $_POST['unit']),
+		'address'=>mysqli_real_escape_string($con, $_POST['address']),
+		'city'=>mysqli_real_escape_string($con, $_POST['city']),
+		'post'=>mysqli_real_escape_string($con, $_POST['post']),
+		'phone'=>mysqli_real_escape_string($con, $_POST['phone']),
+		'liasion'=>mysqli_real_escape_string($con, $_POST['liason']),
+		'region'=>mysqli_real_escape_string($con, $_POST['region']),
 	);
 	if('' == $_POST['name'])
 	{
