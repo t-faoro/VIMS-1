@@ -1,11 +1,21 @@
-#clear{
-	clear: both;
-}
-
 #content{
 	color: white;
 }
 
+.clear{
+	clear: both;
+}
+
 .error{
 	color: red;
+}
+
+form{
+	width: 50%;
+	float: left;
+}
+
+#users{
+	width: 50%;
+	float: right;
 }

@@ -22,8 +22,8 @@ $venInfo = array('VEN_Name'=>'',
 								 'button'=>'Create'
 	);
 $error = '';
+$users = array();
 $myCon = new Connection();
-
 $con = $myCon->connect();
 
 //Get existing data from the data base
@@ -33,6 +33,8 @@ if(isset($_GET) && 'new' != $_GET['id'])
 	$result = mysqli_query($con, $sql);
 	$venInfo = mysqli_fetch_assoc($result);
 	$venInfo['button'] = 'Save Changes';
+	$sql = userList($_GET['id']);
+	$users = mysqli_query($con, $sql);
 }
 
 //if post back create or update venue
@@ -81,12 +83,12 @@ if(isset($_POST['name']))
 createHead('venues.css');
 createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 createNav($_SESSION['userAuth']);
-echo "<div id='clear' ></div>\n";
-echo "<div id='clear' ></div>\n";
+echo "<div class='clear' ></div>\n";
 echo "<div id ='content'>\n";
 echo "<div class='error'>$error</div>\n";
 //Venue information form
 createForm($venInfo);
+if('New' != $venInfo['VEN_ID']) listUsers($users);
 
 	
 echo "</div>\n";

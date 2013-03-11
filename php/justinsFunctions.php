@@ -43,4 +43,39 @@
 		mysqli_close($con);
 	}
 	
+	function listUsers($users)
+	{
+		echo "<table id='users'>\n";
+		echo "<tr>\n";
+		echo "<th>User Name</th>\n";
+		echo "<th>User first Name</th>\n";
+		echo "<th>User last Name</th>\n";
+		echo "<th>User authorization</th>\n";
+		echo "<th></th>\n";
+		echo "</tr>\n";
+		$myCon = new Connection();
+		$con = $myCon->connect();
+		$sql = "select * from Auth_level_lookup;";
+		$authLevels = mysqli_query($con, $sql);
+		
+		foreach($users as $user)
+		{
+			echo "<tr>\n";
+			echo "<td>$user[USE_Name]</td>\n";
+			echo "<td>$user[USE_Fname]</td>\n";
+			echo "<td>$user[USE_Lname]</td>\n";
+			echo "<td><select>\n";
+				foreach($authLevels as $auth)
+				{
+					echo "<option value='$auth[AUT_Level]'";
+					if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo "selected";
+					echo ">$auth[AUT_Def]</option>\n";
+				}
+			echo "</select></td>\n";
+			echo "<td><button>Delete</button></td>\n";
+			echo "</tr>\n";
+		}
+		echo "</table>\n";
+	}
+	
 ?>
