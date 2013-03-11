@@ -76,7 +76,7 @@ function venueList($regID)
 function venueCreate($venueDetails, $con)
 {
     // clean inputs
-    foreach ($venueDetails as $key => $value) {
+    foreach ($venueDetails as &$value) {
         $value = mysqli_real_escape_string($con, $value);
     }
     
