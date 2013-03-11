@@ -39,6 +39,7 @@
 		echo "<label>Contact: </label>\n";
 		echo "<input type='text' name='liason' value='$info[VEN_Liason]' />\n<br />\n";
 		echo "<input type='submit' name='submit' value='$info[button]' />\n";
+		if('New' == $info['VEN_ID']) echo "<input type='submit' name='submit' value='Add users' />\n";
 		echo "</form>\n";
 		mysqli_close($con);
 	}

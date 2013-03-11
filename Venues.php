@@ -58,8 +58,16 @@ if(isset($_POST['name']))
 	{	
 		$sql = venueCreate($venue, $con);
 		mysqli_query($con, $sql);
-		echo mysqli_error($con);
-		header('Location: manageVenues.php');
+		
+		if('Create' == $_POST['submit'])
+		{
+			header('Location: manageVenues.php');
+		}
+		else
+		{
+			$id = mysqli_insert_id($con);
+			header('Location: Venues.php?id='.$id);
+		}
 	}
 	else
 	{
