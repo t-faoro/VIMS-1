@@ -1,0 +1,11 @@
+#clear{
+	clear: both;
+}
+
+#content{
+	color: white;
+}
+
+.error{
+	color: red;
+}

@@ -21,6 +21,7 @@ $venInfo = array('VEN_Name'=>'',
 								 'VEN_Liason'=>'',
 								 'button'=>'Create'
 	);
+$error = '';
 $myCon = new Connection();
 
 $con = $myCon->connect();
@@ -49,16 +50,14 @@ if(isset($_POST['name']))
 	);
 	if('' == $_POST['name'])
 	{
-		echo "error";
+		$error = "You must have a venue name.";
 	}
 	else if('New' == $_POST['id'])
 	{	
 		$sql = venueCreate($venue, $con);
-		var_dump($venue);
-		echo $sql;
 		mysqli_query($con, $sql);
 		echo mysqli_error($con);
-		//header('Location: manageVenues.php');
+		header('Location: manageVenues.php');
 	}
 	else
 	{
@@ -79,12 +78,13 @@ if(isset($_POST['name']))
 	}
 }
 	
-createHead();
+createHead('venues.css');
 createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 createNav($_SESSION['userAuth']);
-echo "<div style='clear:both;'></div>\n";
-echo "<div id ='content' style='color: white'>\n";
-
+echo "<div id='clear' ></div>\n";
+echo "<div id='clear' ></div>\n";
+echo "<div id ='content'>\n";
+echo "<div class='error'>$error</div>\n";
 //Venue information form
 createForm($venInfo);
 
