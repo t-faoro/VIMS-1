@@ -52,7 +52,7 @@
 		echo "<th>User first Name</th>\n";
 		echo "<th>User last Name</th>\n";
 		echo "<th>User authorization</th>\n";
-		echo "<th></th>\n";
+		echo "<th><button>New User</button></th>\n";
 		echo "</tr>\n";
 		$myCon = new Connection();
 		$con = $myCon->connect();
@@ -61,7 +61,7 @@
 		
 		foreach($users as $user)
 		{
-			echo "<tr>\n";
+			echo "<tr id='$user[USE_ID]'>\n";
 			echo "<td>$user[USE_Name]</td>\n";
 			echo "<td>$user[USE_Fname]</td>\n";
 			echo "<td>$user[USE_Lname]</td>\n";
@@ -73,7 +73,7 @@
 					echo ">$auth[AUT_Def]</option>\n";
 				}
 			echo "</select></td>\n";
-			echo "<td><button>Delete</button></td>\n";
+			echo "<td><button onclick=\"deleteUser($user[USE_ID])\">Delete</button></td>\n";
 			echo "</tr>\n";
 		}
 		echo "</table>\n";

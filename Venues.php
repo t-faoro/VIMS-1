@@ -88,7 +88,7 @@ if(isset($_POST['name']))
 	}
 }
 	
-createHead('venues.css');
+createHead('venues.css', 'manageVenue.js');
 createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 createNav($_SESSION['userAuth']);
 echo "<div class='clear' ></div>\n";
