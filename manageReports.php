@@ -21,7 +21,7 @@ $venueID = $_SESSION['venueId'];
 $venueName = $_SESSION['venueName'];
 $fullName = $userFname . " " . $userLname;
 date_default_timezone_set('UTC');
-$date = date('Y-m-d H:i:s', time());
+$date = date('Y-m-d', time());
 					
 //*****************************************************************************
 createHead('manageReports.css');
@@ -30,7 +30,7 @@ createNav($userAuth);
 
 //==========================    Begin Content    =============================
 echo "<div id='content'>\n";
-echo "<a href='createVar.php'><button id='Button_NewReport'>";
+echo "<a href='manageVars.php?action=create'><button id='Button_NewReport'>";
 echo "Create New Report</button></a><br />\n";
 
 $date_ts     = strtotime($date);
@@ -112,8 +112,8 @@ echo $html;
 // Create VAR List
 //_____________________________________________________________________________
 
-$startDate = $selectedYear . "-" . $month . "-" . $day . " 00:00:00";
-$endDate = $selectedYear . "-" . $month . "-" . "-01 00:00:00";
+$startDate = $selectedYear . "-" . $month . "-" . $day;
+$endDate = $selectedYear . "-" . $month . "-" . "-01";
 
 $sql = varList($venueID, $startDate, $endDate);
 
@@ -129,9 +129,9 @@ $html .= '		</tr>' . "\n";
 	        while($row = mysqli_fetch_array($result))
 	        {
 	        	$html .= '		<tr>' . "\n";
-		        $html .= '			<td><a href="reports.php?varID=';
+		        $html .= '			<td><a href="manageVars.php?action=view&varID=';
 				$html .= $row['VAR_ID'] . '">';
-		        $html .= niceDate($row['VAR_Date']) . '</a></td><td>';
+		        $html .= $row['VAR_Date'] . '</a></td><td>';
 				$html .= $row['VAR_Event'] . '</td><td>';
 				$html .= $row['VAR_Attend'] . "</td><td>";
 				$html .= findIncidents($row['VAR_ID'], $con) . '</td><td>';

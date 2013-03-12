@@ -60,7 +60,7 @@ function getIncidentValues($venueID, $date, $con)
 {
 	date_default_timezone_set('UTC');
 	for($i = 0; $i < 45; $i++){
-		$queryDate = $date . " 00:00:00";
+		$queryDate = $date;
 		$sql = varIncidents($venueID, $queryDate, $con);
 		
 		if($sql == "error") echo "Error";
@@ -100,7 +100,7 @@ function getRegionVars($regID, $date, $con)
 {
 	date_default_timezone_set('UTC');
 	for($i = 0; $i < 14; $i++){
-		$queryDate = $date . " 00:00:00";
+		$queryDate = $date;
 		$sql  = "SELECT COUNT(*) FROM venue";
 		$sql .= " JOIN var ON";
 		$sql .= " (venue.VEN_ID = var.venue_VEN_ID)";

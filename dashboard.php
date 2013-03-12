@@ -21,7 +21,7 @@ $venueID = $_SESSION['venueId'];
 $venueName = $_SESSION['venueName'];
 $fullName = $userFname . " " . $userLname;
 date_default_timezone_set('UTC');
-$date = date('Y-m-d H:i:s', time());
+$date = date('Y-m-d', time());
 					
 //*****************************************************************************
 createHead('dashboard.css', 'sparkline.js');
@@ -105,7 +105,7 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	
 	$date_ts    = strtotime($date);
 	$date_dt    = strtotime('-30 days', $date_ts);
-	$endDate    = date('Y-m-d H:i:s', $date_dt);
+	$endDate    = date('Y-m-d', $date_dt);
 	
 	$sql = varList($venueID, $startDate, $endDate) . " LIMIT 3";
 	
@@ -120,7 +120,7 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 		        while($row = mysqli_fetch_array($result))
 		        {
 		        	echo '		<tr>' . "\n";
-			        echo '			<td>' . niceDate($row['VAR_Date']) . '</td><td>';
+			        echo '			<td>' . $row['VAR_Date'] . '</td><td>';
 					echo $row['VAR_Event'] . '</td><td>';
 					echo $row['VAR_Attend'] . "</td><td>";
 					echo findIncidents($row['VAR_ID'], $con) . '</td><td>';

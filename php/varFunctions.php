@@ -37,7 +37,8 @@ function varRead($varID)
     
 	// build statement
 	$sql  = "SELECT * FROM var";
-	$sql .= " WHERE VAR_ID=" . $varID;
+	$sql .= " WHERE (VAR_ID=" . $varID;
+	$sql .= " AND VAR_Reason_for_Del IS NULL)";
 	
 	return $sql;
 }
@@ -60,6 +61,7 @@ function varList($venueID, $startDate, $endDate)
 	$sql .= " WHERE (var.VAR_Date <= '" . $startDate ."'";
 	$sql .= " AND var.VAR_Date >= '" . $endDate . "'";
 	$sql .= " AND var.Venue_VEN_ID=" . $venueID;
+	$sql .= " AND var.VAR_Reason_for_Del IS NULL";
 	$sql .= " ) ORDER BY var.VAR_Date DESC";
 
 	
@@ -121,6 +123,7 @@ function varUpdate($field, $content, $varID, $con)
 	// clean inputs
 	for($i = 0; $i < $length; $i++)
 	{
+		$field[$i]   = mysqli_real_escape_string($con, $field[$i]);
 		$content[$i] = mysqli_real_escape_string($con, $content[$i]);
 	}
 	
@@ -156,7 +159,8 @@ function varUpdate($field, $content, $varID, $con)
  {
  	$sql  = "SELECT VAR_Attend FROM var";
 	$sql .= " WHERE (Venue_VEN_ID=" . $venueID;
-	$sql .= " AND VAR_Date = '" . $date . "')";
+	$sql .= " AND VAR_Date = '" . $date . "'";
+	$sql .= " AND VAR_Reason_for_Del IS NULL)";
 		
 	return $sql;
  }
@@ -176,8 +180,9 @@ function varUpdate($field, $content, $varID, $con)
  	$sql  = "SELECT COUNT(*) FROM var";
 	$sql .= " JOIN incident_entry";
 	$sql .= " ON (var.VAR_ID = incident_entry.var_VAR_ID)";
-	$sql .= " WHERE (Venue_VEN_ID=" . $venueID;
-	$sql .= " AND VAR_Date = '" . $date . "')";
+	$sql .= " WHERE (var.Venue_VEN_ID=" . $venueID;
+	$sql .= " AND var.VAR_Date = '" . $date . "'";
+	$sql .= " AND var.VAR_Reason_for_Del IS NULL)";
 		
 	return $sql;
  }

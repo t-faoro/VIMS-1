@@ -21,7 +21,7 @@ $venueName = $_SESSION['venueName'];
 $regID = $_SESSION['regID'];
 $fullName = $userFname . " " . $userLname;
 date_default_timezone_set('UTC');
-$date = date('Y-m-d H:i:s', time());
+$date = date('Y-m-d', time());
 					
 //*****************************************************************************
 createHead('news.css');
