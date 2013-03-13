@@ -44,7 +44,7 @@
 		mysqli_close($con);
 	}
 	
-	function listUsers($users)
+	function listUsers($users, $venue)
 	{
 		echo "<table id='users'>\n";
 		echo "<tr>\n";
@@ -75,7 +75,7 @@
 					echo ">$auth[AUT_Def]</option>\n";
 				}
 			echo "</select></td>\n";
-			echo "<td><button onclick=\"deleteUser($user[USE_ID])\">Delete</button></td>\n";
+			echo "<td><button onclick=\"deleteUser($user[USE_ID], $venue)\">Delete</button></td>\n";
 			echo "<td><button id='update$user[USE_ID]' disabled>Update user</button></td>\n";
 			echo "</tr>\n";
 		}

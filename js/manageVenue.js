@@ -7,7 +7,7 @@ function updateStatus(id)
 	xmlhttp.send("id="+id+"&status="+status); 
 }
 
-function deleteUser(id)
+function deleteUser(id, venue)
 {
 	if(!confirm("are you sure you want to delete this user?"))
 	{
@@ -16,7 +16,7 @@ function deleteUser(id)
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "php/deleteUser.php");
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id="+id); 
+	xmlhttp.send("id="+id+"&venue="+venue); 
 	xmlhttp.onreadystatechange=function()
 	{
 		if(4 == xmlhttp.readyState)

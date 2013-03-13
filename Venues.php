@@ -96,7 +96,7 @@ echo "<div id ='content'>\n";
 echo "<div class='error'>$error</div>\n";
 //Venue information form
 createForm($venInfo);
-if('New' != $venInfo['VEN_ID']) listUsers($users);
+if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID']);
 
 	
 echo "</div>\n";
