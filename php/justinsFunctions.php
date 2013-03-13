@@ -53,18 +53,20 @@
 		echo "<th>User last Name</th>\n";
 		echo "<th>User authorization</th>\n";
 		echo "<th><button>New User</button></th>\n";
+		echo "<th></th>\n";
 		echo "</tr>\n";
 		$myCon = new Connection();
 		$con = $myCon->connect();
 		$sql = "select * from Auth_level_lookup;";
 		$authLevels = mysqli_query($con, $sql);
 		
+		//Show existing users
 		foreach($users as $user)
 		{
 			echo "<tr id='$user[USE_ID]'>\n";
 			echo "<td>$user[USE_Name]</td>\n";
-			echo "<td>$user[USE_Fname]</td>\n";
-			echo "<td>$user[USE_Lname]</td>\n";
+			echo "<td><input type='text' value='$user[USE_Fname]' /></td>\n";
+			echo "<td><input type='text' value='$user[USE_Lname]' /></td>\n";
 			echo "<td><select>\n";
 				foreach($authLevels as $auth)
 				{
@@ -74,8 +76,12 @@
 				}
 			echo "</select></td>\n";
 			echo "<td><button onclick=\"deleteUser($user[USE_ID])\">Delete</button></td>\n";
+			echo "<td><button>Update user</button></td>\n";
 			echo "</tr>\n";
 		}
+		
+		
+		
 		echo "</table>\n";
 	}
 	
