@@ -32,9 +32,9 @@
 	echo "<th>Status</th>\n";
 	echo "<th></th>\n";
 	echo "</tr>\n";
+
 	foreach($result as $venue)
-	{
-		//var_dump($venue);
+	{	
 		$sql = "SELECT REG_Name from Region where REG_ID = $venue[Region_REG_ID];";
 		$region = mysqli_query($con, $sql);
 		$regName = mysqli_fetch_array($region);
