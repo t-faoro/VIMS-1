@@ -1,6 +1,7 @@
 <?php
 /**
- * 
+ * manageVars.php
+ * displays page for creating or updating/viewing a var
  * @author James P. Smith March 2013
  */
 include_once "php/config.php";
@@ -35,6 +36,7 @@ if(isset($_GET['sec_chklst'])) $sec_chklst = $_GET['sec_chklst'];
 else $sec_chklst = 1;
 if(isset($_GET['action']))     $action 	   = $_GET['action'];
 else $action = null;
+if($action == 'Cancel') header('location: manageReports.php');
 if(isset($_GET['error']))     $error 	   = $_GET['error'];
 else $error = null;
 if(isset($_GET['varID']))
@@ -217,6 +219,7 @@ $html .= "			</table>\n";
 if($varID != null) $html .= "			<input type='hidden' name='varID' value='" . $varID . "'>";
 if($action == 'create')
 {
+	$html .= "			<input type='submit' name='action' value='Cancel'>";
 	$html .= "			<input type='submit' name='action' value='Add new Incident'>";
 	$html .= "			<input type='submit' name='action' value='Finished'>";
 }
@@ -245,6 +248,7 @@ if($action == 'view' || $action == 'Update')
 		$html .= "<tr>\n";
 		$html .= "	<th>Incident Time</th>\n";
 		$html .= "	<th>Incident Level</th>\n";
+		$html .= "	<th>Police Inv.</th>\n";
 		$html .= "	<th>People</th>\n";
 		$html .= "	<th>Images</th>\n";
 		$html .= "</tr>\n";
@@ -252,28 +256,35 @@ if($action == 'view' || $action == 'Update')
 		while($row = mysqli_fetch_array($result))
 		{
 			$link  = "incident.php?action=view&ineID=" . $row['INE_ID'];
+			$link .= "&reportDate=" . $reportDate;
+			$link .= "&sec_chklst=" . $sec_chklst;
+			$link .= "&attendance=" . $attendance;
+			$link .= "&supervisor=" . $supervisor;
+			$link .= "&event=" . $event;
+			
 			$html .= "<tr>\n";
 			$html .= "<td><a href='" . $link . "'>" .$row['INE_Time'] . "</a></td>\n";
 			$html .= "<td>" . $row['Incident_Level_Lookup_ILL_Level'] . "</td>\n";
+			if($row['INE_Police'] == 1 ? $bool = "Yes" : $bool = "No");
+			$html .= "<td>" . $bool . "</td>\n";
 			
 			$sql  = "SELECT COUNT(*) FROM person_of_record";
 			$sql .= " WHERE (incident_entry_INE_ID =" . $row['INE_ID'];
 			$sql .= " AND POR_Reason_for_Del IS NULL)";
 			
 			$newResult = mysqli_query($con, $sql);
-			while($row1 = mysqli_fetch_array($newResult));
-			if($row1 != null) $html .= "<td>" . $row1[0] . "</td>";
-			else $html .= "<td>0</td>";
+			if($row1 = mysqli_fetch_array($newResult)) $num = $row1[0];
+			else $num = 0;
+			$html .= "<td>" . $num . "</td>";
 			
 			$sql  = "SELECT COUNT(*) FROM Images";
 			$sql .= " WHERE (incident_entry_INE_ID =" . $row['INE_ID'];
 			$sql .= " AND IMG_Archived IS NULL)";
 			
 			$newResult = mysqli_query($con, $sql);
-			while($row1 = mysqli_fetch_array($newResult));
-			
-			if($row1 != null) $html .= "<td>" . $row1[0] . "</td>";
-			else $html .= "<td>0</td>";
+			if($row1 = mysqli_fetch_array($newResult)) $num = $row1[0];
+			else $num = 0;
+			$html .= "<td>" . $num . "</td>";
 			
 		}
 		

@@ -182,6 +182,7 @@ function varUpdate($field, $content, $varID, $con)
 	$sql .= " ON (var.VAR_ID = incident_entry.var_VAR_ID)";
 	$sql .= " WHERE (var.Venue_VEN_ID=" . $venueID;
 	$sql .= " AND var.VAR_Date = '" . $date . "'";
+	$sql .= " AND incident_entry.INE_Reason_for_Del IS NULL";
 	$sql .= " AND var.VAR_Reason_for_Del IS NULL)";
 		
 	return $sql;

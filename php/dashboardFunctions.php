@@ -172,7 +172,9 @@ function getDashNews($regID, $date, $type)
 function findIncidents($varID, $con)
 {
  	$sql  = "SELECT COUNT(*) FROM incident_entry";
-	$sql .= " WHERE var_VAR_ID =" . $varID;
+	$sql .= " WHERE (var_VAR_ID =" . $varID;
+	$sql .= " AND INE_Reason_for_Del IS NULL";
+	$sql .= ")";
 
 	$results = mysqli_query($con, $sql);
 	if($row = mysqli_fetch_array($results)) $num = $row[0];
@@ -195,6 +197,7 @@ function findPoliceInv($varID, $con)
 {
 	$sql  = "SELECT COUNT(*) FROM incident_entry";
 	$sql .= " WHERE (var_VAR_ID =" . $varID;
+	$sql .= " AND INE_Reason_for_Del IS NULL";
 	$sql .= " AND INE_Police=1)";
 
 	$results = mysqli_query($con, $sql);

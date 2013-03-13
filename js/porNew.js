@@ -5,6 +5,7 @@
 // @author: ian oxley [ijoxley [at] gmail dot com]
 // @date: 2010-02-22
 //
+/*
 (function(jQuery) {
     jQuery.fn.printPage = function() {
        return this.each(function() {
@@ -19,34 +20,20 @@
        });
     }
 })(jQuery);
+*/
 
-
-
+/*
 //=============================================================================
 $(document).ready(function(){
 
 	$('span.print').printPage();
+	document.getElementById("addButton").onclick = addbutton;
  
     var counter = 2;
- 
-    $("#addButton").click(function () {
-		$('#PorLines > div:last').append('<span id="PorRec' + counter + '">' +
-			'<button>^^ Delete ^^</button>' +
-			'<div class="PorLabel">Person ' + counter + '</div><br />' +
-			'<label>Name: </label><input type="textbox" name="porName' + counter + '"> ' +
-			'<label>Involvement: </label><select name="porInv' + counter + '">' +
-			'<option value="1">Witness</option> ' +
-			'<option value="2">Victim</option> ' +
-			'<option value="3">Instigator</option> ' +
-			'<option value="4">Agressor</option></select> ' +
-			'<label>Phone: </label><input type="textbox" name="porPhone' + counter + '">' +
-			'<label>License: </label><input type="textbox" name="porLicense' + counter + '"><br />' +
-			'<label>Notes: </label><br />' +
-			'<textarea name="porNotes' + counter + '"></textarea>' +
-		'</span>'
-			);
-		counter++;
-     });
+	
+	(function addButton()) {
+		alert('It works!');
+     }    
  
      $("#removeButton").click(function () {
 		if(counter==1){
@@ -83,5 +70,45 @@ $(document).ready(function(){
      });
  
   });
+
   
 //=============================================================================
+*/
+
+window.onload = InitAll;
+
+var counter = 2;
+
+function InitAll(){
+	document.getElementById("addButton").onclick = addButton;
+	document.getElementById("removeButton").onclick = removeButton;
+}
+
+function addButton(){
+	$('#PorLines > div:last').append('<span id="PorRec' + counter + '">' +
+			'<div class="PorLabel">Person ' + counter + '</div><br />' +
+			'<label>Name: </label><input type="textbox" name="porName' + counter + '"> ' +
+			'<label>Involvement: </label><select name="porInv' + counter + '">' +
+			'<option value="1">Witness</option> ' +
+			'<option value="2">Victim</option> ' +
+			'<option value="3">Instigator</option> ' +
+			'<option value="4">Agressor</option></select> ' +
+			'<label>Phone: </label><input type="textbox" name="porPhone' + counter + '">' +
+			'<label>License: </label><input type="textbox" name="porLicense' + counter + '"><br />' +
+			'<label>Notes: </label><br />' +
+			'<textarea name="porNotes' + counter + '"></textarea>' +
+			'</span>'
+	);
+	
+	counter++;
+}
+
+function removeButton(){
+		if(counter==1){
+			  alert("No more fields to remove");
+			  return false;
+		   }   
+		
+			counter--;
+			$("#PorRec" + counter).remove();
+	}

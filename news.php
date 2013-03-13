@@ -141,8 +141,9 @@ $con = $myCon->connect();
 $result = mysqli_query($con, $sql);
 		    	while($row = mysqli_fetch_array($result))
 		        {
-			        $html .= '	<h4>' . niceDate($row[1]) . "</h4>\n";
-					$html .= '	' . $row[2];
+			        $html .= '	<h4>' . niceDate($row['NEW_Date']);
+			        $html .= " | "  . $row['NEW_Title'] . "</h4>\n";
+					$html .= '	' . $row['NEW_Content'];
 			        $html .= "<br />\n";
 		        }
 mysqli_close($con);

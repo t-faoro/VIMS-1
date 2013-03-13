@@ -71,9 +71,10 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	$result = mysqli_query($con, $sql);
 		    	while($row = mysqli_fetch_array($result))
 		        {
-			        echo '	' . niceDate($row[1]) . "<br>\n";
-					echo '	' . $row[2];
-			        echo "<br />";
+			        echo '	' . niceDate($row['NEW_Date']);
+			        echo " | " . $row['NEW_Title'] . "<br>\n";
+					echo '	' . $row['NEW_Content'];
+			        echo "<br /><br/>";
 		        }
 			
 	
@@ -89,9 +90,11 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	$result = mysqli_query($con, $sql);
 		    	while($row = mysqli_fetch_array($result))
 		        {
-			        echo '	' . niceDate($row[1]) . "<br>\n";
-					echo '	' . $row[2];
-			        echo "<br />";
+			        echo '	' . niceDate($row['NEW_Date']);
+			        echo " | " . $row['NEW_Title'] . "<br>\n";
+					echo '	' . $row['NEW_Content'];
+
+			        echo "<br /><br />";
 		        }
 			
 	
