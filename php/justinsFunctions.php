@@ -63,11 +63,11 @@
 		//Show existing users
 		foreach($users as $user)
 		{
-			echo "<tr id='$user[USE_ID]'>\n";
+			echo "<tr id='$user[USE_ID]' >\n";
 			echo "<td>$user[USE_Name]</td>\n";
-			echo "<td><input type='text' value='$user[USE_Fname]' /></td>\n";
-			echo "<td><input type='text' value='$user[USE_Lname]' /></td>\n";
-			echo "<td><select>\n";
+			echo "<td><input type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+			echo "<td><input type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+			echo "<td><select onchange=\"enableSaveButton($user[USE_ID])\">\n";
 				foreach($authLevels as $auth)
 				{
 					echo "<option value='$auth[AUT_Level]'";
@@ -76,12 +76,11 @@
 				}
 			echo "</select></td>\n";
 			echo "<td><button onclick=\"deleteUser($user[USE_ID])\">Delete</button></td>\n";
-			echo "<td><button>Update user</button></td>\n";
+			echo "<td><button id='update$user[USE_ID]' disabled>Update user</button></td>\n";
 			echo "</tr>\n";
 		}
 		
-		
-		
+		echo "</select></td>\n";
 		echo "</table>\n";
 	}
 	

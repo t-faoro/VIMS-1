@@ -29,3 +29,8 @@ function deleteUser(id)
 		}
 	};
 }
+
+function enableSaveButton(id)
+{
+	document.getElementById("update"+id).disabled = false;
+}
