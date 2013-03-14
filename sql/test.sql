@@ -165,8 +165,8 @@ INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Le
 INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
 					 VALUES (100,		   1002,		0);
 					 
-INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level, VUA_Sys_Status)
-					 VALUES (102,		   1002,		1, 0);
+INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
+					 VALUES (102,		   1002,		1);
  
 INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
 					 VALUES (101,		   1003,		3);

@@ -59,29 +59,26 @@
 		$con = $myCon->connect();
 		$sql = "select * from Auth_level_lookup;";
 		$authLevels = mysqli_query($con, $sql);
-		
-		//Show existing users
 		foreach($users as $user)
 		{
 			echo "<tr id='$user[USE_ID]' >\n";
 			echo "<td>$user[USE_Name]</td>\n";
-			echo "<td><input type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-			echo "<td><input type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-			echo "<td><select onchange=\"enableSaveButton($user[USE_ID])\">\n";
+			echo "<td><input id='first$user[USE_ID]' type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+			echo "<td><input id='last$user[USE_ID]' type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+			echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
 				foreach($authLevels as $auth)
 				{
 					echo "<option value='$auth[AUT_Level]'";
-					if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo "selected";
+					if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo " selected";
 					echo ">$auth[AUT_Def]</option>\n";
 				}
 			echo "</select></td>\n";
 			echo "<td><button onclick=\"deleteUser($user[USE_ID], $venue)\">Delete</button></td>\n";
-			echo "<td><button id='update$user[USE_ID]' disabled>Update user</button></td>\n";
+			echo "<td><button onclick=\"updateUser($user[USE_ID], $venue)\" id='update$user[USE_ID]' disabled>Update user</button></td>\n";
 			echo "</tr>\n";
 		}
 		
-		echo "</select></td>\n";
 		echo "</table>\n";
 	}
-	
+
 ?>
