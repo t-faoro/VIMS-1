@@ -57,6 +57,7 @@ $date = date('Y-m-d H:i:s', time());
 					
 //*****************************************************************************
 createHeader($userName);
+createNav($userAuth);
 //if($userAuth > 0 && $userAuth < 99) echo buildUserNav();
 //else buildAdminNav();
 //==========================Begin Dashboard Content============================
