@@ -40,6 +40,7 @@ function updateUser(user, venue)
 	//Get new data
 	var data  = "id="+user;
 	data += "&venue="+venue;
+	data += "&name="+document.getElementById("user"+user).value;
 	data += "&first="+document.getElementById("first"+user).value;
 	data += "&last="+document.getElementById("last"+user).value;
 	data += "&auth="+document.getElementById("auth"+user).value;
@@ -54,6 +55,7 @@ function updateUser(user, venue)
 		if(4 == xmlhttp.readyState)
 		{
 			console.log(xmlhttp.responseText);
+			document.getElementById("update"+user).disabled = true;
 		}
 	};
 }

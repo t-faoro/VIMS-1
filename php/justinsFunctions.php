@@ -11,19 +11,19 @@
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
 		echo "<input type='hidden' name='id' value=$info[VEN_ID] />\n";
-		echo "<label>Name: </label>\n";
+		echo "<label>Name: <br /></label>\n";
 		echo "<input type='text' name='name' value='$info[VEN_Name]' />\n<br />\n";
-		echo "<label>Unit: </label>\n";
+		echo "<label>Unit: <br /></label>\n";
 		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' />\n<br />\n";
-		echo "<label>Address: </label>\n";
+		echo "<label>Address: <br /></label>\n";
 		echo "<input type='text' name='address' value='$info[VEN_St_Addr]' />\n<br />\n";
-		echo "<label>City: </label>\n";
+		echo "<label>City: <br /></label>\n";
 		echo "<input type='text' name='city' value='$info[VEN_City]' />\n<br />\n";
-		/*echo "<label>Province: </label>\n";
+		/*echo "<label>Province: <br /></label>\n";
 		echo "<input type='test' value='$info[province]' />\n<br />\n";*/
-		echo "<label>Postal Code: </label>\n";	
+		echo "<label>Postal Code: <br /></label>\n";	
 		echo "<input type='text' name='post' value='$info[VEN_Pcode]' />\n<br />\n";
-		echo "<label>Region :</label>\n";
+		echo "<label>Region: <br /></label>\n";
 		echo "<select name='region'>\n";
 			$sql = 'SELECT * FROM Region;';
 			$results = mysqli_query($con, $sql);
@@ -34,12 +34,13 @@
 				echo ">$region[REG_Name]</option>\n";
 			}
 		echo "</select>\n<br />\n";
-		echo "<label>Phone</label>\n";
+		echo "<label>Phone: <br /></label>\n";
 		echo "<input type='text' name='phone' value='$info[VEN_Phone]' />\n<br />\n";
-		echo "<label>Contact: </label>\n";
+		echo "<label>Contact: <br /></label>\n";
 		echo "<input type='text' name='liason' value='$info[VEN_Liason]' />\n<br />\n";
 		echo "<input type='submit' name='submit' value='$info[button]' />\n";
 		if('New' == $info['VEN_ID']) echo "<input type='submit' name='submit' value='Add users' />\n";
+		echo "<input type='submit' name='submit' value='Cancel' />\n";
 		echo "</form>\n";
 		mysqli_close($con);
 	}
@@ -62,7 +63,7 @@
 		foreach($users as $user)
 		{
 			echo "<tr id='$user[USE_ID]' >\n";
-			echo "<td>$user[USE_Name]</td>\n";
+			echo "<td><input id='user$user[USE_ID]' type='text' value='$user[USE_Name]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
 			echo "<td><input id='first$user[USE_ID]' type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
 			echo "<td><input id='last$user[USE_ID]' type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
 			echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";

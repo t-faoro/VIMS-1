@@ -50,25 +50,36 @@ if(isset($_POST['name']))
 		$_POST['liason'],
 		$_POST['region'],
 	);
-	if('' == $_POST['name'])
+	
+	//if user wanted to cancel changes
+	if("Cancel" == $_POST['submit'])
+	{
+		header('Location: ManageVenues.php');
+	}
+	//if no venue name, show a error
+	else if('' == $_POST['name'])
 	{
 		$error = "You must have a venue name.";
 	}
+	//if making a new venue, create that venue
 	else if('New' == $_POST['id'])
 	{	
 		$sql = venueCreate($venue, $con);
 		mysqli_query($con, $sql);
 		
+		//no adding users, send back to manageVenues.php
 		if('Create' == $_POST['submit'])
 		{
 			header('Location: manageVenues.php');
 		}
+		//adding users, post back with venue id
 		else
 		{
 			$id = mysqli_insert_id($con);
 			header('Location: Venues.php?id='.$id);
 		}
 	}
+	//modifying a existing venue
 	else
 	{
 		$fields = array(
@@ -96,6 +107,7 @@ echo "<div id ='content'>\n";
 echo "<div class='error'>$error</div>\n";
 //Venue information form
 createForm($venInfo);
+//only show add users for existing venues
 if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID']);
 
 	
