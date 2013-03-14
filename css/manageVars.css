@@ -1,0 +1,35 @@
+/*
+ * createVar.css
+ * stylesheet for var creation page
+ * Programmed by James P. Smith March 2013  
+ * */
+
+/*==============Create Var Start===============*/
+#content {
+	color: #FFF;
+	margin-left: 10%; 
+	margin-right: 10%; 
+	min-height: 62%; 
+	text-align: center;
+	
+}
+
+.ui-datepicker {  
+    text-decoration: none;  
+    background-color: #FFF;
+    position: relative;
+    left: -50px;
+    
+}  
+
+#IneTableArea {
+	text-align: center;
+}
+
+#IneList {
+	margin-left: auto;
+	margin-right: auto;
+	width: 75%;
+	
+}
+/*==============Create Var End===============*/

@@ -116,8 +116,8 @@
 	{
 		echo "<body>\n";
 		echo "<div id='header_container' >\n";    
-		echo "<div id='topLeft'>".IMG("logo_clubwatch_v4.1.png", "Clubwatch Logo")."<p>Powered By: <span class='yellow'>Clubwatch</span></p>\n"."</div>\n";
-		echo "<div id='topMiddle'><h2>Venue Information Management System</h2></div>\n";    
+		echo "<div id='topLeft'>".IMG("logo_clubwatch_v4.1.png", "Clubwatch Logo")."<p>Powered By: <span class='yellow'>Clubwatch</span></p>\n"."</div>\n"; // close topLeft
+		echo "<div id='topMiddle'><h2>Venue Information Management System</h2></div>\n"; // close topMiddle
 		echo "<div id='topRight'>";
 		if($name == null)
 		{ 
@@ -128,6 +128,7 @@
 			echo "<p>Welcome <a href='accountManagement.php'>$name</a></p>";
 			echo "<p><a href='index.php'>Log out</a></p>\n";
 		}
-		echo "</div>\n";
+		echo "</div>\n"; // close topRight
+		echo "</div>\n"; // close header container
 	}
 ?>

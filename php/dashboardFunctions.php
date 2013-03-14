@@ -18,11 +18,11 @@
  */
 function getAttendValues($venueID, $date, $con)
 {
-	date_default_timezone_set('UTC');
+	$date_ts = strtotime($date); 
+	$date    = date('Y-m-d', $date_ts);
 	for($i = 0; $i < 45; $i++){
-		$queryDate = $date . " 00:00:00";
+		$queryDate = $date;
 		$sql = varAttend($venueID, $queryDate, $con);
-		
 		if($sql == "error") echo "Error";
 		else {
 			$result = mysqli_query($con, $sql);
@@ -60,7 +60,7 @@ function getIncidentValues($venueID, $date, $con)
 {
 	date_default_timezone_set('UTC');
 	for($i = 0; $i < 45; $i++){
-		$queryDate = $date . " 00:00:00";
+		$queryDate = $date;
 		$sql = varIncidents($venueID, $queryDate, $con);
 		
 		if($sql == "error") echo "Error";
@@ -100,7 +100,7 @@ function getRegionVars($regID, $date, $con)
 {
 	date_default_timezone_set('UTC');
 	for($i = 0; $i < 14; $i++){
-		$queryDate = $date . " 00:00:00";
+		$queryDate = $date;
 		$sql  = "SELECT COUNT(*) FROM venue";
 		$sql .= " JOIN var ON";
 		$sql .= " (venue.VEN_ID = var.venue_VEN_ID)";
@@ -172,7 +172,9 @@ function getDashNews($regID, $date, $type)
 function findIncidents($varID, $con)
 {
  	$sql  = "SELECT COUNT(*) FROM incident_entry";
-	$sql .= " WHERE var_VAR_ID =" . $varID;
+	$sql .= " WHERE (var_VAR_ID =" . $varID;
+	$sql .= " AND INE_Reason_for_Del IS NULL";
+	$sql .= ")";
 
 	$results = mysqli_query($con, $sql);
 	if($row = mysqli_fetch_array($results)) $num = $row[0];
@@ -195,6 +197,7 @@ function findPoliceInv($varID, $con)
 {
 	$sql  = "SELECT COUNT(*) FROM incident_entry";
 	$sql .= " WHERE (var_VAR_ID =" . $varID;
+	$sql .= " AND INE_Reason_for_Del IS NULL";
 	$sql .= " AND INE_Police=1)";
 
 	$results = mysqli_query($con, $sql);

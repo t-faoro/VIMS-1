@@ -113,6 +113,8 @@ function userCreate($username, $pswd, $Fname, $Lname, $currentUser, $con)
 /**
  *	userUpdate() builds an sql statement to update user details
  *	@param $field	  array contains field to be changed [string]
+ * 			field with value of Passwd will cause $content of corresponding 
+ * 			index to be hashed using MD5
  *	@param $content  array contains new value [string]
  * 	@param $username contains user's login name [string]
  * 	@param $con	  database connection [resource]

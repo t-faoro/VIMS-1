@@ -202,6 +202,12 @@
 
 /*jslint regexp: true, browser: true, jquery: true, white: true, nomen: false, plusplus: false, maxerr: 500, indent: 4 */
 
+// VIMS added function
+$(function() {
+		 $(".inlinesparkline").sparkline("html", { enableTagOptions: true });
+		
+	  });
+
 (function(factory) {
     if(typeof define === 'function' && define.amd) {
 		define(['jquery'], factory);

@@ -122,7 +122,11 @@ function verifyUser()
 function niceDate($date)
 {
 	$date_ts    = strtotime($date);
+<<<<<<< HEAD
+	$showDate    = date('D M d, Y', $date_ts);
+=======
 	$showDate    = date('Y-m-d', $date_ts);
+>>>>>>> master
 	
 	return $showDate;
 }
