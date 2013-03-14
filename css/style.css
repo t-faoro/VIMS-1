@@ -32,6 +32,28 @@ p{
 	color: yellow;	
 }
 
+h1 h2 h3 h4{
+	color: #FFF;
+	font-family:Arial, Helvetica, sans-serifl;
+}
+
+.headingDiv{
+	margin-left: 35%;
+	margin-bottom: 50px;
+	text-align:center;
+	width: 25%;
+	border-bottom:groove;
+	border-color: yellow;
+	border-width: 3px;
+}
+
+#error{
+	margin-left: 10%;
+	color: #F00;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
 /*==============Default Styles End===============*/
 
 /*
@@ -106,6 +128,9 @@ p{
 
 /*==============Content Start=============*/
 #content{
+	clear: both;
+	float: left;
+	
 	margin-left: 10%; 
 	margin-right: 10%; 
 	width: 73.75%; 
@@ -114,6 +139,27 @@ p{
 	border: solid; 
 	border-color: #FF0; 
 	border-width: 1px;
+}
+
+#leftContent{
+	margin-right: 75px;
+	display: inline-block;
+	float: left;
+	padding: 5px;
+	width: 45%;
+
+}
+
+#rightContent{
+	margin-bottom: 75px;
+	display: inline-block;
+	float: left;
+}
+
+#rightContent img{
+	display: inline-block;
+	width: 550px;
+	height: 450px;
 }
 /*==============Content End===============*/
 
@@ -281,3 +327,48 @@ p{
 /*:: No Navigation End     ::*/
 
 /*==============Navigation End===============*/
+{
+	
+}
+
+#accountManage{	
+	margin-left: 10%;
+	margin-right: 0;
+	margin-top: 25px;
+	margin-bottom: 5%;
+	color: #FFF;
+}
+
+#accountManage label{
+	clear:both;
+	float: left;
+	padding: 2px;
+	width: 200px;
+	font-size:20px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.readOnly{
+	float: left;
+	font-size: 20px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #FF0;
+	
+}
+
+
+.passField{
+	padding: 2px;
+	min-width: 25px;
+	
+}
+
+#accountManage .button{
+	margin-left: 15%;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 150px;
+	height: 35px;
+}
+

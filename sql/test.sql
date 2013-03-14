@@ -145,6 +145,9 @@ INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Pcode, VE
 		   
 INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID)
 		   VALUES ('The Party Room', '3B', '4040 5th Ave SW', 'Calgary', 'T1H1R1', '4033101010', 'Roose Bolton', 102);
+			 
+INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID, VEN_Status)
+		   VALUES ('Pulse', '18', '415 1st street south', 'Lethbridge', 'T1K1N5', '4033101010', 'Mick Bolton', 101, 0);
 		   
 -- ----------------------------------------------------------------------------
 -- Test data for vims.venue_user_assc
@@ -159,8 +162,11 @@ INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Le
 INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
 					 VALUES (101,		   1002,		1);
 					 
-INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level, VUA_Sys_Status)
-					 VALUES (102,		   1002,		1, 0);
+INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
+					 VALUES (100,		   1002,		0);
+					 
+INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
+					 VALUES (102,		   1002,		1);
  
 INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
 					 VALUES (101,		   1003,		3);

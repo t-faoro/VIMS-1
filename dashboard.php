@@ -10,6 +10,7 @@ session_start();
 if(!verifyUser()) header('location:index.php');
 $myCon = new Connection();
 
+
 //*****************************************************************************
 // get variables
 $userID  = $_SESSION['userId'];
@@ -61,6 +62,7 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	//_____________________________________________________________________________
 	//							Industry News Feed
 	//_____________________________________________________________________________
+
 	
 	echo "	<a href='news.php?NewsType=01'>";
 	echo "<h3 class='left'>Industry News</h3></a>\n";
@@ -90,19 +92,27 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	$result = mysqli_query($con, $sql);
 		    	while($row = mysqli_fetch_array($result))
 		        {
+<<<<<<< HEAD
 			        echo '	' . niceDate($row['NEW_Date']);
 			        echo " | " . $row['NEW_Title'] . "<br>\n";
 					echo '	' . $row['NEW_Content'];
 
 			        echo "<br /><br />";
+=======
+			        echo '	' . niceDate($row[1]) . "<br>\n";
+					echo '	' . $row[2];
+			        echo "<br />";
+>>>>>>> master
 		        }
 			
 	
 	//_____________________________________________________________________________
 	//							Latest Activity Report Feed
 	//_____________________________________________________________________________
+
 	$link = "manageReports.php";
 	echo '	<a href="' . $link . '"><h3 class="left">Latest Activity Reports</h3></a>' . "\n";;
+
 	
 	$startDate = $date;
 	
@@ -134,7 +144,6 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	
 	echo "\n" . '	</table>' . "\n";
 	echo '</div>' . "\n";
-
 	
 //_____________________________________________________________________________
 	mysqli_close($con);									// close db connection

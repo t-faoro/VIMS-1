@@ -141,7 +141,7 @@ INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Province,
 		   
 INSERT INTO venue (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Province, VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID)
 		   VALUES ('The Party Room', '3B', '4040 5th Ave SW', 'Calgary', 'Alberta', 'T1H1R1', '4033101010', 'Roose Bolton', 102);
-		   
+  
 -- ----------------------------------------------------------------------------
 -- Test data for vims.venue_user_assc
 -- ----------------------------------------------------------------------------
