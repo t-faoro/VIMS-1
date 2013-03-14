@@ -18,7 +18,7 @@
 			$adminNav = "<div id='adminNavigation' >\n";
 			$adminNav .= "<ul>\n";
 			$adminNav .= "<li><a href='dashboard.php'>Home</a></li>\n";
-			$adminNav .= "<li><a href='#'>News</a></li>\n";
+			$adminNav .= "<li><a href='news.php'>News</a></li>\n";
 			$adminNav .= "<li><a href='#'>Manage News</a></li>\n";
 			$adminNav .= "<li><a href='manageVenues.php'>Manage Venue</a></li>\n";
 			$adminNav .= "</ul>\n";
@@ -33,7 +33,7 @@
 			$userNav  .= "<li><a href='dashboard.php'>Home</a></li>\n";
 			$userNav  .= "<li><a href='#'>News</a></li>\n";
 			$userNav  .= "<li><a href='#'>Manage Venue</a></li>\n";
-			$userNav  .= "<li><a href='#'>Manage Reports</a></li>\n";
+			$userNav  .= "<li><a href='ManageReports.php'>Manage Reports</a></li>\n";
 			$userNav  .= "</ul>\n";
 			$userNav  .= "</div>\n";
 			echo $userNav;
@@ -45,7 +45,7 @@
 			$userNav  .= "<ul>\n";
 			$userNav  .= "<li><a href='dashboard.php'>Home</a></li>\n";
 			$userNav  .= "<li><a href='#'>News</a></li>\n";
-			$userNav  .= "<li><a href='#'>Manage Report</a></li>\n";
+			$userNav  .= "<li><a href='ManageReports.php'>Manage Report</a></li>\n";
 			$userNav  .= "<li><a href='#'>Create Report</a></li>\n";
 			$userNav  .= "</ul>\n";
 			$userNav  .= "</div>\n";
