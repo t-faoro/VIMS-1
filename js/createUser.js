@@ -9,7 +9,7 @@ $(function(){
 	
 	$('#create-form').dialog({
 		autoOpen: false,
-		height: 350,
+		height: 400,
 		width: 350,
 		modal: true,
 		buttons: {
