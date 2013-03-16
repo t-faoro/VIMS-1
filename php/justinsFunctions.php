@@ -53,7 +53,7 @@
 		echo "<th>User first Name</th>\n";
 		echo "<th>User last Name</th>\n";
 		echo "<th>User authorization</th>\n";
-		echo "<th><button>New User</button></th>\n";
+		echo "<th><button id='createUser' >create User</button></th>\n";
 		echo "<th></th>\n";
 		echo "</tr>\n";
 		$myCon = new Connection();
@@ -78,8 +78,19 @@
 			echo "<td><button onclick=\"updateUser($user[USE_ID], $venue)\" id='update$user[USE_ID]' disabled>Update user</button></td>\n";
 			echo "</tr>\n";
 		}
-		
 		echo "</table>\n";
+		echo "<div id='dialog-form' title='Create new user'>\n";
+		echo "<form>\n";
+		echo "<fieldset>\n";
+		echo "<label for='uName'>User name:</label>\n";
+		echo "<input type='text' name='uName' id='uName' />\n";
+		echo "<label for='fName'>First name:</label>\n";
+		echo "<input type='test' name='fName' id='fName' />\n";
+		echo "<lable for='lName'>Last name:</label>\n";
+		echo "<input type='text' name='lName' id='lName' />\n";
+		echo "</fieldset>\n";
+		echo "<form>\n";
+		echo "</div>\n";	
 	}
 
 ?>

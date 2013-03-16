@@ -70,7 +70,15 @@
 		echo CSS("style.css"); 
 		if($css != null)
 		{
-			echo CSS($css);
+			if(is_array($css))
+			{
+				foreach($css as $style)
+					echo CSS($style);
+			}
+			else 
+			{
+				echo CSS($css);
+			}
 		}
 		
 		echo "<script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>\n";
