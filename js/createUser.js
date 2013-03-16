@@ -2,17 +2,31 @@ $(function(){
 	var uName = $('#uName'),
 	fName = $('#fName'),
 	lName = $('#lName'),
-	allFields = $( [] ).add(uName).add(fName).add(lName),
+	auth = $('#auth'),
+	venue = $('#venue'),
+	allFields = $( [] ).add(uName).add(fName).add(lName).add(auth),
 	tips = $(".validateTips");
 	
-	$('#dialog-form').dialog({
+	$('#create-form').dialog({
 		autoOpen: false,
 		height: 350,
 		width: 350,
 		modal: true,
 		buttons: {
 			"Create an user": function(){
-				console.log('test');
+				$.ajax({
+					type: "POST", 	
+					data: { user: uName.val(),
+						first: fName.val(),
+						last: lName.val(),
+						auth: auth.val(),
+						venue: venue.val()
+					},
+					url: "php/createUser.php"
+				}).done(function(msg){
+						$('#users').append(msg);
+						$(this).dialog("close"); 
+					});
 			},
 			Cancel: function() {
 			$(this).dialog("close");
@@ -26,6 +40,6 @@ $(function(){
 	$("#createUser")
 		.button()
 		.click(function() {
-			$("#dialog-form").dialog("open");
+			$("#create-form").dialog("open");
 		});
 });

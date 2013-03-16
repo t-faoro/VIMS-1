@@ -56,41 +56,64 @@
 		echo "<th><button id='createUser' >create User</button></th>\n";
 		echo "<th></th>\n";
 		echo "</tr>\n";
+		foreach($users as $user)
+			createUserRow($user, $venue);
+		echo "</table>\n";
+		
 		$myCon = new Connection();
 		$con = $myCon->connect();
 		$sql = "select * from Auth_level_lookup;";
 		$authLevels = mysqli_query($con, $sql);
-		foreach($users as $user)
-		{
-			echo "<tr id='$user[USE_ID]' >\n";
-			echo "<td><input id='user$user[USE_ID]' type='text' value='$user[USE_Name]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-			echo "<td><input id='first$user[USE_ID]' type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-			echo "<td><input id='last$user[USE_ID]' type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-			echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
-				foreach($authLevels as $auth)
-				{
-					echo "<option value='$auth[AUT_Level]'";
-					if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo " selected";
-					echo ">$auth[AUT_Def]</option>\n";
-				}
-			echo "</select></td>\n";
-			echo "<td><button onclick=\"deleteUser($user[USE_ID], $venue)\">Delete</button></td>\n";
-			echo "<td><button onclick=\"updateUser($user[USE_ID], $venue)\" id='update$user[USE_ID]' disabled>Update user</button></td>\n";
-			echo "</tr>\n";
-		}
-		echo "</table>\n";
-		echo "<div id='dialog-form' title='Create new user'>\n";
+		echo "<div id='create-form' title='Create new user'>\n";
 		echo "<form>\n";
 		echo "<fieldset>\n";
+		echo "<input type='hidden' name='venue' id='venue' value='$venue' />\n"; 
 		echo "<label for='uName'>User name:</label>\n";
 		echo "<input type='text' name='uName' id='uName' />\n";
 		echo "<label for='fName'>First name:</label>\n";
 		echo "<input type='test' name='fName' id='fName' />\n";
 		echo "<lable for='lName'>Last name:</label>\n";
 		echo "<input type='text' name='lName' id='lName' />\n";
+		echo "<lable for='auth'>Authorization level:</label>\n";
+		echo "<td><select name='auth' id='auth'>\n";
+				foreach($authLevels as $auth)
+				{
+					echo "<option value='$auth[AUT_Level]'";
+					echo ">$auth[AUT_Def]</option>\n";
+				}
+			echo "</select></td>\n";
 		echo "</fieldset>\n";
 		echo "<form>\n";
 		echo "</div>\n";	
 	}
-
+	/**
+		@param $user contains the following indexs:
+			USE_ID
+			USE_Name
+			USE_Fname
+			USE_Lname
+		@param
+	*/
+	function createUserRow($user, $venue)
+	{
+		$myCon = new Connection();
+		$con = $myCon->connect();
+		$sql = "select * from Auth_level_lookup;";
+		$authLevels = mysqli_query($con, $sql);
+		echo "<tr id='$user[USE_ID]' >\n";
+		echo "<td><input id='user$user[USE_ID]' type='text' value='$user[USE_Name]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+		echo "<td><input id='first$user[USE_ID]' type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+		echo "<td><input id='last$user[USE_ID]' type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+		echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
+			foreach($authLevels as $auth)
+			{
+				echo "<option value='$auth[AUT_Level]'";
+				if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo " selected";
+				echo ">$auth[AUT_Def]</option>\n";
+			}
+		echo "</select></td>\n";
+		echo "<td><button onclick=\"deleteUser($user[USE_ID], $venue)\">Delete</button></td>\n";
+		echo "<td><button onclick=\"updateUser($user[USE_ID], $venue)\" id='update$user[USE_ID]' disabled>Update user</button></td>\n";
+		echo "</tr>\n";
+	}
 ?>
