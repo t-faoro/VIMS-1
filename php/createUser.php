@@ -10,8 +10,9 @@
 	$sql = userCreate($_POST['user'], 'password', $_POST['first'], $_POST['last'], $_SESSION['userId'], $con);
 	if(!mysqli_query($con, $sql))
 	{
+		$error = mysqli_error($con);
 		mysqli_close($con);
-		return 0;
+		return $error;
 	}
 	else
 	{
@@ -19,7 +20,7 @@
 		$sql = venue_user_asscCreate($_POST['venue'], $id, $_POST['auth']);
 		mysqli_query($con, $sql);
 		$user = mysqli_query($con, findUser($id, $_POST['venue']));
-		mysqli_close($con);
 		echo createUserRow(mysqli_fetch_assoc($user), $_POST['venue']);
-	}
+		mysqli_close($con);
+	}		
 ?>

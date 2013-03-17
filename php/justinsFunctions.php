@@ -85,11 +85,10 @@
 		echo "</div>\n";	
 		
 		
-		echo "<div id='join-form' title='join new user'>\n";
-		echo "<form>\n";
+		echo "<div id='join-form' title='join new user'>\n"; 
+		echo "<input type='hidden' id='venueId' value=$venue>\n";
 		echo "<label>User name</label>\n";
 		echo "<input type='text' id='existingName' name='existingName' />\n";
-		echo "</form>\n";
 		echo "</div>\n";
 	}
 	/**

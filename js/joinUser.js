@@ -1,5 +1,7 @@
 $(function(){
-	var uName = $('#existingName');
+	var uName = $('#existingName'),
+	venue = $('#venueId'),
+	name = $('#existingName').val();
 	
 	$("#join-form").dialog({
 		autoOpen: false,
@@ -11,7 +13,17 @@ $(function(){
 					data: {user: uName.val()},
 					url: 'php/findUser.php'
 				}).done(function(msg){
-					console.log(msg);
+					if(confirm("Are you sure you want to add " + msg + "?"))
+					{
+						$.ajax({
+							type: 'POST',
+							data: {user: uName.val(),
+								venue: venue.val()},
+							url: 'php/addUser.php'
+						}).done(function(msg){
+							$('#users').append(msg);
+						});
+					}
 				});
 				$(this).dialog('close');
 			},
@@ -20,7 +32,7 @@ $(function(){
 			}
 		},
 		close: function(){
-			uName.val('');
+			//uName.val('');
 		}
 	});
 	

@@ -4,9 +4,8 @@
 	$con = $myCon->connect();
 	
 	$sql = "SELECT * FROM User WHERE USE_Name = '$_POST[user]'"; 
-	echo $sql;
-	//$result = mysqli_query($con, $sql);
-	//echo mysqli_fetch_assoc($result);
+	$result = mysqli_query($con, $sql);
+	$result = mysqli_fetch_assoc($result);
+	echo "$result[USE_Fname] $result[USE_Lname]";
 	mysqli_close($con);
-	//var_dump($_POST);
 ?>
