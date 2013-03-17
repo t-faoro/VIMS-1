@@ -94,12 +94,11 @@ if(isset($_POST['name']))
 		);
 		$sql = venueUpdate($fields, $venue, $_POST['id'], $con);
 		mysqli_query($con, $sql);
-		echo mysqli_error($con);
 		header('Location: manageVenues.php');
 	}
 }
 	
-createHead(array('venues.css', 'darkness.css'), array('manageVenue.js', 'createUser.js'));
+createHead(array('venues.css', 'darkness.css'), array('manageVenue.js', 'createUser.js', 'joinUser.js'));
 createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 createNav($_SESSION['userAuth']);
 echo "<div class='clear' ></div>\n";

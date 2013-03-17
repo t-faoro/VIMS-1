@@ -25,8 +25,8 @@ $(function(){
 					url: "php/createUser.php"
 				}).done(function(msg){
 						$('#users').append(msg);
-						$(this).dialog("close"); 
 					});
+					$(this).dialog("close");
 			},
 			Cancel: function() {
 			$(this).dialog("close");

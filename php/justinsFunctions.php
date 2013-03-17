@@ -11,7 +11,7 @@
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
 		echo "<input type='hidden' name='id' value=$info[VEN_ID] />\n";
-		echo "<label>Name: <br /></label>\n";
+		echo "<label for='name'>Name: </label>\n";
 		echo "<input type='text' name='name' value='$info[VEN_Name]' />\n<br />\n";
 		echo "<label>Unit: <br /></label>\n";
 		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' />\n<br />\n";
@@ -53,8 +53,8 @@
 		echo "<th>User first Name</th>\n";
 		echo "<th>User last Name</th>\n";
 		echo "<th>User authorization</th>\n";
-		echo "<th><button id='createUser' >create User</button></th>\n";
-		echo "<th></th>\n";
+		echo "<th><button id='createUser' >Create User</button></th>\n";
+		echo "<th><button id='joinUser'>Join User</button></th>\n";
 		echo "</tr>\n";
 		foreach($users as $user)
 			createUserRow($user, $venue);
@@ -66,25 +66,31 @@
 		$authLevels = mysqli_query($con, $sql);
 		echo "<div id='create-form' title='Create new user'>\n";
 		echo "<form>\n";
-		echo "<fieldset>\n";
 		echo "<input type='hidden' name='venue' id='venue' value='$venue' />\n"; 
 		echo "<label for='uName'>User name:</label>\n";
 		echo "<input type='text' name='uName' id='uName' />\n";
 		echo "<label for='fName'>First name:</label>\n";
 		echo "<input type='test' name='fName' id='fName' />\n";
-		echo "<lable for='lName'>Last name:</label>\n";
+		echo "<label for='lName'>Last name:</label>\n";
 		echo "<input type='text' name='lName' id='lName' />\n";
-		echo "<lable for='auth'>Authorization level:</label>\n";
-		echo "<td><select name='auth' id='auth'>\n";
-				foreach($authLevels as $auth)
-				{
-					echo "<option value='$auth[AUT_Level]'";
-					echo ">$auth[AUT_Def]</option>\n";
-				}
-			echo "</select></td>\n";
-		echo "</fieldset>\n";
-		echo "<form>\n";
+		echo "<label for='auth'>Authorization level:</label>\n";
+		echo "<select name='auth' id='auth'>\n";
+			foreach($authLevels as $auth)
+			{
+				echo "<option value='$auth[AUT_Level]'";
+				echo ">$auth[AUT_Def]</option>\n";
+			}
+		echo "</select>\n";
+		echo "</form>\n";
 		echo "</div>\n";	
+		
+		
+		echo "<div id='join-form' title='join new user'>\n";
+		echo "<form>\n";
+		echo "<label>User name</label>\n";
+		echo "<input type='text' id='existingName' name='existingName' />\n";
+		echo "</form>\n";
+		echo "</div>\n";
 	}
 	/**
 		@param $user contains the following indexs:
@@ -92,7 +98,7 @@
 			USE_Name
 			USE_Fname
 			USE_Lname
-		@param
+		@param $venue the id number of the venue associatied with the user
 	*/
 	function createUserRow($user, $venue)
 	{
