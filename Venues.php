@@ -1,6 +1,9 @@
 <?php
 /**
 	By: Justin Werre
+	Purpose: Creates a page for added and modifying venues, as well as creating users,
+		and adding existing users to a venue.
+	@param id a venue id in get, new if creating a new venue
 */
 
 include_once "php/config.php";
@@ -97,19 +100,17 @@ if(isset($_POST['name']))
 		header('Location: manageVenues.php');
 	}
 }
-	
+
+//Show the page	
 createHead(array('venues.css', 'darkness.css'), array('manageVenue.js', 'createUser.js', 'joinUser.js'));
 createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 createNav($_SESSION['userAuth']);
 echo "<div class='clear' ></div>\n";
 echo "<div id ='content'>\n";
 echo "<div class='error'>$error</div>\n";
-//Venue information form
 createForm($venInfo);
 //only show add users for existing venues
 if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID']);
-
-	
 echo "</div>\n";
 createFoot();
 mysqli_close($con);

@@ -1,4 +1,15 @@
 <?php
+	/*
+		purpose: updates user name, first name, last name and authorization for a particular user and venue.
+		By: Justin Werre
+		@param POST contains the following indexes:
+			[name] string the user name
+			[first] string the users first name
+			[last] string the users last name
+			[id] interger the users id number
+			[auth] interger the users authorization level
+			[venue] interger the venue number
+	*/
 	include_once("connection.php");
 	$myCon = new Connection();
 	$con = $myCon->connect();
