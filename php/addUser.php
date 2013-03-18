@@ -14,23 +14,24 @@
 	$user = $result['USE_ID'];
 	$venue = $_POST['venue'];
 	$sql = findUser($user, $venue);
-	if(!($result = mysqli_query($con, $sql)))
+	// var_dump(mysqli_fetch_assoc(mysqli_query($con, $sql)));
+	if(NULL == mysqli_fetch_assoc(mysqli_query($con, $sql)))
 	{
 		//create new association
-		$sql1 = venue_user_asscCreate($venue, $user, 2);
-		mysqli_query($con, $sql1);
+		$sql = venue_user_asscCreate($venue, $user, 2);
+		mysqli_query($con, $sql);
 	}
 	else 
 	{
 		//update existing association VUA_Sys_Status
-		$sql2 = venue_user_asscUpdate(array('VUA_Sys_Status'), array(1), $venue, $user);
-		mysqli_query($con, $sql2);
+		$sql = venue_user_asscUpdate(array('Sys_Status'), array(1), $venue, $user);
+		mysqli_query($con, $sql);
 	}
 	
-	$sqlfour = findUser($user, $venue);
-	echo $sqlfour;
-	//$result = mysqli_query($con, $sql);
+	// var_dump($sql);
+	$sql = findUser($user, $venue);
+	$result = mysqli_query($con, $sql);
 	// var_dump($result);
-	// echo createUserRow(mysqli_fetch_assoc($result), $venue);
+	echo createUserRow(mysqli_fetch_assoc($result), $venue);
 	mysqli_close($con);
 ?>
