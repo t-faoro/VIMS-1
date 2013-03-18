@@ -13,7 +13,6 @@
 	$result = mysqli_fetch_assoc($result);
 	$user = $result['USE_ID'];
 	$venue = $_POST['venue'];
-	
 	$sql = findUser($user, $venue);
 	if(!($result = mysqli_query($con, $sql)))
 	{
@@ -28,9 +27,9 @@
 		mysqli_query($con, $sql2);
 	}
 	
-	$sql = findUser($user, $venue);
-	echo $sql;
-	$result = mysqli_query($con, $sql);
+	$sqlfour = findUser($user, $venue);
+	echo $sqlfour;
+	//$result = mysqli_query($con, $sql);
 	// var_dump($result);
 	// echo createUserRow(mysqli_fetch_assoc($result), $venue);
 	mysqli_close($con);

@@ -29,10 +29,8 @@ $(function(){
 			},
 			Cancel: function() {
 				$(this).dialog('close');
+				uName.val('');
 			}
-		},
-		close: function(){
-			//uName.val('');
 		}
 	});
 	
