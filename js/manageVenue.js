@@ -13,6 +13,7 @@
 /**
  * updateStatus(venue)
  * Purpose: Issues a ajax call to update the venues active status
+ * @param venue the id number of the venue to be updated
  */
 function updateStatus(venue){
 	var status = document.getElementById(venue).value; 
@@ -23,6 +24,10 @@ function updateStatus(venue){
 }
 
 /**
+ * deleteUser(user, venue)
+ * purpose: disables a users access to the system
+ * @param user the users id number that is to be disabled
+ * @param venue the venue number for which the user is to be disabled
  */
 function deleteUser(user, venue){
 	if(!confirm("are you sure you want to delete this user?")){
@@ -45,12 +50,20 @@ function deleteUser(user, venue){
 }
 
 /**
+ * enableSaveButton(user)
+ * Purpose: enables the save button for a particular user
+ * @param user the id number for the user that can be saved
  */
 function enableSaveButton(user){
 	document.getElementById("update"+user).disabled = false;
 }
 
 /**
+ * updateUser(user, venue)
+ * purpose: updates the users information
+ * @param user the user number of the user to be updated
+ * @param venue the venue id number of the venue that the user
+ * 	is authorized to acces.
  */
 function updateUser(user, venue){
 	//Get new data

@@ -1,3 +1,9 @@
+/*
+ * CreateUser.js
+ * Purpose: creates a dialog box from which the user can create new users
+ * By: Justin Werre
+ */
+
 $(function(){
 	var uName = $('#uName'),
 	fName = $('#fName'),
@@ -6,7 +12,9 @@ $(function(){
 	venue = $('#venue'),
 	allFields = $( [] ).add(uName).add(fName).add(lName).add(auth),
 	tips = $(".validateTips");
-	
+
+	//Turns the html form into a dialog box, and ajaxs to the server to create the user
+	//account
 	$('#create-form').dialog({
 		autoOpen: false,
 		height: 400,
@@ -37,6 +45,7 @@ $(function(){
 		}
 	});
 	
+	//Creates a button to show the form
 	$("#createUser")
 		.button()
 		.click(function() {
