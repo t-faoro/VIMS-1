@@ -19,6 +19,7 @@
 /*==============Default Styles Start=============*/
 body{
 	background-color: #333;	
+	color: #fff;
 }
 
 p{
@@ -39,12 +40,21 @@ h1 h2 h3 h4{
 
 .headingDiv{
 	margin-left: 35%;
-	margin-bottom: 50px;
+	margin-bottom: 10px;
 	text-align:center;
 	width: 25%;
 	border-bottom:groove;
 	border-color: yellow;
 	border-width: 3px;
+}
+
+.center{
+	text-align: center;
+}
+
+.tableCenter{
+	margin-left: 35%;
+	margin-right: auto;
 }
 
 #error{
@@ -65,7 +75,8 @@ h1 h2 h3 h4{
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 2%;
-	display:box; 
+	display:box;
+	position: inherit; 
 	width: 75%; 
 }
 
@@ -80,6 +91,7 @@ h1 h2 h3 h4{
 	 
 	
 }
+
 
 #topRight{
 	float: left;
@@ -127,14 +139,14 @@ h1 h2 h3 h4{
 /*==============Header End===============*/
 
 /*==============Content Start=============*/
-#content{
+#content  { 
 	clear: both;
 	float: left;
-	
-	margin-left: 10%; 
+	margin-bottom: 25px;
+	margin-left: 10%;
 	margin-right: 10%; 
 	width: 73.75%; 
-	height: 62%; 
+	min-height: 62%; 
 	background-color: #000; 
 	border: solid; 
 	border-color: #FF0; 
@@ -142,18 +154,29 @@ h1 h2 h3 h4{
 }
 
 #leftContent{
-	margin-right: 75px;
 	display: inline-block;
+	position: inherit;
 	float: left;
 	padding: 5px;
-	width: 45%;
+	width: 50%;
+	color: #FFF;
+	border:solid;
+	border-width: 1px;
+	border-color: #ff0;
 
 }
 
 #rightContent{
-	margin-bottom: 75px;
 	display: inline-block;
+	position: inherit;
 	float: left;
+	width: 30%;
+}
+
+#singleContent{
+	float: left;
+	display: inline-block;
+	width: 100%;
 }
 
 #rightContent img{
@@ -161,13 +184,17 @@ h1 h2 h3 h4{
 	width: 550px;
 	height: 450px;
 }
+
 /*==============Content End===============*/
 
 /*==============Footer Start=============*/
 #footer_container{
+	clear: both;
+	float: left;
 	margin-left: 10%;
 	margin-right: 10%;
-	display:box; 
+	display:box;
+	position:inherit; 
 	width: 75%; 
 }
 
@@ -266,14 +293,14 @@ h1 h2 h3 h4{
 }
 
 #adminNavigation a:active{
-	background-color: #009;
+	background-color: #AAA;
 }
 /*:: Admin Navigation End ::*/
 
 /*:: User Navigation Start ::*/
 #userNavigation{
-	margin-left: 23.5%;
-	margin-right: 10%;
+	margin-left: 15%;
+	margin-right: 15%;
 	width: 100%;
 }
 
@@ -290,6 +317,7 @@ h1 h2 h3 h4{
 	width: 18%; 
 	font-family:Arial, Helvetica, sans-serif; 
 	font-size: 16px;
+	text-wrap:suppress;
 	border: solid;
 	border-color: #FF0;
 	background-color: #000;
@@ -304,7 +332,7 @@ h1 h2 h3 h4{
 	font-weight: bold;
 	/*margin-top: 4%;*/
 	height: 30px;
-	font-size:24px;
+	font-size:22px;
 	text-decoration: none;
 	color: #FF0;	
 }
@@ -315,7 +343,7 @@ h1 h2 h3 h4{
 }
 
 #userNavigation a:active{
-	background-color: #009;
+	background-color: #AAA;
 }
 /*:: User Navigation End   ::*/
 
@@ -339,12 +367,58 @@ h1 h2 h3 h4{
 	color: #FFF;
 }
 
-#accountManage label{
+
+#accountManage .button{
+	margin-left: 15%;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 150px;
+	height: 35px;
+}
+
+#manageNews{
+	
+}
+
+/*:: Form Decoration */
+#content form{
+	/*margin: 5px 5px 5px 5px;*/
+	margin-bottom: 25px;
+	margin-left: 15%;
+	position:inherit;
+	float: left;
+	display: inline;
+	padding: 2px;
+	width: 100%;
+	font-size:20px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#content form input{
+	width: 12%;
+}
+
+#content textarea{
+	width: 25%;
+	height: 150px;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#content select{
+	width: 13%;
+}
+
+
+label{
 	clear:both;
 	float: left;
 	padding: 2px;
-	width: 200px;
+	width: 15%;
 	font-size:20px;
+	color: #FFF;
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -364,11 +438,72 @@ h1 h2 h3 h4{
 	
 }
 
-#accountManage .button{
-	margin-left: 15%;
-	font-size: 16px;
-	font-family: Arial, Helvetica, sans-serif;
-	width: 150px;
-	height: 35px;
+/*:: Table Starts */
+#content table{
+	position: inherit;
+	margin-left: 10%;
+	margin-right: 5%;
+	margin-bottom: 5%;
+	margin-right: 5%;
+	float:none;
+	display:table;
+	width: 90%;
+	padding: 10px;
+	color: #FFF;
+	text-align: center;	
 }
+
+#content .newNewsButton{
+	position: inherit;
+	margin-left: 10%;
+}
+
+#content td{	
+	width: 15%;
+	border: solid;
+	border-color: #FF0;
+	border-width: 1px;
+	padding: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+
+}
+#content th{
+	margin-right: 5px;
+	margin-left: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #999;
+	text-transform:uppercase;	
+}
+
+
+
+#content .hiddenEffects{
+	border: none;
+	width: 10%;
+	
+	
+	
+}
+
+#content .helperTray{
+	float: left;
+	display:inline;
+	height: auto;
+	width: auto;
+	text-align:left;
+}
+
+#subhead h3{
+	float: left;
+	margin-left: 10%;
+	margin-bottom: 3%;
+	
+}
+
+#content a{
+	text-decoration: none;	
+}
+
+
+
 

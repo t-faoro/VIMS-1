@@ -83,7 +83,7 @@ $javaScript = "";
 function IMG($imgName, $alt){
 $image;
 
-	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />\n';
+	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />'."\n";
 	return $image;
 }
 
