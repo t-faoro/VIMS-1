@@ -1,4 +1,10 @@
 <?php
+	/**
+		manageRegions.php
+		Purpose: Creates a page from which administrators can manage the regions
+		By: Justin Werre
+		March 19, 2013
+	*/
 	include_once "php/config.php";
 	session_start();
 	if(!verifyUser()) header("Location: index.php");
@@ -28,6 +34,5 @@
 	}
 	echo "</table>\n";
 	echo "</div>";
-	
 	createFoot();
 ?>

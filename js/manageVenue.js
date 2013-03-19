@@ -1,5 +1,20 @@
-function updateStatus(venue)
-{
+/**
+ * manageVenue.js
+ * Purpose: Assisting functions for the manageVenue and venue page
+ * Contains: 
+ * 	updateStatus(venue)
+ * 	deleteUser(user, venue)
+ * 	enableSaveButton(user)
+ * 	updateUser(user, venue)
+ * By: Justin Werre
+ * March 19, 2013
+ */
+
+/**
+ * updateStatus(venue)
+ * Purpose: Issues a ajax call to update the venues active status
+ */
+function updateStatus(venue){
 	var status = document.getElementById(venue).value; 
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "php/updateVenueStatus.php");
@@ -7,22 +22,21 @@ function updateStatus(venue)
 	xmlhttp.send("id="+venue+"&status="+status); 
 }
 
-function deleteUser(user, venue)
-{
-	if(!confirm("are you sure you want to delete this user?"))
-	{
+/**
+ */
+function deleteUser(user, venue){
+	if(!confirm("are you sure you want to delete this user?")){
 		return false;
 	}
+	
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "php/deleteUser.php");
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id="+user+"&venue="+venue); 
 	xmlhttp.onreadystatechange=function()
 	{
-		if(4 == xmlhttp.readyState)
-		{
-			if(xmlhttp.responseText)
-			{
+		if(4 == xmlhttp.readyState){
+			if(xmlhttp.responseText){
 				var userRow = document.getElementById(user);
 				userRow.parentNode.removeChild(userRow);
 			}
@@ -30,13 +44,15 @@ function deleteUser(user, venue)
 	};
 }
 
-function enableSaveButton(user)
-{
+/**
+ */
+function enableSaveButton(user){
 	document.getElementById("update"+user).disabled = false;
 }
 
-function updateUser(user, venue)
-{
+/**
+ */
+function updateUser(user, venue){
 	//Get new data
 	var data  = "id="+user;
 	data += "&venue="+venue;
@@ -50,10 +66,8 @@ function updateUser(user, venue)
 	xmlhttp.open("POST", "php/updateUser.php");
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send(data); 
-	xmlhttp.onreadystatechange=function()
-	{
-		if(4 == xmlhttp.readyState)
-		{
+	xmlhttp.onreadystatechange=function(){
+		if(4 == xmlhttp.readyState){
 			console.log(xmlhttp.responseText);
 			document.getElementById("update"+user).disabled = true;
 		}

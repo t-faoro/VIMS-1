@@ -1,5 +1,14 @@
 <?php
-
+	/**
+		regions.php
+		Purpose: Allows administrators to create and modify regions
+		@param $_GET['id'] the id number of the region to be used, 'new' if creating 
+			a new region
+		By: Justin Werre
+		March 19, 2013
+	*/
+	
+	//verify user has been authenticated, and open a database connection
 	include_once "php/config.php";
 	session_start();
 	if(!verifyUser()) header("Location: index.php");

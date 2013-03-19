@@ -1,8 +1,22 @@
+/**
+ * joinUser.js
+ * Purpose: Javascript function to join a new user to a venue
+ * @param #existingName html element with a existingName id, contains user name of user
+ * 	to be joined
+ *@param #venueId html element with a venueId id, contains venue id of venue that the 
+		user is to be joined with
+	@param #join-form html div element to be turned in to dialog box
+ * By: Justin Werre
+ * March 19, 2013
+ */
+
 $(function(){
 	var uName = $('#existingName'),
 	venue = $('#venueId'),
 	name = $('#existingName').val();
 	
+	//Convert the join-form div in to a dialog form, and ajax's the userName
+	//to join the user to the venue
 	$("#join-form").dialog({
 		autoOpen: false,
 		modal: true,
@@ -34,6 +48,7 @@ $(function(){
 		}
 	});
 	
+	//Creates onclick event to show the form
 	$('#joinUser')
 		.button()
 		.click(function(){
