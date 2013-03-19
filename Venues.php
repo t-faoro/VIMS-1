@@ -9,6 +9,7 @@
 include_once "php/config.php";
 include_once "php/justinsFunctions.php";
 
+//Verify user is authenticated
 session_start();
 if(!verifyUser()) header("Location: index.php");
 
