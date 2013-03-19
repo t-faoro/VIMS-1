@@ -13,7 +13,12 @@
 	$myCon = new Connection();
 	$con = $myCon->connect();
 	$sql = venueUpdate($field, $status, $_POST['id'], $con);
-	$result = mysqli_query($con, $sql);
+	if(mysqli_query($con, $sql)){
+		echo "Venue status has been updated";
+	}	
+	else{
+		echo "Error: Could not update venue status";
+	}
+	// var_dump($result);
 	mysqli_close($con);
-	return $result;
 ?>

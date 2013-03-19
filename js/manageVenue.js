@@ -17,10 +17,17 @@
  */
 function updateStatus(venue){
 	var status = document.getElementById(venue).value; 
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "php/updateVenueStatus.php");
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("id="+venue+"&status="+status); 
+	$.ajax({
+		type: "POST",
+		data: {
+			'id': venue,
+			'status': status
+		},
+		url: 'php/updateVenueStatus.php'
+	}).done(function(msg){
+		console.log(msg);
+	});
+	
 }
 
 /**
@@ -38,8 +45,7 @@ function deleteUser(user, venue){
 	xmlhttp.open("POST", "php/deleteUser.php");
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id="+user+"&venue="+venue); 
-	xmlhttp.onreadystatechange=function()
-	{
+	xmlhttp.onreadystatechange=function(){
 		if(4 == xmlhttp.readyState){
 			if(xmlhttp.responseText){
 				var userRow = document.getElementById(user);

@@ -32,6 +32,7 @@
 	echo "<th>Phone</th>\n";
 	echo "<th>Status</th>\n";
 	echo "<th></th>\n";
+	echo "<th></th>\n";
 	echo "</tr>\n";
 
 	//Display all venues
@@ -55,6 +56,7 @@
 		echo "</td>\n";
 		echo "<td><a href='venues.php?id=$venue[VEN_ID]'><button>Modify</button></a></td>\n";
 		echo "</tr>\n";
+		echo "<td><span id='$venue[VEN_ID]UpdateStatus'></span></td>\n";
 	}
 	echo "</table>\n";
 	mysqli_close($con);
