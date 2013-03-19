@@ -1,9 +1,18 @@
 <?php
+	/**
+		addUser.php
+		Purpose: Creates or updates an association between an existing user, and a venue, granting them
+			access to the system.
+		@param $_POST['user'] the user name of the user to be added
+		@param $_POST['venue'] the venue id number which the user is to be joined with
+		@return a html table row with input boxes for the user name, first name, last name, authorization level, 
+			delete button, and save changes button
+	*/
+	
 	include_once "connection.php";
 	include_once "justinsFunctions.php";
 	include_once "venue_user_asscFunctions.php";
 	include_once "userFunctions.php";
-	
 	$myCon = new Connection();
 	$con = $myCon->connect();
 
@@ -14,7 +23,8 @@
 	$user = $result['USE_ID'];
 	$venue = $_POST['venue'];
 	$sql = findUser($user, $venue);
-	// var_dump(mysqli_fetch_assoc(mysqli_query($con, $sql)));
+
+	//Associate user with venue
 	if(NULL == mysqli_fetch_assoc(mysqli_query($con, $sql)))
 	{
 		//create new association
@@ -28,10 +38,9 @@
 		mysqli_query($con, $sql);
 	}
 	
-	// var_dump($sql);
+	//Create and return table row
 	$sql = findUser($user, $venue);
 	$result = mysqli_query($con, $sql);
-	// var_dump($result);
 	echo createUserRow(mysqli_fetch_assoc($result), $venue);
 	mysqli_close($con);
 ?>

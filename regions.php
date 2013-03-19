@@ -1,4 +1,5 @@
 <?php
+
 	include_once "php/config.php";
 	session_start();
 	if(!verifyUser()) header("Location: index.php");
@@ -23,7 +24,6 @@
 	}
 	
 	//get the region's information
-	
 	$results = array('REG_ID' => 'new', 'REG_Name' => '');
 	if('new' != $_GET['id'])
 	{

@@ -1,5 +1,5 @@
 <?php
-	/*
+	/**
 		findUser.php
 		Purpose: Searches database to find if a user exists
 		@param POST['user'] the user name of the person to find

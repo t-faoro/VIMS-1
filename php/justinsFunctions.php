@@ -68,7 +68,7 @@
 		mysqli_close($con);
 	}
 	
-	/*
+	/**
 		purpose: creates a table of users which can be modified, as well as the forms to create a 
 			new user, and join an existing user to the venue
 		@param users an array of users to be displayed, may be empty
