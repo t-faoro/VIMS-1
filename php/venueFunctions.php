@@ -118,7 +118,8 @@ function venueCreate($venueDetails, $con)
  *	@return $sql	string containing sql statement
  */
 function venueUpdate($field, $content, $venueID, $con)
-{
+{	
+	$length = count($field);
 	// clean inputs
     for($i = 0; $i < $length; $i++)
 	{
@@ -128,7 +129,7 @@ function venueUpdate($field, $content, $venueID, $con)
 	//buils sql string
     $sql  = "UPDATE venue SET";
 	
-	$length = count($field);
+
 	
 	// loop through arrays
 	for($i = 0; $i < $length; $i++)
