@@ -45,7 +45,7 @@
     
     //:: Draws Header for UI 
     createHeader($fullName);
-		createNam($userAuth);
+		createNav($userAuth);
 
     
     
