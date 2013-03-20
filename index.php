@@ -78,24 +78,16 @@ if(isset($_POST['submit']))
 										venueRead($row['Venue_VEN_ID'])
 									)
 								);
-								
-				//make sure venue is active
-				if($venue['VEN_Status'])
-				{
-					//Set the session variables
-					$_SESSION['userId'] = $row['USE_ID'];
-					$_SESSION['userName'] = $row['USE_Name'];
-					$_SESSION['userFname'] = $row['USE_Fname'];
-					$_SESSION['userLname'] = $row['USE_Lname'];
-					$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
-					$_SESSION['venueId'] = $row['Venue_VEN_ID'];
-					$_SESSION['venueName'] = $venue['VEN_Name'];
-					header('Location: dashboard.php');
-				}
-				else
-				{
-					$error = "Venue is no longer active.";
-				}
+				
+				//Set the session variables
+				$_SESSION['userId'] = $row['USE_ID'];
+				$_SESSION['userName'] = $row['USE_Name'];
+				$_SESSION['userFname'] = $row['USE_Fname'];
+				$_SESSION['userLname'] = $row['USE_Lname'];
+				$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
+				$_SESSION['venueId'] = $row['Venue_VEN_ID'];
+				$_SESSION['venueName'] = $venue['VEN_Name'];
+				header('Location: dashboard.php');
 			}
 			else
 			{

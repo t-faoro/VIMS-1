@@ -6,6 +6,8 @@
  */
 include_once "php/config.php";
 include_once "CRUD Functions/IncidentEntry.php";
+include_once "php/classIncident.php";
+include_once "php/classPor.php";
 
 session_start();
 if(!verifyUser()) header('location:index.php');
@@ -23,37 +25,55 @@ $venueName = $_SESSION['venueName'];
 $fullName = $userFname . " " . $userLname;
 date_default_timezone_set('UTC');
 $date = date('Y-m-d', time());
-$pm = null;
 
+$pm 		  = null;
+$action 	  = null;
+$varID 		  = null;
+$ine_time 	  = null;
+$ine_severity = null;
+$ine_police   = null;
+$ine_summary  = null;
+$ine_damages  = null;
+if(isset($_GET['pm'])) 	  	   $pm	   = $_GET['pm'];
 if(isset($_GET['action'])) 	   $action     = $_GET['action'];
-else $action = null;
 if(isset($_GET['varID'])) 	   $varID      = $_GET['varID'];
-else $varID = null;
-if(isset($_GET['reportDate'])) $reportDate = $_GET['reportDate'];
-else $reportDate = null;
-if(isset($_GET['sec_chklst'])) $sec_chklst = $_GET['sec_chklst'];
-else $sec_chklst = null;
-if(isset($_GET['supervisor'])) $supervisor = $_GET['supervisor'];
-else $supervisor = null;
-if(isset($_GET['event'])) 	   $event	   = $_GET['event'];
-else $event = null;
 if(isset($_GET['time'])) 	   $ine_time	   = $_GET['time'];
-else $ine_time = null;
 if(isset($_GET['severity']))   $ine_severity = $_GET['severity'];
-else $ine_severity = null;
 if(isset($_GET['police'])) 	   $ine_police   = $_GET['police'];
-else $ine_police = null;
 if(isset($_GET['Summary']))    $ine_summary	= $_GET['Summary'];
-else $ine_summary = null;
 if(isset($_GET['Damages']))    $ine_damages  = $_GET['Damages'];
-else $ine_damages = null;
+if(isset($_GET['ineID']))	   $ineID = $_GET['ineID'];
+if(isset($_GET['varID']))	   $varID = $_GET['varID'];
 
+// Convert time value from form into 24 hr format
+if($pm == 1)
+{
+	$ineTime_ts = strtotime($ine_time);
+	echo $ineTime_ts . "\n";
+	$ineTime_ts += (60 * 60 * 12);
+	echo $ineTime_ts . "\n";
+	$ine_time   = date('G:i:s', $ineTime_ts);
+	
+}
+// Cancel option - returns user to manageVars.php without saving incident inputs
 if($action == "Cancel") header('location:manageVars.php?action=view&varID=' . $varID);
 
-
 //_____________________________________________________________________________
-if($event == 'Reg. Op.'? $eventName = 'Regular Operations' : $eventName = $event);
-if($reportDate != null)
+// Look up Incident Level Definitions to create combo box on form
+$con = $myCon->connect();
+$result = mysqli_query($con, 'SELECT * FROM incident_level_lookup');
+$i = 0;
+while($row = mysqli_fetch_array($result))
+{
+	$IllLevels[$i] = $row['ILL_Def'];
+	$i++;
+}
+mysqli_close($con);
+//_____________________________________________________________________________
+
+// Get values for making a nice, complete looking report output with venue name,
+//	address, phone number, etc. 
+if($varID != null)
 {
 	$con = $myCon->connect();
 	
@@ -73,20 +93,28 @@ if($reportDate != null)
 	
 	$sql  = "SELECT * FROM var";
 	$sql .= " WHERE (venue_VEN_ID=";
-	$sql .= $venueID . " AND VAR_Date='";
-	$sql .= $reportDate . "')";
+	$sql .= $venueID . " AND VAR_ID=$varID)";
 	
 	$result = mysqli_query($con, $sql);
-	while($row  = mysqli_fetch_array($result)) $varID = $row['VAR_ID'];
+	while($row  = mysqli_fetch_array($result))
+	{
+		$reportDate = $row['VAR_Date']; 
+		$sec_chklst = $row['VAR_Sec_Chklst'];
+		$supervisor = $row['VAR_Supervisor'];
+		$event		= $row['VAR_Event'];
+		if($event == 'Reg. Op.') $event = 'Regular Operations';
+	}
 	
 	
-	$sql  = "SELECT ILL_Def FROM incident_level_lookup";
-	$IllResult = mysqli_query($con, $sql);
+	//$sql  = "SELECT ILL_Def FROM incident_level_lookup";
+	//$IllResult = mysqli_query($con, $sql);
 	
 	mysqli_close($con);
 	
 }
+//_____________________________________________________________________________
 
+// Get existing data, if that's what we're here for
 if(isset($_GET['ineID']))
 { 
 	$ineID = $_GET['ineID'];
@@ -132,19 +160,33 @@ else
 //*****************************************************************************
 //							      Post Back
 //*****************************************************************************
+
+// Delete option - sets a value in Reason_for_Del. Field is no long null and 
+//	is therefore record is "deleted"
 if($action == 'Delete')
-	{
-		$con = $myCon->connect();
-		$sql = incEntUpdate('INE_Reason_for_del', 'test', $ineID, $reason_for_delete = NULL, $con);
-		echo $sql;
-		$result = mysqli_query($con, $sql);
-		mysqli_close($con);
-		header('location:manageVars.php?action=view&varID=' . $varID);
-	}
-if($action == 'Save' && $ine_time != null)
 {
+	// send to delete page
+	$page = "location:delete.php?action=deleteIne&varID=$varID&ineID=$ineID";
+	header($page);
+}
+//_____________________________________________________________________________
+
+// Save option - creates a new entry in incident table and sends user back to
+//	manage Vars page
+// Add a Person option creates a new entry and sends user to person of record
+//	creation page
+// If there is an existing record, it is updated
+if(($action == 'Save' || $action == 'Add a Person'))
+{
+	// No ineID, so we make a new record
 	if($ineID == null)
 	{
+		$con = $myCon->connect();
+		
+		$ine_time    = mysqli_real_escape_string($con, $ine_time);
+		$ine_summary = mysqli_real_escape_string($con, $ine_summary);
+		$ine_damages = mysqli_real_escape_string($con, $ine_damages);
+		
 		$sql  = "INSERT INTO incident_entry (";
 		$sql .= "var_VAR_ID";
 		$sql .= ", INE_Time";
@@ -161,7 +203,6 @@ if($action == 'Save' && $ine_time != null)
 		$sql .= ", '" . $ine_damages . "'";
 		$sql .= ")";
 		
-		$con = $myCon->connect();
 		$result = mysqli_query($con, $sql);
 		
 		$sql  = "SELECT MAX(INE_ID) AS INE_ID FROM incident_entry";
@@ -172,83 +213,131 @@ if($action == 'Save' && $ine_time != null)
 		{
 			$ineID = $row['INE_ID'];
 		}
-	}
-	else 
-	{
-		$sql  = "SELECT * FROM incident_entry";
-		$sql .= " WHERE INE_ID=" . $ineID;
 		
+		if($action == 'Save')
+		{
+			$page = "location:manageVars.php?action=view&varID=$varID";
+		}
+		if($action == 'Add a Person')
+		{
+			$page = "location:managePor.php?action=new&varID=$varID&ineID=$ineID";
+		}
+		header($page);
+	}
+	else 	// update the existing record
+	{
 		$con = $myCon->connect();
 		
-		$result = mysqli_query($con, $sql);
+		$ine_time     = mysqli_real_escape_string($con, $ine_time);
+		$ine_severity = mysqli_real_escape_string($con, $ine_severity);
+		$ine_police   = mysqli_real_escape_string($con, $ine_police);
+		$ine_summary  = mysqli_real_escape_string($con, $ine_summary);
+		$ine_damages  = mysqli_real_escape_string($con, $ine_damages);
+						
+					
+		if($ine_time != $resultTime)
+		{
+			//update
+			$sql = incEntUpdate('INE_Time', $ine_time, $ineID, $reason_for_delete = NULL, $con);
+			$new = mysqli_query($con, $sql);
+			//auditing
+			$sql  = "INSERT INTO modification_ine (Incident_Entry_INE_ID, Incident_Entry_Var_VAR_ID,User_USE_ID, MOD_Action)";
+			$sql .= " VALUES ($ineID, $varID, $userID, 'INE_Time')";
+			$new = mysqli_query($con, $sql);
+		}
+		
+		if($ine_severity != $ineLevel)
+		{
+			//update
+			$sql = incEntUpdate('Incident_Level_Lookup_ILL_Level', $ine_severity, $ineID, $reason_for_delete = NULL, $con);
+			$new = mysqli_query($con, $sql);
+			//auditing
+			$sql  = "INSERT INTO modification_ine (Incident_Entry_INE_ID, Incident_Entry_Var_VAR_ID,User_USE_ID, MOD_Action)";
+			$sql .= " VALUES ($ineID, $varID, $userID, 'Incident_Level_Lookup_ILL_Level')";
+			$new = mysqli_query($con, $sql);
+		}
+		
+		if($ine_police != $inePolice)
+		{
+			//update
+			$sql = incEntUpdate('INE_Police', $ine_police, $ineID, $reason_for_delete = NULL, $con);
+			$new = mysqli_query($con, $sql);
+			//auditing
+			$sql  = "INSERT INTO modification_ine (Incident_Entry_INE_ID, Incident_Entry_Var_VAR_ID,User_USE_ID, MOD_Action)";
+			$sql .= " VALUES ($ineID, $varID, $userID, 'INE_Police')";
+			$new = mysqli_query($con, $sql);
+		}
+		if($ine_summary != $ineContent)
+		{
+			//update
+			$sql = incEntUpdate('INE_Content', $ine_summary, $ineID, $reason_for_delete = NULL, $con);
+			$new = mysqli_query($con, $sql);
+			//auditing
+			$sql  = "INSERT INTO modification_ine (Incident_Entry_INE_ID, Incident_Entry_Var_VAR_ID,User_USE_ID, MOD_Action)";
+			$sql .= " VALUES ($ineID, $varID, $userID, 'INE_Content')";
+			$new = mysqli_query($con, $sql);
+		}
+		if($ine_damages != $ineDamages)
+		{
+			//update
+			$sql = incEntUpdate('INE_Damages', $ine_damages, $ineID, $reason_for_delete = NULL, $con);
+			$new = mysqli_query($con, $sql);
+			//auditing
+			$sql  = "INSERT INTO modification_ine (Incident_Entry_INE_ID, Incident_Entry_Var_VAR_ID,User_USE_ID, MOD_Action)";
+			$sql .= " VALUES ($ineID, $varID, $userID, 'INE_Damages')";
+			$new = mysqli_query($con, $sql);
+		}
+		
+		
+		mysqli_close($con);
+		
+		if($action == 'Save')
+		{
+			$page = 'location:manageVars.php?action=view&varID=' . $varID;
+		}
+		if($action == 'Add a Person')
+		{
+			$page  = "location:managePor.php?action=new&ineID=$ineID&varID=$varID";
+		}
+		header($page);
+	}
+//_____________________________________________________________________________
+
+// Find instances of person of record and prepare data to create objects
+// Person of Record objects will be appended to incident form
+}
+$Por[0] = null;
+$records = 0;
+if($ineID != null)
+{
+	$sql  = "SELECT * FROM person_of_record";
+	$sql .= " WHERE (";
+	$sql .= " incident_entry_INE_ID=$ineID";
+	$sql .= " AND POR_Reason_for_Del IS NULL";
+	$sql .= ")";
+	
+	$con = $myCon->connect();
+	$result = mysqli_query($con, $sql);
+	if(mysqli_num_rows($result) != 0)
+	{
 		
 		while($row = mysqli_fetch_array($result))
 		{
-			if($ine_time != $row['INE_Time'])
-			{
-				$sql = incEntUpdate('INE_Time', $ine_time, $ineID, $reason_for_delete = NULL, $con);
-				$result = mysqli_query($con, $sql);
-			}
+			$porDetails[0] = $row['POR_ID'];
+			$porDetails[1] = $row['POR_Name'];
+			$porDetails[2] = $row['Involvement_Lookup_INV_Level'];;
+			$porDetails[3] = $row['POR_Phone'];
+			$porDetails[4] = $row['POR_License'];
+			$porDetails[5] = $row['POR_Notes'];
+			$porDetails[6] = $ineID;
+			$porDetails[7] = $varID;
 			
-			if($ine_severity != $row['Incident_Level_Lookup_ILL_Level'])
-			{
-				$sql = incEntUpdate('Incident_Level_Lookup_ILL_Level', $ine_severity, $ineID, $reason_for_delete = NULL, $con);
-				$result = mysqli_query($con, $sql);
-			}
-			
-			if($ine_police != $row['INE_Police'])
-			{
-				$sql = incEntUpdate('INE_Police', $ine_police, $ineID, $reason_for_delete = NULL, $con);
-				$result = mysqli_query($con, $sql);
-			}
-			if($ine_summary != $row['INE_Content'])
-			{
-				$sql = incEntUpdate('INE_Content', $ine_summary, $ineID, $reason_for_delete = NULL, $con);
-				$result = mysqli_query($con, $sql);
-			}
-			if($ine_damages != $row['INE_Damages'])
-			{
-				$sql = incEntUpdate('INE_Damages', $ine_damages, $ineID, $reason_for_delete = NULL, $con);
-				$result = mysqli_query($con, $sql);
-			}
+			$Por[$records] = new Por($records + 1, $porDetails);
+			$records++;
 		}
-		
-		mysqli_close($con);
-		header('location:manageVars.php?action=view&varID=' . $varID);
-	}
-	/*
-	$length = count($por_notes);
-	
-	while($length > 0){
-		
-		$sql  = "INSERT INTO person_of_record (";
-		$sql .= "incident_entry_INE_ID";
-		$sql .= ", incident_entry_var_VAR_ID";
-		$sql .= ", POR_Name";
-		$sql .= ", POR_Phone";
-		$sql .= ", POR_License";
-		$sql .= ", POR_Notes";
-		$sql .= ", involvement_lookup_INV_Level";
-		$sql .= ") VALUES (";
-		$sql .= $ineID;
-		$sql .= ", " . $varID;
-		$sql .= ", '" . $por_name[$length] . "'";
-		$sql .= ", '" . $por_phone[$length] . "'";
-		$sql .= ", '" . $por_license[$length] . "'";
-		$sql .= ", '" . $por_notes[$length] . "'";
-		$sql .= ", '" . $por_inv[$length] . "'";
-		$sql .= ")";
-		$length--;
-		
-		
-		$result = mysqli_query($con, $sql);
 	}
 	mysqli_close($con);
-	*/
-	
-	
-	//header('location:manageVars.php?action=view&varID=' . $varID);
-}
+} 
 
 //*****************************************************************************
 
@@ -259,177 +348,56 @@ createNav($userAuth);
 //==========================    Begin Content    =============================
 echo "<div id='content'>\n";
 
+$details[0]  = $ineID;
+$details[1]  = $venueName;
+$details[2]  = $address;
+$details[3]  = $city . ", " . $province;
+$details[4]  = $reportDate;
+$details[5]  = $event;
+$details[6]  = $supervisor;
+$details[7]  = $ineTime;
+$details[8]  = $pm;
+$details[9]  = $ineLevel;
+$details[10] = $inePolice;
+$details[11] = $ineContent;
+$details[12] = $ineDamages;
+$details[13] = $userFname . " " . $userLname;
+$details[14] = $liason;
+$details[15] = $action;
+$details[16] = $varID;
 
 $html  = "<div id='IncidentForm'>\n";
-$html .= "<h4>Clubwatch | Venue Information Management System | Security Incident Report Form</h4>\n";
-$html .= "	<div  id='IneTitle'>\n";
-$html .= "		<h3>Incident Report</h3>\n";
-$html .= "	</div>\n"; // close IneTitle
+
 $html .= "	<form id='IneForm' action='incident.php' method='GET'>\n";
-$html .= "		<div class='smallRightField'>\n";
-$html .= "		<div class='label'>Venue Name: </div><br />\n";
-$html .= "		<span class='tab'>" . $venueName . "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
 
-$html .= "		<div class='smallRightField'>\n";
-$html .= "		<div class='label'>Venue Address: </div><br />\n";
-$html .= "		<span class='tab'>" . $address . "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
-
-$html .= "		<div class='smallRightField'>\n";
-$html .= "		<div class='label'>Venue City &amp Province: </div><br />\n";
-$html .= "		<span class='tab'>" . $city . ", " . $province . "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
-
-$html .= "		<div class='smallRightField'>\n";
-$html .= "		<div class='label'>Report Date: </div><br />\n";
-$html .= "		<span class='tab'>" . nicedate($reportDate). "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
-
-$html .= "		<div id='clear'></div>\n"; // close clear
-
-$html .= "		<div class='smallLeftField'>\n";
-$html .= "		<div class='label'>Event Occuring: </div><br />\n";
-$html .= "		<span class='tab'>" . $eventName . "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
-
-$html .= "		<div class='smallRightField'>\n";
-$html .= "		<div class='label'>Supervisor on Shift: </div><br />\n";
-$html .= "		<span class='tab'>" . $supervisor . "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
-
-$html .= "		<div id='clear'></div>"; // close clear
-
-$html .= "		<div id='TimeField'>\n";
-$html .= "		<div class='label'>Time Incident Occurred: </div><br />\n";
-$html .= "		<input type='text' name='time' value='" . $ineTime . "'>\n";
-$html .= "		<input type='radio' name='pm' value=0";
-if($pm == 0)$html .= " checked='checked'";
-$html .= ">am\n";
-$html .= "		<input type='radio' name='pm' value=1";
-if($pm == 1)$html .= " checked='checked'";
-$html .= ">pm\n";
-$html .= "		</div>\n"; // close TimeField
-
-$html .= "		<div id='SeverityField'>\n";
-$html .= "		<div class='label'>Level of Severity: </div><br />\n";
-$html .= "		<select name='severity'>\n";
-$i = 1;
-while($IneLevel = mysqli_fetch_array($IllResult))
-{
-	$html .= "			<option value=" . $i;
-	if($i == $ineLevel) $html .= " selected='selected'";
-	$html .= ">" . $IneLevel['ILL_Def'];
-	$html .= "</option>\n";
-	$i++;
-}
-$html .= "		</select>\n";
-$html .= "		</div>\n"; // close SeverityField
-
-$html .= "		<div id='clear'></div>"; // close clear
-
-$html .= "		<div id='PoliceField'>\n";
-$html .= "		<div class='label'>Where the police involved in this incident?</div><br />\n";
-$html .= "		<input type='radio' name='police' value=0";
-if($inePolice == 0)$html .= " checked='checked'";
-$html .= ">No\n";
-$html .= "		<input type='radio' name='police' value=1";
-if($inePolice == 1)$html .= " checked='checked'";
-$html .= ">Yes\n";
-$html .= "		</div>\n"; // close PoliceField
-
-$html .= "		<div id='SummaryField'>\n";
-$html .= "		<div class='label'>Provide a description of the incident</div><br />\n";
-$html .= "		<textarea name='Summary'>" . $ineContent . "</textarea>\n";
-$html .= "		</div>\n"; // close SummaryField
-
-$html .= "		<div id='DamagesField'>\n";
-$html .= "		<div class='label'>Specify any damages incurred</div><br />\n";
-$html .= "		<textarea name='Damages'>" . $ineDamages . "</textarea>\n";
-$html .= "		</div>\n"; // close DamagesField
-
-//_____________________________________________________________________________
-//
-//								Persons of Record
-//_____________________________________________________________________________
-$html .= "<div id='PorField'>\n";
-$html .= "		<div class='label'>Specify details about persons involved in the incident: </div><br />\n";
-
-$html .= "<div id='PorLines'>\n";
-$html .= "	<div class='porRec'>\n";
-$html .= "		<span id='PorRec1'>\n";
-$html .= "		<div class='PorLabel'>Person 1</div><br />\n"; // close PorLabel
-$html .= "			<label>Name: </label><input type='textbox' id='porName1'>";
-$html .= " <label>Involvement: </label><select id='porInv1'>";
-$html .= "<option value='1'>Witness</option>";
-$html .= "<option value='2'>Victim</option>";
-$html .= "<option value='3'>Instigator</option>";
-$html .= "<option value='4'>Agressor</option>";
-$html .= "</select>";
-$html .= " <label>Phone: </label><input type='textbox' id='porPhone1'>\n";
-$html .= " <label>License: </label><input type='textbox' id='porLicense1'><br />\n";
-$html .= "			<label>Notes: </label><br />\n";
-$html .= "			<textarea id='porNotes1'></textarea>";
-
-
-$html .= "<input type='button' class='floatButton' value='Delete' id='removeButton'>\n";
-$html .= "<input type='button' class='floatButton' value='Save' id='addButton'>\n";
-
-$html .= "		</span>\n";
-$html .= "	</div>\n"; // close PorRec
-$html .= "</div>"; // close PorLines
-
-$html .= "</div>\n"; // close PorField
-$html .= "		<div id='clear'></div>\n"; // close clear
-//_____________________________________________________________________________
-//
-//								Image Uploads
-//_____________________________________________________________________________
-/*
-$html .= "<div id='ImgField'>\n";
-$html .= "		<div class='label'>Add any images you may have relating to the incident: </div><br />\n";
-
-$html .= "<div id='ImgLines'>\n";
-$html .= "	<div class='imgRec'>\n";
-$html .= "		<span id='imgRec1'>\n";
-$html .= "			<div class='ImgLabel'>Image 1: </div><br />\n";
-$html .= "			<input type='file' name='img1' id='img1'><br />";
-$html .= "			<label>Image Description: </label><br />\n";
-$html .= "			<textarea name='imgDesc1'></textarea>";
-$html .= "		</span>\n";
-$html .= "	</div>\n"; // close imgRec
-$html .= "</div>"; // close imgLines
-
-$html .= "<input type='button' value='Add Another Image' id='addImg'>\n";
-$html .= "<input type='button' value='Remove Last Image' id='removeImg'>\n";
-
-$html .= "</div>\n"; // close imgField
-$html .= "		<div id='clear'></div>\n"; // close clear
- */
-//_____________________________________________________________________________
-
-$html .= "		<div class='smallLeftField'>\n";
-$html .= "		<div class='label'>Form Completed by:</div><br />\n";
-$html .= "		<span class='tab'>" . $fullName . "</span>\n";
-$html .= "		</div>\n"; // close CompletedField
-
-$html .= "		<div class='smallRightField'>\n";
-$html .= "		<div class='label'>Venue Contact: </div><br />\n";
-$html .= "		<span class='tab'>" . $liason . "</span>\n";
-$html .= "		</div>\n"; // close smallRightField
-
-$html .= "		<div id='clear'></div>\n"; // close clear
-
-$html .= "<input type='hidden' name='varID' value='" . $varID . "'>\n";
-if($ineID != null) $html .= "<input type='hidden' name='ineID' value='" . $ineID . "'>\n";
-$html .= "<input type='submit' name='action' value='Save'>\n";
-if($action != 'view') $html .= "<input type='submit' name='action' value='Cancel'>\n";
-if($action == 'view') $html .= "<input type='submit' name='action' value='Delete'>";
-$html .= "<span class='print'><button>Print</button></span>\n";
+$Incident = new Incident($details);
+$html .= $Incident->drawIncident($IllLevels);
+$html .= "<input type='submit' class='bottomButton' name='action' value='Add a Person'>"; 
 
 $html .= "	</form>\n";
+$html .= "<script type='text/javascript'>\n";
+// Popup window code
+$html .= "function newPopup(url) {\n";
+$html .= "popupWindow = window.open(\n";
+$html .= "url,'popUpWindow','height=700,width=1100,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')\n";
+$html .= "}\n";
+$html .= "</script>\n";
+$link  = "'printIncident.php?action=print&ineID=$ineID&varID=$varID'";
+$html .= '<a href="JavaScript:newPopup(' . $link . ');">';
+$html .= "<button class='bottomButton'>Print</button></a>\n";
+if($action == 'view') $html .= "<a href='manageVars.php?action=view&varID=" . $varID ."'><button class='bottomButton'>Done</button></a>";
 
-if($action == 'view') $html .= "<a href='manageVars.php?action=view&varID=" . $varID ."'><button>Done</button></a>";
+$html .= "<div id='clear'></div>";
+
+if($ineID != null)
+{	
+	$counter = count($Por);
+	for($i = 0; $i < $records; $i++)
+	{
+		$html .= $Por[$i]->drawPor('disabled');
+	}
+}
+	
 $html .= "</div>\n"; // close IncidentForm
 
 echo $html;
