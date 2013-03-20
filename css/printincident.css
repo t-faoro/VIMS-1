@@ -1,15 +1,13 @@
 /*
  * incident.css
- * stylesheet for incident page elements
+ * stylesheet for printIncident page elements
  * Programmed by James P. Smith March 2013  
  * */
 
 /*==============incident page Start===============*/
 /*
 #content {
-	color: #FFF;
-	margin-left: 10%; 
-	margin-right: 10%; 
+	color: #FFF; 
 	min-height: 62%; 
 	text-align: center;
 }
@@ -18,9 +16,8 @@
 	background-color: #FFF;
 	color: #000;
 	text-align: left;
-	width: 90%;
+	width: 100%;
 	font-family: Arial;
-	margin: 2% auto 2% auto;
 	padding-right: 2%;
 	padding-left: 2%;
 	border: ridge 4px;

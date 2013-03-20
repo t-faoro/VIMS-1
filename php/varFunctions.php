@@ -184,7 +184,7 @@ function varUpdate($field, $content, $varID, $con)
 	$sql .= " AND var.VAR_Date = '" . $date . "'";
 	$sql .= " AND incident_entry.INE_Reason_for_Del IS NULL";
 	$sql .= " AND var.VAR_Reason_for_Del IS NULL)";
-
+		
 	return $sql;
  }
 ?>

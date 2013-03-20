@@ -83,7 +83,7 @@ $javaScript = "";
 function IMG($imgName, $alt){
 $image;
 
-	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />\n';
+	$image = '<img src="'.IMG_PATH.$imgName.'" alt="'.$alt.'" />'."\n";
 	return $image;
 }
 
@@ -122,9 +122,7 @@ function verifyUser()
 function niceDate($date)
 {
 	$date_ts    = strtotime($date);
-
-	$showDate    = date('Y-m-d', $date_ts);
-
+	$showDate    = date('D M d, Y', $date_ts);
 	
 	return $showDate;
 }

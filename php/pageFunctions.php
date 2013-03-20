@@ -30,22 +30,22 @@
 		{
 			$userNav = "<div id='userNavigation' >\n";
 			$userNav  .= "<ul>\n";
-			$userNav  .= "<li><a href='dashboard.php'>Home</a></li>\n";
+			$userNav  .= "<li><a href='#'>Home</a></li>\n";
 			$userNav  .= "<li><a href='#'>News</a></li>\n";
 			$userNav  .= "<li><a href='#'>Manage Venue</a></li>\n";
-			$userNav  .= "<li><a href='ManageReports.php'>Manage Reports</a></li>\n";
+			$userNav  .= "<li><a href='#'>Manage Reports</a></li>\n";
 			$userNav  .= "</ul>\n";
 			$userNav  .= "</div>\n";
 			echo $userNav;
 		}		
 		//Venue staff
-		else if(2 == $authLevel)
+		else if(3 == $authLevel)
 		{
 			$userNav = "<div id='userNavigation' >\n";
 			$userNav  .= "<ul>\n";
-			$userNav  .= "<li><a href='dashboard.php'>Home</a></li>\n";
+			$userNav  .= "<li><a href='#'>Home</a></li>\n";
 			$userNav  .= "<li><a href='#'>News</a></li>\n";
-			$userNav  .= "<li><a href='ManageReports.php'>Manage Report</a></li>\n";
+			$userNav  .= "<li><a href='#'>Manage Report</a></li>\n";
 			$userNav  .= "<li><a href='#'>Create Report</a></li>\n";
 			$userNav  .= "</ul>\n";
 			$userNav  .= "</div>\n";
@@ -134,7 +134,6 @@
 		else 
 		{
 			echo "<p>Welcome <a href='accountManagement.php'>$name</a></p>";
-			echo "<p><a href='index.php'>Log out</a></p>\n";
 		}
 		echo "</div>\n"; // close topRight
 		echo "</div>\n"; // close header container
