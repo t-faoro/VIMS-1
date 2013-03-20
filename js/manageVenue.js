@@ -38,7 +38,7 @@ function updateStatus(venue){
  * @param venue the venue number for which the user is to be disabled
  */
 function deleteUser(user, venue){
-	if(!confirm("are you sure you want to delete this user?")){
+	if(!confirm("Are you sure you want to delete this user?")){
 		return false;
 	}
 	

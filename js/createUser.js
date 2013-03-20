@@ -12,19 +12,21 @@ $(function(){
 	venue = $('#venue'),
 	allFields = $( [] ).add(uName).add(fName).add(lName).add(auth),
 	tips = $(".validateTips");
+	var created = false;
 
 	//Turns the html form into a dialog box, and ajaxs to the server to create the user
 	//account
 	$('#create-form').dialog({
 		autoOpen: false,
-		height: 400,
+		height: 450,
 		width: 350,
 		modal: true,
 		buttons: {
 			"Create an user": function(){
 				$.ajax({
 					type: "POST", 	
-					data: { user: uName.val(),
+					data: { 
+						user: uName.val(),
 						first: fName.val(),
 						last: lName.val(),
 						auth: auth.val(),
@@ -32,9 +34,17 @@ $(function(){
 					},
 					url: "php/createUser.php"
 				}).done(function(msg){
-						$('#users').append(msg);
+						if('false' == msg){
+								// alert('That username is taken. Please chose different username.');
+								$("#uError").text("That username is taken. Please chose a different username.");
+							}
+							else{
+								$('#users').append(msg);
+								created = true;
+							}
 					});
-					$(this).dialog("close");
+					if(created)
+						$(this).dialog("close");
 			},
 			Cancel: function() {
 			$(this).dialog("close");

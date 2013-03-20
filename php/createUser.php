@@ -24,7 +24,7 @@
 	{
 		$error = mysqli_error($con);
 		mysqli_close($con);
-		return $error;
+		echo "false";
 	}
 	else
 	{

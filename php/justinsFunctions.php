@@ -100,6 +100,7 @@
 		echo "<input type='hidden' name='venue' id='venue' value='$venue' />\n"; 
 		echo "<label for='uName'>User name:</label>\n";
 		echo "<input type='text' name='uName' id='uName' />\n";
+		echo "<div class='error' id='uError'></div>\n";
 		echo "<label for='fName'>First name:</label>\n";
 		echo "<input type='test' name='fName' id='fName' />\n";
 		echo "<label for='lName'>Last name:</label>\n";
