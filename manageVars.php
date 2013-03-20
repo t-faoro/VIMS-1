@@ -22,8 +22,7 @@ $fullName = $userFname . " " . $userLname;
 date_default_timezone_set('UTC');
 $date = date('Y-m-d', time());
 $notice = null;
-//*****************************************************************************
-// check variables
+
 if(isset($_GET['reportDate'])) $reportDate = $_GET['reportDate'];
 else $reportDate = date('Y-m-d', strtotime($date));
 if(isset($_GET['event'])) 	   $event 	   = $_GET['event'];
@@ -45,9 +44,7 @@ if(isset($_GET['varID']))
 	if($action == 'Add an Incident')
 	{
 		$page = "location:";
-		$ine  = "incident.php?reportDate=" . $reportDate . "&attendance=" . $attendance;
-		$ine .= "&sec_chklst=" . $sec_chklst . "&supervisor=" . $supervisor;
-		$ine .= "&event=" . $event;
+		$ine  = "incident.php?varID=$varID";
 		header($page . $ine);
 	}
 	
@@ -96,6 +93,13 @@ if($action == 'Update')
 	{
 		$sql = varUpdate($field, $content, $varID, $con);
 		mysqli_query($con, $sql);
+		$mod_field = null;
+		for($j = 0; $j < $counter; $j++) {
+			$mod_field .= $field[$j] . " ";
+		}
+		$sql  = "INSERT INTO modification_var (Var_VAR_ID, User_USE_ID, MOD_Action)";
+		$sql .= " VALUES($varID, $userID, '$mod_field')";
+		mysqli_query($con, $sql);
 		$notice = "<script type='text/javascript'>window.alert('Update Complete!')</script>";
 	}
 	
@@ -138,10 +142,14 @@ if($action == 'Finished'
 	{
 		$sql = varCreate($reportDate, $attendance, $sec_chklst, $supervisor, $event, $venueID, $userID, $con);
 		mysqli_query($con, $sql);
+		$sql = "SELECT MAX(VAR_ID) AS VAR_ID FROM var WHERE venue_VEN_ID=$venueID";
+		$result = mysqli_query($con, $sql);
+		while($row = mysqli_fetch_array($result))
+		{
+			$newVar = $row['VAR_ID'];
+		}
 		$page = "location:";
-		$ine  = "incident.php?reportDate=" . $reportDate . "&attendance=" . $attendance;
-		$ine .= "&sec_chklst=" . $sec_chklst . "&supervisor=" . $supervisor;
-		$ine .= "&event=" . $event;
+		$ine  = "incident.php?varID=$newVar";
 		if($action == 'Finished' ? $page .= 'manageReports.php' : $page .= $ine)
 		mysqli_close($con);
 		header($page);
@@ -158,13 +166,9 @@ if($action == 'Finished'
 //*****************************************************************************
 if($action == 'Delete')
 {
-	$con = $myCon->connect();
-	$field[0] = "Reason_for_Del";
-	$content[0] = "test";
-	$sql = varUpdate($field, $content, $varID, $con);
-	mysqli_query($con, $sql);
-	mysqli_close($con);
-	header('location: manageReports.php');
+	// send to delete page
+	$page = "location:delete.php?action=deleteVar&varID=$varID";
+	header($page);
 }
 
 
@@ -250,17 +254,13 @@ if($action == 'view' || $action == 'Update')
 		$html .= "	<th>Incident Level</th>\n";
 		$html .= "	<th>Police Inv.</th>\n";
 		$html .= "	<th>People</th>\n";
-		$html .= "	<th>Images</th>\n";
+		//$html .= "	<th>Images</th>\n";
 		$html .= "</tr>\n";
 		
 		while($row = mysqli_fetch_array($result))
 		{
-			$link  = "incident.php?action=view&ineID=" . $row['INE_ID'];
-			$link .= "&reportDate=" . $reportDate;
-			$link .= "&sec_chklst=" . $sec_chklst;
-			$link .= "&attendance=" . $attendance;
-			$link .= "&supervisor=" . $supervisor;
-			$link .= "&event=" . $event;
+			$ineID = $row['INE_ID'];
+			$link  = "incident.php?action=view&varID=$varID&ineID=$ineID";
 			
 			$html .= "<tr>\n";
 			$html .= "<td><a href='" . $link . "'>" .$row['INE_Time'] . "</a></td>\n";
@@ -276,7 +276,7 @@ if($action == 'view' || $action == 'Update')
 			if($row1 = mysqli_fetch_array($newResult)) $num = $row1[0];
 			else $num = 0;
 			$html .= "<td>" . $num . "</td>";
-			
+			/*
 			$sql  = "SELECT COUNT(*) FROM Images";
 			$sql .= " WHERE (incident_entry_INE_ID =" . $row['INE_ID'];
 			$sql .= " AND IMG_Archived IS NULL)";
@@ -285,7 +285,7 @@ if($action == 'view' || $action == 'Update')
 			if($row1 = mysqli_fetch_array($newResult)) $num = $row1[0];
 			else $num = 0;
 			$html .= "<td>" . $num . "</td>";
-			
+			*/
 		}
 		
 		$html .= "</table>\n";
