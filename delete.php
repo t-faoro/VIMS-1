@@ -37,16 +37,20 @@ if($action == 'deleteVar')
 	
 	if(isset($_GET['reason']))	
 	{
-		$reason = "user ID: " . $userID . " Reason given: " .$_GET['reason'];
-		
-		$con = $myCon->connect();
-		$reason = mysqli_real_escape_string($con, $reason);
-		$sql  = "UPDATE var SET VAR_Reason_for_Del='$reason' WHERE VAR_ID=$varID";
-		
-		mysqli_query($con, $sql);
-		
-		// done
-		header('location: manageReports.php');
+		if($_GET['reason'] == 'cancel') header('location: manageReports.php');
+		else
+		{
+			$reason = "user ID: " . $userID . " Reason given: " .$_GET['reason'];
+			
+			$con = $myCon->connect();
+			$reason = mysqli_real_escape_string($con, $reason);
+			$sql  = "UPDATE var SET VAR_Reason_for_Del='$reason' WHERE VAR_ID=$varID";
+			
+			mysqli_query($con, $sql);
+			
+			// done
+			header('location: manageReports.php');
+		}
 	}
 	else 
 	{
@@ -56,6 +60,7 @@ if($action == 'deleteVar')
 		window.onload = getReason;
 		function getReason(){
 			var reason = prompt("Enter reason for deleting this record", "");
+			if(reason == null) reason = "cancel";
 			window.location.href = "delete.php?action=deleteVar&reason=" + reason + "&varID=<?php echo $varID; ?>";
 		}
 		
@@ -75,16 +80,20 @@ if($action == 'deleteIne')
 	
 	if(isset($_GET['reason']))	
 	{
-		$reason = "user ID: " . $userID . " Reason given: " .$_GET['reason'];
-		
-		$con = $myCon->connect();
-		$reason = mysqli_real_escape_string($con, $reason);
-		$sql  = "UPDATE incident_entry SET INE_Reason_for_Del='$reason' WHERE INE_ID=$ineID";
-		
-		mysqli_query($con, $sql);
-		
-		// done
-		header('location:manageVars.php?action=view&varID=' . $varID);
+		if($_GET['reason'] == 'cancel') header('location:manageVars.php?action=view&varID=' . $varID);
+		else
+		{
+			$reason = "user ID: " . $userID . " Reason given: " .$_GET['reason'];
+			
+			$con = $myCon->connect();
+			$reason = mysqli_real_escape_string($con, $reason);
+			$sql  = "UPDATE incident_entry SET INE_Reason_for_Del='$reason' WHERE INE_ID=$ineID";
+			
+			mysqli_query($con, $sql);
+			
+			// done
+			header('location:manageVars.php?action=view&varID=' . $varID);
+		}
 	}
 	else 
 	{
@@ -94,6 +103,7 @@ if($action == 'deleteIne')
 		window.onload = getReason;
 		function getReason(){
 			var reason = prompt("Enter reason for deleting this record", "");
+			if(reason == null) reason = "cancel";
 			window.location.href = "delete.php?action=deleteIne&reason=" + reason
 				 + "&varID=<?php echo $varID; ?>"
 				 + "&ineID=<?php echo $ineID; ?>";
@@ -117,17 +127,24 @@ if($action == 'deletePor')
 	
 	if(isset($_GET['reason']))	
 	{
-		$reason = "user ID: " . $userID . " Reason given: " .$_GET['reason'];
-		
-		$con = $myCon->connect();
-		$reason = mysqli_real_escape_string($con, $reason);
-		$sql  = "UPDATE person_of_record SET POR_Reason_for_Del='$reason' WHERE POR_ID=$porID";
-		
-		mysqli_query($con, $sql);
-		
-		// done
-		$page = "location:incident.php?action=view&ineID=$ineID&varID=$varID";
-		header($page);
+		if($_GET['reason'] == 'cancel')
+		{
+			$page = "location:incident.php?action=view&ineID=$ineID&varID=$varID";
+			header($page);
+		} else 
+		{
+			$reason = "user ID: " . $userID . " Reason given: " .$_GET['reason'];
+			
+			$con = $myCon->connect();
+			$reason = mysqli_real_escape_string($con, $reason);
+			$sql  = "UPDATE person_of_record SET POR_Reason_for_Del='$reason' WHERE POR_ID=$porID";
+			
+			mysqli_query($con, $sql);
+			
+			// done
+			$page = "location:incident.php?action=view&ineID=$ineID&varID=$varID";
+			header($page);
+		}
 	}
 	else 
 	{
@@ -137,6 +154,7 @@ if($action == 'deletePor')
 		window.onload = getReason;
 		function getReason(){
 			var reason = prompt("Enter reason for deleting this record", "");
+			if(reason == null) reason = "cancel";
 			window.location.href = "delete.php?action=deletePor&reason=" + reason
 				 + "&varID=<?php echo $varID; ?>"
 				 + "&ineID=<?php echo $ineID; ?>"
