@@ -17,10 +17,10 @@
 		{
 			$adminNav = "<div id='adminNavigation' >\n";
 			$adminNav .= "<ul>\n";
-			$adminNav .= "<li><a href='#'>Home</a></li>\n";
-			$adminNav .= "<li><a href='#'>News</a></li>\n";
-			$adminNav .= "<li><a href='#'>Manage News</a></li>\n";
-			$adminNav .= "<li><a href='#'>Manage Venue</a></li>\n";
+			$adminNav .= "<li><a href='dashboard.php'>Home</a></li>\n";
+			$adminNav .= "<li><a href='news.php'>Manage News</a></li>\n";
+			$adminNav .= "<li><a href='manageRegions.php'>Manage regions</a></li>\n";
+			$adminNav .= "<li><a href='manageVenues.php'>Manage Venue</a></li>\n";
 			$adminNav .= "</ul>\n";
 			$adminNav .= "</div>\n";
 			echo $adminNav;
@@ -54,12 +54,11 @@
 	}
 	
 
-	/*
+	/**
 		Purpose: To create a html <head>
-		Preconditions: 
-			$css is an additional css file.
-			$js is an additinal javascript file.
-		Postconditions: Echos the opening <html> tag, and nesisary <head> contents.
+		@param	$css is an additional css file, may be a single string or an array of strings.
+		@param	$js is an additinal javascript file, may be a single string or an array of strings.
+		@return Echos the opening <html> tag, and nesisary <head> contents.
 	*/
 	function createHead($css = null, $js = null)
 	{
@@ -70,7 +69,15 @@
 		echo CSS("style.css"); 
 		if($css != null)
 		{
-			echo CSS($css);
+			if(is_array($css))
+			{
+				foreach($css as $style)
+					echo CSS($style);
+			}
+			else 
+			{
+				echo CSS($css);
+			}
 		}
 		
 		echo "<script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>\n";
@@ -90,10 +97,10 @@
 		echo "</head>\n";
 	}
 	
-	/*
+	/**
 		Purpose: To create the page footer and closing <body> content
 		Preconditions: createHeader() and createHead() should be called BEFORE this function.
-		Postconditions: Echos the page footer, closes the <body> and <html>. Do not echo any
+		@return Echos the page footer, closes the <body> and <html>. Do not echo any
 			hmtl after calling this function.
 	*/
 	function createFoot()
@@ -107,10 +114,11 @@
 		echo "</html>";
 	}
 	
-	/*
+	/**
 		Purpose: To create the Page header and opening <body> content
 		Preconditions: createHead() should be called BEFORE this function.
-		Postconditions:
+		@param $name is the name of the user logged in to the system.
+		@return Echos the opening <body> tag, as well as the page header.
 	*/
 	function createHeader($name = null)
 	{

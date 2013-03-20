@@ -1,4 +1,11 @@
 <?php
+	/*
+		updateVenueStatus.php
+		Purpose: updates the active status of a venue
+		@param POST['status'] The new status for the venue
+		@param POST['id'] The id number of the venue to be updated
+		@return true on successful update, false if there was an error
+	*/
 	include_once "connection.php";
 	include_once "venueFunctions.php";
 	$field = array("Status");
@@ -6,6 +13,16 @@
 	$myCon = new Connection();
 	$con = $myCon->connect();
 	$sql = venueUpdate($field, $status, $_POST['id'], $con);
-	mysqli_query($con, $sql);
+	if(mysqli_query($con, $sql)){
+		if($_POST['status'] == 1)
+			echo "The venue status has been set to active";
+		else
+			echo "The venue status has been set to deactive";
+		// echo "Venue status has been updated";
+	}	
+	else{
+		echo "Error: Could not update venue status";
+	}
+	// var_dump($result);
 	mysqli_close($con);
 ?>

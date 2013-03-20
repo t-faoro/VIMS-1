@@ -68,6 +68,19 @@ function userList($venueID)
 
 	return $sql;
 }
+
+function findUser($userID, $venueID)
+{
+	// build statement
+	$sql  = "SELECT * FROM user";
+	$sql .= " JOIN venue_user_assc";
+	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
+	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID ;
+	$sql .= " AND venue_user_assc.user_USE_ID = $userID";
+	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
+
+	return $sql;
+}
 // ============================================================================
 /**
  *	userCreate() builds an sql statement to insert a new user into the system

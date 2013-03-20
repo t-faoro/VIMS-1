@@ -1,14 +1,15 @@
 <?php
 /*
 	manage venues.php
+	Purpose: a page from which administrators can select venues to modify, or access the create new venue page
 	By: Justin Werre
-	
+	Date: March 19, 2013
 */
 
+	//verify user has been authenticated, and create the neccessary page header.
 	include_once "php/config.php";
 	session_start();
 	if(!verifyUser()) header("Location: index.php");
-	
 	createHead(null, "manageVenue.js");
 	createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 	createNav($_SESSION['userAuth']);
@@ -18,7 +19,7 @@
 	//Link to create a new venue
 	echo "<a href='Venues.php?id=new'><button>New venue</button></a>\n";
 	
-	//create table of existing venues
+	//create table header
 	$myCon = new Connection();
 	$con = $myCon->connect();
 	$sql = "select * from venue;";
@@ -31,8 +32,10 @@
 	echo "<th>Phone</th>\n";
 	echo "<th>Status</th>\n";
 	echo "<th></th>\n";
+	echo "<th></th>\n";
 	echo "</tr>\n";
 
+	//Display all venues
 	foreach($result as $venue)
 	{	
 		$sql = "SELECT REG_Name from Region where REG_ID = $venue[Region_REG_ID];";
@@ -52,12 +55,11 @@
 			echo "</select>\n";
 		echo "</td>\n";
 		echo "<td><a href='venues.php?id=$venue[VEN_ID]'><button>Modify</button></a></td>\n";
+		echo "<td><div id='$venue[VEN_ID]UpdateStatus'></div></td>\n";
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
 	mysqli_close($con);
-	
 	echo "</div>\n";
 	createFoot();
-	
 ?>

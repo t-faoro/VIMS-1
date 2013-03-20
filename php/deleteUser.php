@@ -1,4 +1,10 @@
 <?php
+	/**
+		deleteUser.php
+		Purpose: Updates a user to set their system status to 0, disabling their access to a system.
+		@param $_POST['id'] the id number of the user to be disabled
+		@param $_POST['venue'] the id number of the venue for which the user is to be denied access
+	*/
 	include_once "connection.php";
 	$myCon = new Connection();
 	$con = $myCon->connect();

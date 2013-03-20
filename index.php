@@ -1,8 +1,16 @@
 <?php 
 /**
 	index.php
-	Purpose: Login screen for the VIMS system. Validates user and stores user
-		information in the SESSION variable.
+	Purpose: Login screen for the VIMS system. Authenticates user and stores user
+		and venue information in the SESSION variable.
+	Post conditions: Sets the session with the following information:
+		userId the users id number
+		userName the users name
+		userFname the users first name
+		userLname the users last name
+		userAuth users authorization level for the venue
+		VenueId the venue's id number
+		venueName the venue's name
 	@author Justin Werre
 	March 4, 2013
 */
@@ -17,8 +25,8 @@ $password = "";
 $venueName = "";
 $error = "";
 $myCon = new Connection();
-$sql;
-$result;
+$sql = "";
+$result = "";
 
 
 //if user has submitted information, validate user
@@ -99,12 +107,9 @@ if(isset($_POST['submit']))
 }
 
 
-//if their was no postback, or user information was invalid
-//show the login page.
+//Display the page with login form
 createHead("index.css");
 createHeader();
-
-//Display the form with previously entered information if necessary
 echo "<div id='content'>\n";
 echo "<div id='error'>$error</div>\n";
 echo "<form method='post'>\n";
@@ -117,8 +122,6 @@ echo "<br />\n";
 echo "<input type='submit' value='submit' name='submit'>";
 echo "</form>\n";
 echo"</div>\n";
-
-
 createFoot();
 
 ?>

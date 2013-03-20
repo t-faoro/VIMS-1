@@ -80,7 +80,6 @@ function venue_user_asscUpdate($field, $content, $venueID, $userID)
 	$sql .= " WHERE (Venue_VEN_ID='" . $venueID . "'";
 	$sql .= " AND User_USE_ID='" . $userID . "')";
 	
-	echo $sql;
 	return $sql;
 }
 
