@@ -56,9 +56,8 @@
 			$comments 	= $_POST['comments'];
 			$regID 		= $_POST['regID'];
 			//$newsID     = $_POST['newsID'];
-			
-				
-				
+
+
 			if(strlen($title) <= 0 || strlen($date) <= 0 || strlen($comments) <=0 ){
 				$error = "Error: All Fields are Mandatory.";
 	
@@ -188,15 +187,7 @@
 	//:: End of Page
 		
 //:: Start of Functions	
-	function readNews($con, $p){
-		echo '<div id="readNews">';
-		
-		echo '<div class="title"';
-		echo '<h1>'.getNews($con, "NEW_Title", $p).'</h1>';
-		echo '</div>';
-		
-		echo '</div>';
-	}	
+	
 	/**
 	 * Take all data received through the form via POSTBACK and attempts to insert it into the database in a readable
 	 * manor.
@@ -213,11 +204,6 @@
 	function setNews($con, $title, $date, $comments, $regID, $uID){
 		global $error;		
 		
-		$title	  = mysqli_real_escape_string($con, $title);
-		$date 	  = mysqli_real_escape_string($con, $date);
-		$comments = mysqli_real_escape_string($con, $comments);
-		
-		
 		$sql  = 'INSERT INTO news ';
 		$sql .= '(NEW_Title, NEW_Date, NEW_Content, User_USE_ID)';
 		$sql .= ' VALUES(';
@@ -227,12 +213,10 @@
 		$sql .= " '".$uID."' ";
 		$sql .= ')';
 		
-
-		
 		if(!mysqli_query($con, $sql)){
-			die('Error: setNewsSQL '.mysqli_error($con));
+			die('Error: '.mysqli_error($con));
 		}
-
+		
 		$newsID = getCurrentNewsID($con, $title);
 		setNewsRegionJunction($con, $newsID, $regID);
 	  
@@ -308,13 +292,13 @@
 		$form .= '<input type="date" value="'.currTimeDate().'" name="newsDate" />';
 		$form .= '<br /><br />';
 		$form .= '<label>Region:</label>';
-		$form .= '<select name="regID"><span>'.selectElementRegionOption($con, NULL).'</span></select>';
+		$form .= '<select name="regID"><span>'.selectElementRegionOption($con).'</span></select>';
 		$form .= '<br /><br />';
 		$form .= '<label>Comments: </label>';
 		$form .= '<textarea class="textarea" name="comments">';
 		$form .= '</textarea>';
 		$form .= '<br /><br />';
-		$form .= '<input type="submit" name="createNews" class="button" value="Submit" />';
+		$form .= '<input type="submit" name="submit" class="button" value="Submit" />';
 		
 		$form .= '</form>';
 		$form .= '</div>';
@@ -334,15 +318,11 @@
 	function modifyNewsForm($con){
         $p = $_GET['id'];
 				
-		$defaults = array( getNews($con, "NEW_Title", $p), getNews($con, "NEW_Date", $p), getNews($con, "REG_Name", $p), getNews($con, "NEW_Content", $p) );
-		$defaultRegion = getRegionID($con, $defaults[2]);
+		$defaults = array( getNews($con, "NEW_Title", $p), getNews($con, "NEW_Date", $p), getNews($con, "REG_Name", $p), getNews($con, "NEW_Content", $p));
 				
-		
 		$form  = '<div id="manageNews" >';
-        $form .= '<form method="POST" action="manageNews.php?action=modify&id='.$p.'">'."\n";
-
+        $form .= '<form method="POST" action="manageNews.php?action=modify">'."\n";
 		$form .= '<input type="hidden" name="newsID" value='.$p.' />';
-
 		$form .= '<label>Title:</label>';
 		$form .= '<input type="text" value="'.$defaults[0].'" name="title" />'."\n";
 		$form .= '<br /><br />';
@@ -352,117 +332,28 @@
 		$form .= '<br /><br />';
 		
 		$form .= '<label>Region:</label>';
-		$form .= '<select name="regID"><span>'.selectElementRegionOption($con, $defaultRegion).'</span></select>';
+		$form .= '<select name="regionName" value=""><span>'.selectElementRegionOption($con).'</span></select>';
 		$form .= '<br /><br />';
 		
 		$form .= '<label>Comments: </label>';
-		$form .= '<textarea class="textarea" name="comments">';
+		$form .= '<textarea class="textarea">';
 		$form .= $defaults[3];
 		$form .= '</textarea>';
 		$form .= '<br /><br />';
 		
-		$form .= '<input type="submit" name="modifyNews" class="button" value="Submit Changes" />';
+		$form .= '<input type="submit" class="button" value="Submit Changes" />';
 		
 		$form .= '</form>';
 		$form .= '</div>';
-		
 		
 		return $form;
-	}
-	
-	function deleteNewsFlashForm($con){
-		$p = $_GET['id'];
-				
-		$defaults = array( getNews($con, "NEW_Title", $p), getNews($con, "NEW_Date", $p), getNews($con, "REG_Name", $p), getNews($con, "NEW_Content", $p) );
-				
-		
-		$form  = '<div id="manageNews" >';
-        $form .= '<form method="POST" action="manageNews.php?action=delete&id='.$p.'">'."\n";
-
-		$form .= '<input type="hidden" name="newsID" value='.$p.' />';
-		
-
-		$form .= '<label>Title:</label>';
-		$form .= '<span>'.$defaults[0].'</span>';
-		$form .= '<br /><br />';
-		
-		$form .= '<label>Date:</label>';
-		$form .= '<span>'.$defaults[1].'</span>';
-		$form .= '<br /><br />';
-		
-		$form .= '<label>Region:</label>';
-		$form .= '<span>'.$defaults[2].'</span>';
-		$form .= '<br /><br />';
-		
-		$form .= '<label>Reason: </label>';
-		$form .= '<textarea class="textarea" name="reason">';
-		$form .= '</textarea>';
-		$form .= '<br /><br />';
-		
-		$form .= '<input type="submit" name="deleteNews" class="button" value="Delete News Flash" />';
-		
-		$form .= '</form>';
-		$form .= '</div>';
-		
-		
-		return $form;  
-	}
-	
-	function getRegionID($con, $regName){
-		$regID = "";
-		
-		$sql = "SELECT REG_ID ";
-		$sql .= "FROM region ";
-		$sql .= 'WHERE REG_Name = "'.$regName.'"';
-		
-		
-		$query = mysqli_query($con, $sql);
-		while($row = mysqli_fetch_array($query)){
-			$regID = $row['REG_ID'];
-		}
-		
-		return $regID;
 	}
 	
 	/**
 	 * FUNCTION YET TO BE STARTED
 	*/
-	function modifyNews($con, $newsID, $title, $date, $content, $regID){
-		global $createNews;
-		global $modifyNews;
-		
-		$title = mysqli_real_escape_string($con, $title);
-		$content = mysqli_real_escape_string($con, $content);
-		
-		$sql  = "UPDATE news ";
-		$sql .= 'SET NEW_Title = "'.$title.'", NEW_Date = "'.$date.'", NEW_Content = "'.$content.'" ';
-		$sql .= 'WHERE NEW_ID = "'.$newsID.'" ';
-		
-		$sql2  = "UPDATE news_region_assc ";
-		$sql2 .= "SET Region_REG_ID = ".$regID." ";
-		$sql2 .= "WHERE News_NEW_ID = ".$newsID." ";
-		
-		
-			if(!mysqli_query($con, $sql)){
-				die('Error: $SQL '.mysqli_error($con));
-				
-			}
-			if(!mysqli_query($con, $sql2)){
-				die('Error: $SQL2'.mysqli_error($con));
-				
-			}
-		
-		
-	}
-	
-	function deleteNews($con, $reason, $newsID){
-		$sql  = "UPDATE news ";	
-		$sql .= 'SET NEW_Reason_for_Del = "'.$reason.'" ';
-		$sql .= "WHERE NEW_ID = '".$newsID."' ";
-		
-		if(!mysqli_query($con, $sql)){
-			die('Error: '.mysqli_error($con));
-		}
+	function modifyNews($con, $nid){
+		// Code Goes Here 
 	}
 			
 	/**
@@ -505,7 +396,7 @@
 	 * @param Object $con The database connection object
 	 * @return static mixed $data The options which can be selected from the Region select form element.
 	*/
-	function selectElementRegionOption($con, $default = NULL){
+	function selectElementRegionOption($con){
 		static $data;
 		 
 		$sql  = "SELECT * ";
@@ -517,12 +408,7 @@
 			while($row = mysqli_fetch_array($query)){
 				$results[] = $row;
 				if($row['REG_ID'] != 99){
-					if($default != NULL && $default == $row['REG_ID']){
-						$data .= '<option selected = "selected" value="'.$default.'">'.$row['REG_Name'].'</option>';
-					}
-					else{
-						$data .= '<option value='.$row['REG_ID'].'>'.$row['REG_Name'].'</option>';
-					}
+					$data .= '<option value='.$row['REG_ID'].'>'.$row['REG_Name'].'</option>';
 				}
 				
 			}
@@ -539,10 +425,11 @@
 	 * @return none
 	*/
 	function drawNewsTable($con){
+
 		global $userName;
 
 		$month = $_POST['month'];
-		
+
 		$newsID = "";
 		
 		$sql = 'SELECT * ';
@@ -555,13 +442,15 @@
 		echo '<tr>';
 		echo '<th>News Title</th>';
 		echo '<th>News Date</th>';
+		echo '<th>News Category</th>';
 		echo '<th>News Region</th>';
 		echo '<th>News Poster</th>';
 		echo '</tr>';
+
 						
 		while($data = mysqli_fetch_array($query)){
 			$newsID = $data['NEW_ID']; // used to get region name using Junction Table
-			
+
 			if($data['NEW_Reason_for_Del'] == NULL){
 				if ( date("M", strtotime($data['NEW_Date'])) == $month){
 								
@@ -622,7 +511,6 @@
 	 * @param Int    $newsID The newsflash ID to filter the search by.
 	*/
 	function getRegionName($con, $newsID){
-		$results = "";
 						
 		$sql = "SELECT REG_Name ";
 		$sql .= "FROM region ";
@@ -634,11 +522,8 @@
 						
 		$subQuery = mysqli_query($con, $sql);
 		while($row = mysqli_fetch_array($subQuery)){
-			$results = $row['REG_Name'];
-			
-		}
-		return $results;
-								
+			echo $row['REG_Name'];
+		}						
 	}
 	
 	/**

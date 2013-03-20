@@ -24,8 +24,8 @@
     $userAuth   		= $_SESSION['userAuth'];
     $venueID  		    = $_SESSION['venueId'];
     $venueName  		= $_SESSION['venueName'];
-	$fullName			= $userFname." ".$userLname;
-    
+		$fullName			= $userFname." ".$userLname;
+
     //:: Password Field Declarations
     $currentPassword 	= NULL;
     $oldPass    		= NULL;
@@ -37,12 +37,16 @@
     $css = "";
     $js = "";
     
+    //TEST VALUE
+    $verifyUser = TRUE;
+
     //:: Draws Head HTML with Stylesheets, Javascript, Doctype, and Title already implemented.
     createHead($css, $js);
     
     //:: Draws Header for UI 
     createHeader($fullName);
-	createNav($userAuth);
+		createNam($userAuth);
+
     
     
     
@@ -96,16 +100,12 @@
     echo '<div id="content">';
        echo '<div class="headingDiv"><h2>Edit Account</h2></div>';
      
-
        // Shows the appropriate error on postback
        echo '<div id="error">'.$error.'</div>';
          // Draws the manage account form
          echo manageAccountForm();
-       
-
 
          //echo IMG("spotlights.jpg", "Spotlights");
-
     echo "</div>";
     
     //:: Draws the Footer Content	
