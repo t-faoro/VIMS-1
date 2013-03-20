@@ -25,7 +25,8 @@ function updateStatus(venue){
 		},
 		url: 'php/updateVenueStatus.php'
 	}).done(function(msg){
-		console.log(msg);
+		var string = '#' + venue + 'UpdateStatus';
+		$(string).text(msg);
 	});
 	
 }

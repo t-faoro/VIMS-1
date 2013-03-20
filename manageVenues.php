@@ -55,8 +55,8 @@
 			echo "</select>\n";
 		echo "</td>\n";
 		echo "<td><a href='venues.php?id=$venue[VEN_ID]'><button>Modify</button></a></td>\n";
+		echo "<td><div id='$venue[VEN_ID]UpdateStatus'></div></td>\n";
 		echo "</tr>\n";
-		echo "<td><span id='$venue[VEN_ID]UpdateStatus'></span></td>\n";
 	}
 	echo "</table>\n";
 	mysqli_close($con);

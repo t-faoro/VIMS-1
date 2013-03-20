@@ -14,7 +14,11 @@
 	$con = $myCon->connect();
 	$sql = venueUpdate($field, $status, $_POST['id'], $con);
 	if(mysqli_query($con, $sql)){
-		echo "Venue status has been updated";
+		if($_POST['status'] == 1)
+			echo "The venue status has been set to active";
+		else
+			echo "The venue status has been set to deactive";
+		// echo "Venue status has been updated";
 	}	
 	else{
 		echo "Error: Could not update venue status";
