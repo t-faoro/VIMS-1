@@ -17,80 +17,171 @@
     }
 	
 	//:: Program Variable Declarations
-	//$userAuth   		= $_SESSION['userAuth'];
-	$userName  		    =  "Tylor";//$_SESSION['userName'];
-	//$venueID  		= $_SESSION['venueId'];
-	//$venueName  		= $_SESSION['venueName'];
+	$userAuth   = $_SESSION['userAuth'];
+	$userName  	=  $_SESSION['userName'];
+	$venueID  	= $_SESSION['venueId'];
+	$venueName  = $_SESSION['venueName'];
+    $userFname  = $_SESSION['userFname'];
+    $userLname  = $_SESSION['userLname'];
+	$fullName	= $userFname." ".$userLname;
 	
 	$title = NULL;
 	$date  = NULL;
 	$comments = NULL;
+	static $month = 0;
+
 			
 	//:: Misc. Variables
 	$error = " ";
 	$css = "";
 	$js = "";
-	
-	createHead($css, $js);
-	createHeader($userName);
-	
-	if(isset($_POST['submit'])){
-		$title 		= $_POST['title'];
-		$date  		= $_POST['newsDate'];
-		$comments 	= $_POST['comments'];
-		$regID 		= $_POST['regID'];
-		//$newsID 	= $_POST['newsID'];
-			
-			
-		if(strlen($title) <= 0 || strlen($date) <= 0 || strlen($comments) <=0 ){
-			$error = "Error: All Fields are Mandatory.";
-		}
-		else{
-			setNews($con, $title, $date, $comments, $regID, 1004);
-			$error = "Update worked!";
-		}
-																			
-	}
-		
-	//:: Draws Content Blocks
-	echo '<div id="content">';
-	echo '<div class="headingDiv"><h2>Manage News</h2></div>';
-		 
-	echo '<div id="singleContent">';
-	echo '<div id="error">'.$error.'</div>';
-	$news = $_GET['action'];
+    
+	//:: Verify that the user is logged in
+    // If the user is not logged in, send back to index.php
 
-	switch($news){
-		case "create":
-				
-			echo '<div id="subhead">';
-			echo "<h3><span class='yellow'>Create News Flash</span></h3>";
-			echo '</div>';
-			echo newNewsForm($con);		
-		
-		break;
-		
-		case "modify": 
-			if($_GET['id'] == NULL){
-				header('Location: manageNews.php?action=default');
-			}
-			echo '<div id="subhead">';
-			echo "<h3 class='center'><span class='yellow'>Modify News Flash</span></h3>";
-			echo '</div>';
-			echo modifyNewsForm($con);
-			
-		break;
-		
-		default:
-			echo '<div class="newNewsButton"><a href="manageNews.php?action=create" >'.IMG("new.gif", "Create a new News Article.").'</a></div>';
-				drawNewsTable($con);
-		break;
-		
-	}
-	                           
-	echo '</div>';	
-	echo "</div>"; //End of Content	
+	createHead($css, $js);
+	createHeader($fullName);
+	createNav($userAuth);
 	
+	if (!verifyUser()){
+        echo "Forbidden: You do not have access to view that page";
+        header('Location: index.php');	
+    }
+	else{
+		$uID = getUserID($con, $userName);
+	
+		if(isset($_POST['createNews'])){
+			$title 		= $_POST['title'];
+			$date  		= $_POST['newsDate'];
+			$comments 	= $_POST['comments'];
+			$regID 		= $_POST['regID'];
+			//$newsID     = $_POST['newsID'];
+
+
+			if(strlen($title) <= 0 || strlen($date) <= 0 || strlen($comments) <=0 ){
+				$error = "Error: All Fields are Mandatory.";
+	
+			
+			}
+			else{
+				setNews($con, $title, $date, $comments, $regID, $uID);
+				header('Location: manageNews.php?action=default');
+																							
+			}
+		}
+		if(isset($_POST['modifyNews'])){
+			$title 		= $_POST['title'];
+			$date  		= $_POST['newsDate'];
+			$comments 	= $_POST['comments'];
+			$regID 		= $_POST['regID'];
+			//$newsID     = $_POST['newsID'];
+			
+			if(strlen($title) <= 0 || strlen($date) <= 0 || strlen($comments) <=0 ){
+				$error = "Error: All Fields are Mandatory.";
+			}
+			else{
+				modifyNews($con, $_GET['id'], $title, $date, $comments, $regID);
+				header('Location: manageNews.php?action=default');																						
+			}
+		}
+		
+		if(isset($_POST['deleteNews'])){
+			$reason = $_POST['reason'];
+		
+			if(strlen($reason) <= 0 ){
+				$error = "Error: A reason is required before a deletion can occur.";
+		
+			}
+			else{
+				deleteNews($con, $reason, $_GET['id']);
+				header('Location: manageNews.php?action=default');																						
+			}
+		}
+	
+			
+		//:: Draws Content Blocks
+		echo '<div id="content">';
+		echo '<div class="headingDiv"><h2>Manage News</h2></div>';	 
+		echo '<div id="error">'.$error.'</div>';
+		$news = $_GET['action'];
+		if($news != "default" && $news != "create"){
+			$p = $_GET['id'];
+		}
+		switch($news){
+								
+			case "create":			
+				echo '<a href="manageNews.php?action=default">'.IMG("back_arrow.gif", "Go back one page").'</a>';	
+				echo '<div id="subhead">';			
+				echo "<h3><span class='yellow'>Create News Flash</span></h3>";
+				echo '</div>';			
+				echo newNewsForm($con);				
+			break;
+			
+			case "modify":
+				echo '<a href="manageNews.php?action=default">'.IMG("back_arrow.gif", "Go back one page").'</a>';
+				echo '<div id="subhead">';
+				echo "<h3 class='center'><span class='yellow'>Modify News Flash</span></h3>";
+				echo '</div>';
+				echo modifyNewsForm($con);			
+			break;
+			
+			case "delete":
+				echo '<a href="manageNews.php?action=default">'.IMG("back_arrow.gif", "Go back one page").'</a>';
+				echo '<div id="subhead">';
+				echo "<h3 class='center'><span class='yellow'>Delete News Flash</span></h3>";
+				echo '</div>';
+				echo deleteNewsFlashForm($con);					
+			break;
+			
+			case "view":
+				$title = getNews($con, "NEW_Title", $p);
+				
+				echo '<a href="manageNews.php?action=default">'.IMG("back_arrow.gif", "Go back one page").'</a>';
+				echo '<div id="subhead">';
+				echo "<h3 class='center'><span class='yellow'>Read News Flash</span></h3>";
+				echo '</div>';
+				echo "<br /><br />";
+				echo '<div id="newsBlock">';
+				echo '<h1>'.$title.'</h1>';
+				echo '<h3>Submitted By: '.getNewsPosterName($con, $p).'</h3>';
+				echo '<h4>Desired Region: <span>'.getRegionName($con, $p).'</span></h4>';
+				echo '<div id="newsContent">';
+				echo '<p class="center">'.getNews($con, "NEW_Content", $p).'</p>';
+				echo '</div>';
+				echo "<br /><br /><br />";
+				echo '<div align="center"><a href="manageNews.php?action=default">DONE</a></div>';
+				echo "<br /><br /><br />";
+				echo "</div>";					
+			break;
+			
+			default:
+			
+				if(isset($_POST['monthSelect'])){
+					$month = $_POST['month'];	
+					
+					echo '<div class="center">';
+					echo updateNewsTable();
+					echo '</div>';
+					echo '<div class="newNewsButton"><a href="manageNews.php?action=create" >'.IMG("new.gif", "Create a new News Article.").'</a></div>';				
+					drawNewsTable($con);
+
+				}
+				else{
+					$month = 0;
+					echo '<div class="center">';
+					echo updateNewsTable();
+					echo '</div>';
+					echo '<div class="newNewsButton"><a href="manageNews.php?action=create" >'.IMG("new.gif", "Create a new News Article.").'</a></div>';					
+					drawAllNewsTable($con);
+				
+				}
+			break;
+			
+		}
+                           
+		echo '</div>';	
+		echo "</div>"; //End of Content	
+	}
 	createFoot();
 	
 	//:: End of Page
@@ -334,36 +425,80 @@
 	 * @return none
 	*/
 	function drawNewsTable($con){
+
+		global $userName;
+
+		$month = $_POST['month'];
+
 		$newsID = "";
 		
 		$sql = 'SELECT * ';
-		$sql .= 'FROM news';
+		$sql .= 'FROM news ';
+		$sql .= "ORDER BY NEW_Date DESC ";
+		
 		
 		$query = mysqli_query($con, $sql);
-		
 		echo '<table class="tableCenter">';
 		echo '<tr>';
 		echo '<th>News Title</th>';
 		echo '<th>News Date</th>';
 		echo '<th>News Category</th>';
 		echo '<th>News Region</th>';
+		echo '<th>News Poster</th>';
+		echo '</tr>';
+
 						
 		while($data = mysqli_fetch_array($query)){
 			$newsID = $data['NEW_ID']; // used to get region name using Junction Table
+
+			if($data['NEW_Reason_for_Del'] == NULL){
+				if ( date("M", strtotime($data['NEW_Date'])) == $month){
+								
+					echo '<tr>';
+					echo '<td>'.$data['NEW_Title'].'</td>';
+					echo '<td>'.date('M-d-Y', strtotime($data['NEW_Date'])).'</td>';			
+					echo '<td>';
+							 echo getRegionName($con, $newsID); // Calls getRegionName() function to determine name of Region for news					 
+					echo '</td>';
+					echo '<td>'.getNewsPosterName($con, $newsID).'</td>';
+					echo '<td class="hiddenEffects">'; 
+					echo '<div class="helperTray">';
+					echo '<a href="manageNews.php?action=view&id='.$data['NEW_ID'].'">'.IMG("view2.gif", "View News Entry").'</a>';
+					echo '<a href="manageNews.php?action=modify&id='.$data['NEW_ID'].'">'.IMG("edit.gif", "Edit News Entry").'</a>';			
+					echo '<a href="manageNews.php?action=delete&id='.$data['NEW_ID'].'">'.IMG("delete.gif", "Delete News Entry").'</a>';
+					echo '</div>';
+					echo '</td>';
+					echo '</tr>';
+				}
 			
-			echo '<tr>';
-			echo '<td>'.$data['NEW_Title'].'</td>';
-			echo '<td>'.$data['NEW_Date'].'</td>';
-			echo '<td>'.$data['NEW_Type'].'</td>';
-			echo '<td>';
-					 getRegionName($con, $newsID); // Calls getRegionName() function to determine name of Region for news					 
-			echo '</td>';
-			echo '<td class="hiddenEffects">';
-			echo '<a href="manageNews.php?action=modify&id='.$data['NEW_ID'].'">'.IMG("edit.gif", "Edit the Entry").'</a>';
-			echo '</td>';
-			echo '</tr>';
+
+			}
 		}		
 		echo '</table>';					
+	}
+	
+	function updateNewsTable(){
+		
+		$markUp  = '<form method="post" action="manageNews.php?action=default">';	
+		$markUp .= '<select name="month">';
+		$markUp .= '<option value=0 selected="selected">Select a Month</option>';
+		$markUp .= '<option value="Jan">January</option>';
+		$markUp .= '<option value="Feb">February</option>';
+		$markUp .= '<option value="Mar">March</option>';
+		$markUp .= '<option value="Apr">April</option>';
+		$markUp .= '<option value="May">May</option>';
+		$markUp .= '<option value="Jun">June</option>';
+		$markUp .= '<option value="Jul">July</option>';
+		$markUp .= '<option value="Aug">August</option>';
+		$markUp .= '<option value="Sep">September</option>';
+		$markUp .= '<option value="Oct">October</option>';
+		$markUp .= '<option value="Nov">November</option>';
+		$markUp .= '<option value="Dec">December</option>';
+		$markUp .= '</select>';
+		$markUp .= '<input type="submit" name="monthSelect", value="Go" />';
+		$markUp .= '</form>';
+		
+		return $markUp;
 	}
 	
 	/**
@@ -399,6 +534,100 @@
 	function currTimeDate(){		
 		$date = date('Y-m-d H:i:s');
 		return $date;		
+	}
+	
+	function getNewsPosterName($con, $newsID){
+		$name = "";
+		
+		$pID = getPosterID($con, $newsID);
+		
+		$sql  = "SELECT USE_Fname, USE_Lname ";
+		$sql .= 'FROM User ';
+		$sql .= 'WHERE Use_ID = "'.$pID.'"';
+		
+		$query = mysqli_query($con, $sql);
+		while ($row = mysqli_fetch_array($query)){
+			$name = $row['USE_Fname']." ".$row['USE_Lname'];	
+		}
+		
+		return $name;
+		
+		
+	}
+	
+	function getPosterID($con, $newsID){
+		$posterID = "";
+		
+		$sql = "SELECT User_USE_ID ";
+		$sql .= "FROM news ";
+		$sql .= "WHERE NEW_ID = ".$newsID." ";
+		
+		$query = mysqli_query($con, $sql);
+		while($row = mysqli_fetch_array($query)){
+			$posterID = $row['User_USE_ID'];
+		}
+		return $posterID;			
+	}
+	
+	function getUserID($con, $uName){
+		$uID = "";
+		
+		$sql  = 'SELECT USE_ID ';
+		$sql .= 'FROM user ';
+		$sql .= 'WHERE USE_Name = "'.$uName.'" ';
+		
+		$query = mysqli_query($con, $sql);
+
+
+		while($row = mysqli_fetch_array($query)){
+			$uID = $row['USE_ID'];
+		}
+		
+		return $uID;
+		
+	}
+	
+	function drawAllNewsTable($con){
+		global $userName;
+		
+		$newsID = "";
+		
+		$sql = 'SELECT * ';
+		$sql .= 'FROM news ';
+		$sql .= "ORDER BY NEW_Date DESC ";
+		
+		
+		$query = mysqli_query($con, $sql);
+		echo '<table class="table_center">';
+		echo '<tr>';
+		echo '<th>News Title</th>';
+		echo '<th>News Date</th>';
+		echo '<th>News Region</th>';
+		echo '<th>News Poster</th>';
+		echo '</tr>';
+						
+		while($data = mysqli_fetch_array($query)){
+			$newsID = $data['NEW_ID']; // used to get region name using Junction Table
+			
+			if($data['NEW_Reason_for_Del'] == NULL){								
+					echo '<tr>';
+					echo '<td>'.$data['NEW_Title'].'</td>';
+					echo '<td>'.date('M-d-Y', strtotime($data['NEW_Date'])).'</td>';			
+					echo '<td>';
+							 echo getRegionName($con, $newsID); // Calls getRegionName() function to determine name of Region for news					 
+					echo '</td>';
+					echo '<td>'.getNewsPosterName($con, $newsID).'</td>';
+					echo '<td class="hiddenEffects">'; 
+					echo '<div class="helperTray">';
+					echo '<a href="manageNews.php?action=view&id='.$data['NEW_ID'].'">'.IMG("view2.gif", "View News Entry").'</a>';
+					echo '<a href="manageNews.php?action=modify&id='.$data['NEW_ID'].'">'.IMG("edit.gif", "Edit News Entry").'</a>';			
+					echo '<a href="manageNews.php?action=delete&id='.$data['NEW_ID'].'">'.IMG("delete.gif", "Delete News Entry").'</a>';
+					echo '</div>';
+					echo '</td>';
+					echo '</tr>';							
+			}
+		}		
+		echo '</table>';					
 	}	
 
 ?>
