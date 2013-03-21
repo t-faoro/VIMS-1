@@ -26,6 +26,7 @@ $fullName = $userFname . " " . $userLname;
 date_default_timezone_set('UTC');
 $date = date('Y-m-d', time());
 
+$error		  = null;
 $pm 		  = null;
 $action 	  = null;
 $varID 		  = null;
@@ -181,48 +182,55 @@ if(($action == 'Save' || $action == 'Add a Person'))
 	// No ineID, so we make a new record
 	if($ineID == null)
 	{
-		$con = $myCon->connect();
-		
-		$ine_time    = mysqli_real_escape_string($con, $ine_time);
-		$ine_summary = mysqli_real_escape_string($con, $ine_summary);
-		$ine_damages = mysqli_real_escape_string($con, $ine_damages);
-		
-		$sql  = "INSERT INTO incident_entry (";
-		$sql .= "var_VAR_ID";
-		$sql .= ", INE_Time";
-		$sql .= ", incident_level_lookup_ILL_Level";
-		$sql .= ", INE_Police";
-		$sql .= ", INE_Content";
-		$sql .= ", INE_Damages";
-		$sql .= ") VALUES (";
-		$sql .= $varID;
-		$sql .= ", '" . $ine_time . "'";
-		$sql .= ", " . $ine_severity;
-		$sql .= ", " . $ine_police;
-		$sql .= ", '" . $ine_summary . "'";
-		$sql .= ", '" . $ine_damages . "'";
-		$sql .= ")";
-		
-		$result = mysqli_query($con, $sql);
-		
-		$sql  = "SELECT MAX(INE_ID) AS INE_ID FROM incident_entry";
-		$sql .= " WHERE (var_VAR_ID=" . $varID . ")";
-		
-		$result = mysqli_query($con, $sql);
-		while($row = mysqli_fetch_array($result))
+		if($ine_time == null || $ine_summary == null)
 		{
-			$ineID = $row['INE_ID'];
+			$error = "Please fill out required fields<br />\n";
 		}
-		
-		if($action == 'Save')
+		else
 		{
-			$page = "location:manageVars.php?action=view&varID=$varID";
+			$con = $myCon->connect();
+			
+			$ine_time    = mysqli_real_escape_string($con, $ine_time);
+			$ine_summary = mysqli_real_escape_string($con, $ine_summary);
+			$ine_damages = mysqli_real_escape_string($con, $ine_damages);
+			
+			$sql  = "INSERT INTO incident_entry (";
+			$sql .= "var_VAR_ID";
+			$sql .= ", INE_Time";
+			$sql .= ", incident_level_lookup_ILL_Level";
+			$sql .= ", INE_Police";
+			$sql .= ", INE_Content";
+			$sql .= ", INE_Damages";
+			$sql .= ") VALUES (";
+			$sql .= $varID;
+			$sql .= ", '" . $ine_time . "'";
+			$sql .= ", " . $ine_severity;
+			$sql .= ", " . $ine_police;
+			$sql .= ", '" . $ine_summary . "'";
+			$sql .= ", '" . $ine_damages . "'";
+			$sql .= ")";
+			
+			$result = mysqli_query($con, $sql);
+			
+			$sql  = "SELECT MAX(INE_ID) AS INE_ID FROM incident_entry";
+			$sql .= " WHERE (var_VAR_ID=" . $varID . ")";
+			
+			$result = mysqli_query($con, $sql);
+			while($row = mysqli_fetch_array($result))
+			{
+				$ineID = $row['INE_ID'];
+			}
+			
+			if($action == 'Save')
+			{
+				$page = "location:manageVars.php?action=view&varID=$varID";
+			}
+			if($action == 'Add a Person')
+			{
+				$page = "location:managePor.php?action=new&varID=$varID&ineID=$ineID";
+			}
+			header($page);
 		}
-		if($action == 'Add a Person')
-		{
-			$page = "location:managePor.php?action=new&varID=$varID&ineID=$ineID";
-		}
-		header($page);
 	}
 	else 	// update the existing record
 	{
@@ -369,7 +377,7 @@ $details[16] = $varID;
 $html  = "<div id='IncidentForm'>\n";
 
 $html .= "	<form id='IneForm' action='incident.php' method='GET'>\n";
-
+$html .= "$error\n";
 $Incident = new Incident($details);
 $html .= $Incident->drawIncident($IllLevels);
 $html .= "<input type='submit' class='bottomButton' name='action' value='Add a Person'>"; 

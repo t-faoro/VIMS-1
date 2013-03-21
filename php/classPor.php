@@ -50,8 +50,8 @@ class Por {
 		$html .= "	<div class='porRec'>\n";
 		$html .= "		<span id='PorRec" . $this->num . "'>\n";
 		$html .= "		<div class='PorLabel'>Person " . $this->num . "</div><br />\n"; // close PorLabel
-		$html .= "			<label>Name: </label><input " . $disabled . "type='textbox' value='" . $this->name . "' name='porName'>\n";
-		$html .= " 			<label>Involvement: </label><select " . $disabled . "name='porInv'>\n";
+		$html .= "			<span>Name: </span><input " . $disabled . "type='textbox' value='" . $this->name . "' name='porName'>\n";
+		$html .= " 			<span>Involvement: </span><select " . $disabled . "name='porInv'>\n";
 		$html .= "											<option value='1'";
 		if($this->involved == 1) $html .= " selected='selected'";
 		$html .= ">Witness</option>\n";
@@ -65,9 +65,9 @@ class Por {
 		if($this->involved == 4) $html .= " selected='selected'";
 		$html .= ">Agressor</option>\n";
 		$html .= "										</select>\n";
-		$html .= " 			<label>Phone: </label><input " . $disabled . "type='textbox' value='" . $this->phone . "' name='porPhone'>\n";
-		$html .= " 			<label>License: </label><input  " . $disabled . "type='textbox' value='" . $this->license . "' name='porLicense'><br />\n";
-		$html .= "			<label>Notes: </label><br />\n";
+		$html .= " 			<span>Phone: </span><input " . $disabled . "type='textbox' value='" . $this->phone . "' name='porPhone'>\n";
+		$html .= " 			<span>License: </span><input  " . $disabled . "type='textbox' value='" . $this->license . "' name='porLicense'><br />\n";
+		$html .= "			<span>Notes: </span><br />\n";
 		$html .= "			<textarea " . $disabled . "name='porNotes'>" . $this->notes . "</textarea>\n";
 		
 		
