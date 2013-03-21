@@ -154,7 +154,8 @@ function getDashNews($regID, $date, $type)
 	$sql .= " WHERE (news.NEW_Date <='" . $date . "'";
 	$sql .= " AND news.NEW_Date >='" . $endDate . "'";
 	$sql .= " AND news.NEW_Type=" . $type;
-	$sql .= " AND news_region_assc.region_REG_ID=" . $regID . ")";
+	$sql .= " AND (news_region_assc.region_REG_ID=" . $regID;
+	$sql .= " OR news_region_assc.region_REG_ID<100))";
 	$sql .= " LIMIT 2";
 	
 	return $sql;

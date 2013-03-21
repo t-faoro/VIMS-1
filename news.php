@@ -54,7 +54,7 @@ else
 	$selectedYear = $year;
 }
 if(isset ($_GET['NewsType'])) $selectedType = $_GET['NewsType'];
-else $selectedType = null;
+else $selectedType = 2;
 $html  = "<div id='NewsPeriod'>\n";
 $html .= "<form action='news.php' method='GET'>";
 $html .= "	<label class='comboLabel'>Displaying News for Month:</label>";
@@ -133,7 +133,8 @@ $sql .= " ON (news.NEW_ID = news_region_assc.News_NEW_ID)";
 $sql .= " WHERE (news.NEW_Date <='" . $startDate . "'";
 $sql .= " AND news.NEW_Date >='" . $endDate . "'";
 $sql .= " AND news.NEW_Type=" . $selectedType;
-$sql .= " AND news_region_assc.region_REG_ID=" . $regID . ")";
+$sql .= " AND (news_region_assc.region_REG_ID=" . $regID;
+$sql .= " OR news_region_assc.region_REG_ID<100))";
 
 $html  = "<div id='clear'></div>\n";
 $html .= "<div id='NewsReel'>\n";
