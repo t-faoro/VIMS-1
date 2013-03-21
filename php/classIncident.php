@@ -38,8 +38,8 @@ class Incident {
 		$this->venueAddr   = $details[2];
 		$this->venueLoc    = $details[3];
 		$this->reportDate  = $details[4];
-		$this->supervisor  = $details[5];
-		$this->event	   = $details[6];
+		$this->event	   = $details[5];
+		$this->supervisor  = $details[6];
 		$this->hourMin	   = $details[7];
 		$this->pm		   = $details[8];
 		$this->level  	   = $details[9];
