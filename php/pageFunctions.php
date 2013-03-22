@@ -9,7 +9,11 @@
 	
 	include_once "php/config.php";
 	
-
+	/**
+		Purpose: to create a navagation bar based on the users authrization level
+		@param $authLevel the authorization level for the user
+		@return the users navagation bar
+	*/
 	function createNav($authLevel)
 	{
 		//Clubwatch administrator
