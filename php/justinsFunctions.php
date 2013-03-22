@@ -24,9 +24,10 @@
 			VEN_Phone the venues phone number
 			VEN_Liason the venues primary contact
 			button Text to appear in the submit button for the form
+		@param $auth the users authorization level
 		@return a form containing text boxes for each index
 	*/
-	function createForm($info)
+	function createForm($info, $auth)
 	{	
 		$myCon = new Connection();
 		$con = $myCon->connect();
@@ -46,17 +47,25 @@
 		echo "<input type='test' value='$info[VEN_Province]' />\n<br />\n";*/
 		echo "<label>Postal Code: <br /></label>\n";	
 		echo "<input type='text' name='post' value='$info[VEN_Pcode]' />\n<br />\n";
-		echo "<label>Region: <br /></label>\n";
-		echo "<select name='region'>\n";
-			$sql = 'SELECT * FROM Region;';
-			$results = mysqli_query($con, $sql);
-			foreach($results as $region)
-			{
-				echo "<option value='$region[REG_ID]' ";
-				if($region['REG_ID'] == $info['Region_REG_ID']) echo "selected";
-				echo ">$region[REG_Name]</option>\n";
-			}
-		echo "</select>\n<br />\n";
+
+		if(0 == $auth)
+		{		
+			echo "<label>Region: <br /></label>\n";
+			echo "<select name='region'>\n";
+				$sql = 'SELECT * FROM Region;';
+				$results = mysqli_query($con, $sql);
+				foreach($results as $region)
+				{
+					echo "<option value='$region[REG_ID]' ";
+					if($region['REG_ID'] == $info['Region_REG_ID']) echo "selected";
+					echo ">$region[REG_Name]</option>\n";
+				}
+			echo "</select>\n<br />\n";
+		}
+		else
+		{
+			echo "<input type='hidden' vame='region' value='$info[Region_REG_ID] >\n";
+		}
 		echo "<label>Phone: <br /></label>\n";
 		echo "<input type='text' name='phone' value='$info[VEN_Phone]' />\n<br />\n";
 		echo "<label>Contact: <br /></label>\n";
