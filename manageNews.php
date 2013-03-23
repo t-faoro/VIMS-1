@@ -8,6 +8,7 @@
 	
 	//error_reporting(0);
 	include_once "php/config.php";
+	include_once "php/newsFunctions.php";
     
 	//:: Instantiate Database Connection Object
 	$con = new Connection();

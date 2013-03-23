@@ -18,7 +18,7 @@ include_once "php/venue_user_asscFunctions.php";
 include_once "php/VenueFunctions.php";
 include_once "php/dashboardFunctions.php";
 include_once "php/varFunctions.php";
-include_once "php/newsFunctions.php";
+// include_once "php/newsFunctions.php";
 
 
 
