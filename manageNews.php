@@ -2,13 +2,13 @@
 	/**
 	 * manageNews.php
 	 * @author Tylor Faoro
+	  Edited by: Justin Werre March 23, 2013
 	*/	
 	
 	session_start();
 	
 	//error_reporting(0);
 	include_once "php/config.php";
-	include_once "php/newsFunctions.php";
     
 	//:: Instantiate Database Connection Object
 	$con = new Connection();

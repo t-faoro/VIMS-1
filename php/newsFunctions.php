@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 	 * Take all data received through the form via POSTBACK and attempts to insert it into the database in a readable
 	 * manor.
@@ -419,6 +419,7 @@
 	*/	
 	function drawAllNewsTable($con){
 		global $userName;
+		date_default_timezone_set('America/Edmonton');
 		
 		$newsID = "";
 		
