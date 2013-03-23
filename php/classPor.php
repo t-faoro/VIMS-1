@@ -67,7 +67,7 @@ class Por {
 		$html .= "										</select>\n";
 		$html .= " 			<span>Phone: </span><input " . $disabled . "type='textbox' value='" . $this->phone . "' name='porPhone'>\n";
 		$html .= " 			<span>License: </span><input  " . $disabled . "type='textbox' value='" . $this->license . "' name='porLicense'><br />\n";
-		$html .= "			<span>Notes: </span><br />\n";
+		$html .= "			<span>*Notes: </span><br />\n";
 		$html .= "			<textarea " . $disabled . "name='porNotes'>" . $this->notes . "</textarea>\n";
 		
 		
