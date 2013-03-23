@@ -116,7 +116,7 @@
 	echo "<div class='error'>$error</div>\n";
 	createForm($venInfo, $_SESSION['userAuth']);
 	//only show add users for existing venues
-	if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID'], $_SESSION['userAuth']);
+	if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID'], $_SESSION['userAuth'], $venInfo['VEN_Can_Make_Owner']);
 	echo "</div>\n";
 	createFoot();
 	mysqli_close($con);

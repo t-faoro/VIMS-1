@@ -116,10 +116,11 @@
 		@param users an array of users to be displayed, may be empty
 		@param venue the id number of the venue that new users will be associated with
 		@param $userAuth the authorization level of the user
+		@param $makeOwner wether or not the venue can make additinal owners
 		@return a table with users that can be edited, and buttons show the create new user form
 			and join existing user form
 	*/
-	function listUsers($users, $venue, $userAuth)
+	function listUsers($users, $venue, $userAuth, $makeOwners)
 	{
 		echo "<table id='users'>\n";
 		echo "<tr>\n";
@@ -131,7 +132,7 @@
 		echo "<th><button id='joinUser'>Join User</button></th>\n";
 		echo "</tr>\n";
 		foreach($users as $user)
-			createUserRow($user, $venue, $userAuth);
+			createUserRow($user, $venue, $userAuth, $makeOwners);
 		echo "</table>\n";
 		
 		$myCon = new Connection();
@@ -152,9 +153,12 @@
 		echo "<select name='auth' id='auth'>\n";
 			foreach($authLevels as $auth)
 			{
+				//only clubwatch can have administrators
 				if(100 != $venue && 0 == $auth['AUT_Level']) continue;
+				//venue owners can not create administrators
 				if(1 == $userAuth && 0 == $auth['AUT_Level']) continue;
-				if(2 == $userAuth) continue;
+				//venue owners can only create additinal owners if permited
+				if(1 == $userAuth && 1 == $auth['AUT_Level'] && 0 == $makeOwners) continue;
 				echo "<option value='$auth[AUT_Level]'";
 				echo ">$auth[AUT_Def]</option>\n";
 			}
@@ -178,10 +182,11 @@
 			Auth_Level_Lookup_AUT_Level 
 		@param $venue the id number of the venue associatied with the user
 		@param $userAuth the authorization level of the user
+		@param $makeOwner wether or not the venue can make owners
 		@return a single table row, with text boxs for the user name, first name, last name a selection box
 			for the authorization level, and a delete and save button
 	*/
-	function createUserRow($user, $venue, $userAuth)
+	function createUserRow($user, $venue, $userAuth, $makeOwner)
 	{
 		$myCon = new Connection();
 		$con = $myCon->connect();
@@ -194,9 +199,16 @@
 		echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
 			foreach($authLevels as $auth)
 			{
+				//only clubwatch can have administrators
 				if(100 != $venue && 0 == $auth['AUT_Level']) continue;
+				//venue owners can not create administrators
 				if(1 == $userAuth && 0 == $auth['AUT_Level']) continue;
-				if(2 == $userAuth) continue;
+				//venue owners can only create additinal owners if permited
+				if(1 == $userAuth //user is a club owner
+					&& 1 == $auth['AUT_Level'] //show owner privilages
+					&& 0 == $makeOwner //does not have permission to create owners
+					&& 1 != $user['Auth_Level_Lookup_AUT_Level']) //existing user is not a owner
+						continue;
 				echo "<option value='$auth[AUT_Level]'";
 				if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo " selected";
 				echo ">$auth[AUT_Def]</option>\n";
