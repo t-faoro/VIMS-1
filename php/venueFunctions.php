@@ -65,6 +65,7 @@ function venueList($regID)
  * 			VEN_Unit_Addr
  *  		VEN_St_Addr
  * 			VEN_City
+ *			VEN_Province
  * 			VEN_Pcode
  * 			VEN_Phone
  * 			VEN_Liason
@@ -93,10 +94,10 @@ function venueCreate($venueDetails, $con)
     else {
         // build sql string
 	    $sql  = "INSERT INTO venue";
-	    $sql .= " (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City,";
+	    $sql .= " (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Province";
 	    $sql .= " VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID)";
 	    $sql .= " VALUES (";
-	    for($i = 0; $i <= 7; $i++)
+	    for($i = 0; $i <= 8; $i++)
 		{
 			if($i != 0) $sql .= ", ";
 			$sql .= "'" . $venueDetails[$i] . "'";

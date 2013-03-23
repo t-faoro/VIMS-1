@@ -49,6 +49,7 @@ if(isset($_POST['name']))
 		$_POST['unit'],
 		$_POST['address'],
 		$_POST['city'],
+		$_POST['province'],
 		$_POST['post'],
 		$_POST['phone'],
 		$_POST['liason'],
@@ -91,6 +92,7 @@ if(isset($_POST['name']))
 			'Unit_Addr',
 			'St_Addr',
 			'City',
+			'Province',
 			'Pcode',
 			'phone',
 			'Liason',
@@ -109,7 +111,7 @@ createNav($_SESSION['userAuth']);
 echo "<div class='clear' ></div>\n";
 echo "<div id ='content'>\n";
 echo "<div class='error'>$error</div>\n";
-createForm($venInfo, $_SESSION['venueId']);
+createForm($venInfo, $_SESSION['userAuth']);
 //only show add users for existing venues
 if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID']);
 echo "</div>\n";

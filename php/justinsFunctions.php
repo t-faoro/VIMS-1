@@ -31,22 +31,34 @@
 	{	
 		$myCon = new Connection();
 		$con = $myCon->connect();
-		
+		var_dump($info);
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
-		echo "<input type='hidden' name='id' value=$info[VEN_ID] />\n";
+		echo "<input type='hidden' name='id' value=$info[VEN_ID] ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n";
 		echo "<label for='name'>Name: </label>\n";
 		echo "<input type='text' name='name' value='$info[VEN_Name]' />\n<br />\n";
 		echo "<label>Unit: <br /></label>\n";
-		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' />\n<br />\n";
+		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n<br />\n";
 		echo "<label>Address: <br /></label>\n";
-		echo "<input type='text' name='address' value='$info[VEN_St_Addr]' />\n<br />\n";
+		echo "<input type='text' name='address' value='$info[VEN_St_Addr]' ";
+		if(1 == $auth) echo "disabled "; 
+		echo "/>\n<br />\n";
 		echo "<label>City: <br /></label>\n";
-		echo "<input type='text' name='city' value='$info[VEN_City]' />\n<br />\n";
-		/*echo "<label>Province: <br /></label>\n";
-		echo "<input type='test' value='$info[VEN_Province]' />\n<br />\n";*/
+		echo "<input type='text' name='city' value='$info[VEN_City]' ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n<br />\n";
+		echo "<label>Province: <br /></label>\n";
+		echo "<input type='test' name='province' value='$info[VEN_Province]' ";
+		if(1 == $auth) echo "disabled";
+		echo "/>\n<br />\n";
 		echo "<label>Postal Code: <br /></label>\n";	
-		echo "<input type='text' name='post' value='$info[VEN_Pcode]' />\n<br />\n";
+		echo "<input type='text' name='post' value='$info[VEN_Pcode]' ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n<br />\n";
 
 		if(0 == $auth)
 		{		
@@ -64,12 +76,26 @@
 		}
 		else
 		{
-			echo "<input type='hidden' vame='region' value='$info[Region_REG_ID] >\n";
+			echo "<input type='hidden' vame='region' value='$info[Region_REG_ID]' />\n";
 		}
+		
 		echo "<label>Phone: <br /></label>\n";
 		echo "<input type='text' name='phone' value='$info[VEN_Phone]' />\n<br />\n";
 		echo "<label>Contact: <br /></label>\n";
 		echo "<input type='text' name='liason' value='$info[VEN_Liason]' />\n<br />\n";
+		
+		if(0 == $auth)
+		{
+			echo "<label>Create Owners:</label>\n<br />\n";
+			echo "<select name='owner'>\n";
+			echo "<option value='0' ";
+			if(0 == $info['VEN_Can_Make_Owner']) echo "";
+			echo ">No</option>\n";
+			echo "<option value='1'>Yes</option>\n";
+			echo "</select>\n";
+			echo "<br />\n";
+		}
+		
 		echo "<input type='submit' name='submit' value='$info[button]' />\n";
 		if('New' == $info['VEN_ID']) echo "<input type='submit' name='submit' value='Add users' />\n";
 		echo "<input type='submit' name='submit' value='Cancel' />\n";
