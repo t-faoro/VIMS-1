@@ -6,8 +6,15 @@
 		@param $_POST['venue'] the id number of the venue for which the user is to be denied access
 	*/
 	include_once "connection.php";
+	include_once "userFunctions.php";
 	$myCon = new Connection();
 	$con = $myCon->connect();
+	
+	//don't delete the owner if their is only one owner
+	$sql = ownerList($_POST['venue']);
+	$response = mysqli_fetch_array(mysqli_query($con, $sql));
+	if($response[0] == 1)
+		return false;
 	
 	date_default_timezone_set('America/Edmonton');
 	$date = date('Y-m-d H:i:s');
