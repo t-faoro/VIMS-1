@@ -24,43 +24,85 @@
 			VEN_Phone the venues phone number
 			VEN_Liason the venues primary contact
 			button Text to appear in the submit button for the form
+		@param $auth the users authorization level
 		@return a form containing text boxes for each index
 	*/
-	function createForm($info)
+	function createForm($info, $auth)
 	{	
 		$myCon = new Connection();
 		$con = $myCon->connect();
 		
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
-		echo "<input type='hidden' name='id' value=$info[VEN_ID] />\n";
+		echo "<input type='hidden' name='id' value=$info[VEN_ID] ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n";
 		echo "<label for='name'>Name: </label>\n";
 		echo "<input type='text' name='name' value='$info[VEN_Name]' />\n<br />\n";
 		echo "<label>Unit: <br /></label>\n";
-		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' />\n<br />\n";
+		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n<br />\n";
 		echo "<label>Address: <br /></label>\n";
-		echo "<input type='text' name='address' value='$info[VEN_St_Addr]' />\n<br />\n";
+		echo "<input type='text' name='address' value='$info[VEN_St_Addr]' ";
+		if(1 == $auth) echo "disabled "; 
+		echo "/>\n<br />\n";
 		echo "<label>City: <br /></label>\n";
-		echo "<input type='text' name='city' value='$info[VEN_City]' />\n<br />\n";
-		/*echo "<label>Province: <br /></label>\n";
-		echo "<input type='test' value='$info[VEN_Province]' />\n<br />\n";*/
+		echo "<input type='text' name='city' value='$info[VEN_City]' ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n<br />\n";
+		echo "<label>Province: <br /></label>\n";
+		echo "<input type='test' name='province' value='$info[VEN_Province]' ";
+		if(1 == $auth) echo "disabled";
+		echo "/>\n<br />\n";
 		echo "<label>Postal Code: <br /></label>\n";	
-		echo "<input type='text' name='post' value='$info[VEN_Pcode]' />\n<br />\n";
-		echo "<label>Region: <br /></label>\n";
-		echo "<select name='region'>\n";
-			$sql = 'SELECT * FROM Region;';
-			$results = mysqli_query($con, $sql);
-			foreach($results as $region)
-			{
-				echo "<option value='$region[REG_ID]' ";
-				if($region['REG_ID'] == $info['Region_REG_ID']) echo "selected";
-				echo ">$region[REG_Name]</option>\n";
-			}
-		echo "</select>\n<br />\n";
+		echo "<input type='text' name='post' value='$info[VEN_Pcode]' ";
+		if(1 == $auth) echo "disabled ";
+		echo "/>\n<br />\n";
+
+		if(0 == $auth)
+		{		
+			echo "<label>Region: <br /></label>\n";
+			echo "<select name='region'>\n";
+				$sql = 'SELECT * FROM Region;';
+				$results = mysqli_query($con, $sql);
+				foreach($results as $region)
+				{
+					if(100 != $info['VEN_ID'] && 99 == $region['REG_ID'])continue;
+					echo "<option value='$region[REG_ID]' ";
+					if($region['REG_ID'] == $info['Region_REG_ID']) echo "selected";
+					echo ">$region[REG_Name]</option>\n";
+				}
+			echo "</select>\n<br />\n";
+		}
+		else
+		{
+			echo "<input type='hidden' vame='region' value='$info[Region_REG_ID]' />\n";
+		}
+		
 		echo "<label>Phone: <br /></label>\n";
 		echo "<input type='text' name='phone' value='$info[VEN_Phone]' />\n<br />\n";
 		echo "<label>Contact: <br /></label>\n";
 		echo "<input type='text' name='liason' value='$info[VEN_Liason]' />\n<br />\n";
+		
+		if(0 == $auth)
+		{
+			echo "<label>Create Owners:</label>\n<br />\n";
+			echo "<select name='owner'>\n";
+			echo "<option value='0' ";
+			if(0 == $info['VEN_Can_Make_Owner']) echo "selected ";
+			echo ">No</option>\n";
+			echo "<option value='1'";
+			if(1 == $info['VEN_Can_Make_Owner']) echo "selected ";
+			echo ">Yes</option>\n";
+			echo "</select>\n";
+			echo "<br />\n";
+		}
+		else
+		{
+			echo "<input type='hidden' name='owner' value='$info[VEN_Can_Make_Owner]' />\n";
+		}
+		
 		echo "<input type='submit' name='submit' value='$info[button]' />\n";
 		if('New' == $info['VEN_ID']) echo "<input type='submit' name='submit' value='Add users' />\n";
 		echo "<input type='submit' name='submit' value='Cancel' />\n";
@@ -73,10 +115,11 @@
 			new user, and join an existing user to the venue
 		@param users an array of users to be displayed, may be empty
 		@param venue the id number of the venue that new users will be associated with
+		@param $userAuth the authorization level of the user
 		@return a table with users that can be edited, and buttons show the create new user form
 			and join existing user form
 	*/
-	function listUsers($users, $venue)
+	function listUsers($users, $venue, $userAuth)
 	{
 		echo "<table id='users'>\n";
 		echo "<tr>\n";
@@ -88,7 +131,7 @@
 		echo "<th><button id='joinUser'>Join User</button></th>\n";
 		echo "</tr>\n";
 		foreach($users as $user)
-			createUserRow($user, $venue);
+			createUserRow($user, $venue, $userAuth);
 		echo "</table>\n";
 		
 		$myCon = new Connection();
@@ -109,6 +152,9 @@
 		echo "<select name='auth' id='auth'>\n";
 			foreach($authLevels as $auth)
 			{
+				if(100 != $venue && 0 == $auth['AUT_Level']) continue;
+				if(1 == $userAuth && 0 == $auth['AUT_Level']) continue;
+				if(2 == $userAuth) continue;
 				echo "<option value='$auth[AUT_Level]'";
 				echo ">$auth[AUT_Def]</option>\n";
 			}
@@ -131,10 +177,11 @@
 			USE_Lname the users last name
 			Auth_Level_Lookup_AUT_Level 
 		@param $venue the id number of the venue associatied with the user
+		@param $userAuth the authorization level of the user
 		@return a single table row, with text boxs for the user name, first name, last name a selection box
 			for the authorization level, and a delete and save button
 	*/
-	function createUserRow($user, $venue)
+	function createUserRow($user, $venue, $userAuth)
 	{
 		$myCon = new Connection();
 		$con = $myCon->connect();
@@ -147,6 +194,9 @@
 		echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
 			foreach($authLevels as $auth)
 			{
+				if(100 != $venue && 0 == $auth['AUT_Level']) continue;
+				if(1 == $userAuth && 0 == $auth['AUT_Level']) continue;
+				if(2 == $userAuth) continue;
 				echo "<option value='$auth[AUT_Level]'";
 				if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo " selected";
 				echo ">$auth[AUT_Def]</option>\n";

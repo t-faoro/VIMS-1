@@ -65,9 +65,11 @@ function venueList($regID)
  * 			VEN_Unit_Addr
  *  		VEN_St_Addr
  * 			VEN_City
+ *			VEN_Province
  * 			VEN_Pcode
  * 			VEN_Phone
  * 			VEN_Liason
+ *      VEN_Can_Make_Owner
  * 			Region_REG_ID
  * 	@param $con	database connection [resource]
  * 
@@ -80,29 +82,29 @@ function venueCreate($venueDetails, $con)
         $value = mysqli_real_escape_string($con, $value);
     }
     
-    if((strlen($venueDetails[0]) > 45)
-        || (strlen($venueDetails[1]) > 10)
-        || (strlen($venueDetails[2]) > 45)
-		|| (strlen($venueDetails[3]) > 25)
-		|| (strlen($venueDetails[4]) > 7)
-		|| (strlen($venueDetails[5]) > 12)
-		|| (strlen($venueDetails[6]) > 45)
-		|| (!is_numeric($venueDetails[7]))
-        ) $sql = "error";
+    // if((strlen($venueDetails[0]) > 45)
+        // || (strlen($venueDetails[1]) > 10)
+        // || (strlen($venueDetails[2]) > 45)
+		// || (strlen($venueDetails[3]) > 25)
+		// || (strlen($venueDetails[5]) > 7)
+		// || (strlen($venueDetails[6]) > 12)
+		// || (strlen($venueDetails[7]) > 45)
+		// || (!is_numeric($venueDetails[9]))
+        // ) $sql = "error";
 
-    else {
+    // else {
         // build sql string
 	    $sql  = "INSERT INTO venue";
-	    $sql .= " (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City,";
-	    $sql .= " VEN_Pcode, VEN_Phone, VEN_Liason, Region_REG_ID)";
+	    $sql .= " (VEN_Name, VEN_Unit_Addr, VEN_St_Addr, VEN_City, VEN_Province,";
+	    $sql .= " VEN_Pcode, VEN_Phone, VEN_Liason, VEN_Can_Make_Owner, Region_REG_ID)";
 	    $sql .= " VALUES (";
-	    for($i = 0; $i <= 7; $i++)
+	    for($i = 0; $i <= 9; $i++)
 		{
 			if($i != 0) $sql .= ", ";
 			$sql .= "'" . $venueDetails[$i] . "'";
 		}
 	    $sql .= ")";
-    }
+    // }
 	
 	return $sql;
 }
@@ -118,7 +120,8 @@ function venueCreate($venueDetails, $con)
  *	@return $sql	string containing sql statement
  */
 function venueUpdate($field, $content, $venueID, $con)
-{
+{	
+	$length = count($field);
 	// clean inputs
     for($i = 0; $i < $length; $i++)
 	{
@@ -128,7 +131,7 @@ function venueUpdate($field, $content, $venueID, $con)
 	//buils sql string
     $sql  = "UPDATE venue SET";
 	
-	$length = count($field);
+
 	
 	// loop through arrays
 	for($i = 0; $i < $length; $i++)

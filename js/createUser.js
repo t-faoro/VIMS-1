@@ -35,16 +35,16 @@ $(function(){
 					url: "php/createUser.php"
 				}).done(function(msg){
 						if('false' == msg){
-								// alert('That username is taken. Please chose different username.');
-								$("#uError").text("That username is taken. Please chose a different username.");
-							}
-							else{
-								$('#users').append(msg);
-								created = true;
-							}
+							$("#uError").text("That username is taken. Please chose a different username.");
+							created = false;
+						}
+						else{
+							$('#users').append(msg);
+							$('#uError').text('');
+							created = true;
+						}
 					});
-					if(created)
-						$(this).dialog("close");
+				if(created) { $(this).dialog("close"); }
 			},
 			Cancel: function() {
 			$(this).dialog("close");

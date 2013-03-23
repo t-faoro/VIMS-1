@@ -36,7 +36,7 @@
 			$userNav  .= "<ul>\n";
 			$userNav  .= "<li><a href='dashboard.php'>Home</a></li>\n";
 			$userNav  .= "<li><a href='news.php'>News</a></li>\n";
-			$userNav  .= "<li><a href='#'>Manage Venue</a></li>\n";
+			$userNav  .= "<li><a href='venues.php?id=$_SESSION[venueId]'>Manage Venue</a></li>\n";
 			$userNav  .= "<li><a href='manageReports.php'>Manage Reports</a></li>\n";
 			$userNav  .= "</ul>\n";
 			$userNav  .= "</div>\n";

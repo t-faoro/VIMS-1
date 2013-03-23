@@ -17,7 +17,7 @@
 	echo "<div id ='content' style='color: white;'>\n";
 	
 	//Link to create a new venue
-	echo "<a href='Venues.php?id=new'><button>New venue</button></a>\n";
+	//echo "<a href='Venues.php?id=new'><button>New venue</button></a>\n";
 	
 	//create table header
 	$myCon = new Connection();
@@ -31,7 +31,7 @@
 	echo "<th>Region</th>\n";
 	echo "<th>Phone</th>\n";
 	echo "<th>Status</th>\n";
-	echo "<th></th>\n";
+	echo "<th><a href='Venues.php?id=new'><button>New venue</button></a></th>\n";
 	echo "<th></th>\n";
 	echo "</tr>\n";
 
