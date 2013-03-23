@@ -31,7 +31,7 @@
 	{	
 		$myCon = new Connection();
 		$con = $myCon->connect();
-		var_dump($info);
+		
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
 		echo "<input type='hidden' name='id' value=$info[VEN_ID] ";
@@ -68,6 +68,7 @@
 				$results = mysqli_query($con, $sql);
 				foreach($results as $region)
 				{
+					if(100 != $info['VEN_ID'] && 99 == $region['REG_ID'])continue;
 					echo "<option value='$region[REG_ID]' ";
 					if($region['REG_ID'] == $info['Region_REG_ID']) echo "selected";
 					echo ">$region[REG_Name]</option>\n";
@@ -89,11 +90,17 @@
 			echo "<label>Create Owners:</label>\n<br />\n";
 			echo "<select name='owner'>\n";
 			echo "<option value='0' ";
-			if(0 == $info['VEN_Can_Make_Owner']) echo "";
+			if(0 == $info['VEN_Can_Make_Owner']) echo "selected ";
 			echo ">No</option>\n";
-			echo "<option value='1'>Yes</option>\n";
+			echo "<option value='1'";
+			if(1 == $info['VEN_Can_Make_Owner']) echo "selected ";
+			echo ">Yes</option>\n";
 			echo "</select>\n";
 			echo "<br />\n";
+		}
+		else
+		{
+			echo "<input type='hidden' name='owner' value='$info[VEN_Can_Make_Owner]' />\n";
 		}
 		
 		echo "<input type='submit' name='submit' value='$info[button]' />\n";
@@ -108,10 +115,11 @@
 			new user, and join an existing user to the venue
 		@param users an array of users to be displayed, may be empty
 		@param venue the id number of the venue that new users will be associated with
+		@param $userAuth the authorization level of the user
 		@return a table with users that can be edited, and buttons show the create new user form
 			and join existing user form
 	*/
-	function listUsers($users, $venue)
+	function listUsers($users, $venue, $userAuth)
 	{
 		echo "<table id='users'>\n";
 		echo "<tr>\n";
@@ -123,7 +131,7 @@
 		echo "<th><button id='joinUser'>Join User</button></th>\n";
 		echo "</tr>\n";
 		foreach($users as $user)
-			createUserRow($user, $venue);
+			createUserRow($user, $venue, $userAuth);
 		echo "</table>\n";
 		
 		$myCon = new Connection();
@@ -144,6 +152,9 @@
 		echo "<select name='auth' id='auth'>\n";
 			foreach($authLevels as $auth)
 			{
+				if(100 != $venue && 0 == $auth['AUT_Level']) continue;
+				if(1 == $userAuth && 0 == $auth['AUT_Level']) continue;
+				if(2 == $userAuth) continue;
 				echo "<option value='$auth[AUT_Level]'";
 				echo ">$auth[AUT_Def]</option>\n";
 			}
@@ -166,10 +177,11 @@
 			USE_Lname the users last name
 			Auth_Level_Lookup_AUT_Level 
 		@param $venue the id number of the venue associatied with the user
+		@param $userAuth the authorization level of the user
 		@return a single table row, with text boxs for the user name, first name, last name a selection box
 			for the authorization level, and a delete and save button
 	*/
-	function createUserRow($user, $venue)
+	function createUserRow($user, $venue, $userAuth)
 	{
 		$myCon = new Connection();
 		$con = $myCon->connect();
@@ -182,6 +194,9 @@
 		echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
 			foreach($authLevels as $auth)
 			{
+				if(100 != $venue && 0 == $auth['AUT_Level']) continue;
+				if(1 == $userAuth && 0 == $auth['AUT_Level']) continue;
+				if(2 == $userAuth) continue;
 				echo "<option value='$auth[AUT_Level]'";
 				if($auth['AUT_Level'] == $user['Auth_Level_Lookup_AUT_Level']) echo " selected";
 				echo ">$auth[AUT_Def]</option>\n";
