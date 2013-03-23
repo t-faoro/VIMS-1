@@ -40,7 +40,7 @@ $(function(){
 						}
 						else{
 							$('#users').append(msg);
-							$('#uError').text('');
+							$('#uError').text("");
 							created = true;
 						}
 					});
@@ -52,6 +52,7 @@ $(function(){
 		},
 		close: function(){
 			allFields.val("");
+			$('#uError').text("");
 		}
 	});
 	

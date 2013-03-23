@@ -15,6 +15,7 @@
 	include_once "userFunctions.php";
 	$myCon = new Connection();
 	$con = $myCon->connect();
+	session_start();
 
 	//get user information
 	$sql = "SELECT * FROM User WHERE USE_Name = '$_POST[user]'"; 
@@ -41,6 +42,6 @@
 	//Create and return table row
 	$sql = findUser($user, $venue);
 	$result = mysqli_query($con, $sql);
-	echo createUserRow(mysqli_fetch_assoc($result), $venue);
+	echo createUserRow(mysqli_fetch_assoc($result), $venue, $_SESSION['userAuth']);
 	mysqli_close($con);
 ?>

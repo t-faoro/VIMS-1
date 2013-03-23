@@ -32,7 +32,7 @@
 		$sql = venue_user_asscCreate($_POST['venue'], $id, $_POST['auth']);
 		mysqli_query($con, $sql);
 		$user = mysqli_query($con, findUser($id, $_POST['venue']));
-		echo createUserRow(mysqli_fetch_assoc($user), $_POST['venue']);
+		echo createUserRow(mysqli_fetch_assoc($user), $_POST['venue'], $_SESSION['userAuth']);
 		mysqli_close($con);
 	}		
 ?>
