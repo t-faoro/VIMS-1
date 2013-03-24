@@ -67,8 +67,17 @@
 	echo "<form method='post'>\n";
 	echo "<input type='hidden' name='id' value='$results[REG_ID]'>\n";
 	echo "<label for='regionId'>Region Number</label>\n";
-	if('new' == $_GET['id']){ echo "<input type='number' name='regionId' >";}
-	else echo "<input type='number' name='regionId' value='$results[REG_ID]' disabled>\n";
+	
+	if('new' == $_GET['id'])
+	{ 
+		echo "<input type='number' name='regionId' >";
+	}
+	else 
+	{
+		echo "<input type='number' name='regionId' value='$results[REG_ID]' disabled>\n";
+		echo "<input type='hidden' name='regionId' value='$results[REG_ID]' >\n";
+	}
+	
 	echo "<div class='error'>$errorId</div>\n";
 	echo "<label for='region'>Region: </label>\n";
 	echo "<input type='text' name='region' value='$results[REG_Name]'>\n";
