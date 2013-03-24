@@ -95,6 +95,7 @@ if(isset($_POST['submit']))
 				$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
 				$_SESSION['venueId'] = $row['Venue_VEN_ID'];
 				$_SESSION['venueName'] = $venue['VEN_Name'];
+				$_SESSION['createOwner'] = $venue['VEN_Can_Make_Owner'];
 				header('Location: dashboard.php');
 			}
 			else

@@ -10,6 +10,7 @@ $(function(){
 	lName = $('#lName'),
 	auth = $('#auth'),
 	venue = $('#venue'),
+	password = $('#password'),
 	allFields = $( [] ).add(uName).add(fName).add(lName).add(auth),
 	tips = $(".validateTips");
 	var created = false;
@@ -18,7 +19,7 @@ $(function(){
 	//account
 	$('#create-form').dialog({
 		autoOpen: false,
-		height: 450,
+		height: 500,
 		width: 350,
 		modal: true,
 		buttons: {
@@ -30,7 +31,8 @@ $(function(){
 						first: fName.val(),
 						last: lName.val(),
 						auth: auth.val(),
-						venue: venue.val()
+						venue: venue.val(),
+						password: password.val()
 					},
 					url: "php/createUser.php"
 				}).done(function(msg){

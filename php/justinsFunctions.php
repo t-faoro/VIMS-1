@@ -154,6 +154,7 @@
 			createUserRow($user, $venue, $userAuth, $makeOwners);
 		echo "</table>\n";
 		
+		//New user form
 		$myCon = new Connection();
 		$con = $myCon->connect();
 		$sql = "select * from Auth_level_lookup;";
@@ -161,13 +162,25 @@
 		echo "<div id='create-form' title='Create new user'>\n";
 		echo "<form>\n";
 		echo "<input type='hidden' name='venue' id='venue' value='$venue' />\n"; 
+		
+		//user name
 		echo "<label for='uName'>User name:</label>\n";
 		echo "<input type='text' name='uName' id='uName' />\n";
 		echo "<div class='error' id='uError'></div>\n";
+		
+		//first name
 		echo "<label for='fName'>First name:</label>\n";
 		echo "<input type='test' name='fName' id='fName' />\n";
+		
+		//Last name
 		echo "<label for='lName'>Last name:</label>\n";
 		echo "<input type='text' name='lName' id='lName' />\n";
+		
+		//Password
+		echo "<label for='password'>Password:</label>\n";
+		echo "<input type='password' name='password' id='password'/>\n";
+		
+		//authorization
 		echo "<label for='auth'>Authorization level:</label>\n";
 		echo "<select name='auth' id='auth'>\n";
 			foreach($authLevels as $auth)
