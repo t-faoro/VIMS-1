@@ -44,7 +44,7 @@
 
 	//if post back create or update venue
 	if(isset($_POST['name']))
-	{
+	{	
 		$venue = array(
 			$_POST['name'],
 			$_POST['unit'],
@@ -72,18 +72,27 @@
 		else if('New' == $_POST['id'])
 		{	
 			$sql = venueCreate($venue, $con);
-			$result = mysqli_query($con, $sql);
 			
-			//not adding users, send back to manageVenues.php
-			if('Create' == $_POST['submit'])
+			//Display an error message, or create the venue
+			if(stristr($sql, 'Error'))
 			{
-				header('Location: manageVenues.php');
+				$error = $sql;
 			}
-			//adding users, post back with venue id
 			else
 			{
-				$id = mysqli_insert_id($con);
-				header('Location: Venues.php?id='.$id);
+				$result = mysqli_query($con, $sql);
+				
+				//not adding users, send back to manageVenues.php
+				if('Create' == $_POST['submit'])
+				{
+					header('Location: manageVenues.php');
+				}
+				//adding users, post back with venue id
+				else
+				{
+					$id = mysqli_insert_id($con);
+					header('Location: Venues.php?id='.$id);
+				}
 			}
 		}
 		//modifying a existing venue

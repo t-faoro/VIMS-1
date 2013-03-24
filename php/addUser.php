@@ -18,6 +18,7 @@
 	session_start();
 
 	//get user information
+	$_POST['user'] = mysqli_real_escape_string($_POST['user']);
 	$sql = "SELECT * FROM User WHERE USE_Name = '$_POST[user]'"; 
 	$result = mysqli_query($con, $sql);
 	$result = mysqli_fetch_assoc($result);

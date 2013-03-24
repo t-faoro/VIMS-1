@@ -32,34 +32,48 @@
 		$myCon = new Connection();
 		$con = $myCon->connect();
 		
+		//open form
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
 		echo "<input type='hidden' name='id' value=$info[VEN_ID] ";
 		if(1 == $auth) echo "disabled ";
 		echo "/>\n";
+		
+		//Venue name
 		echo "<label for='name'>Name: </label>\n";
-		echo "<input type='text' name='name' value='$info[VEN_Name]' />\n<br />\n";
+		echo "<input type='text' name='name' value=\"$info[VEN_Name]\" />\n<br />\n";
+		
+		//Venue unit address
 		echo "<label>Unit: <br /></label>\n";
-		echo "<input type='text' name='unit' value='$info[VEN_Unit_Addr]' ";
+		echo "<input type='text' name='unit' value=\"$info[VEN_Unit_Addr]\" ";
 		if(1 == $auth) echo "disabled ";
 		echo "/>\n<br />\n";
+		
+		//venue address
 		echo "<label>Address: <br /></label>\n";
-		echo "<input type='text' name='address' value='$info[VEN_St_Addr]' ";
+		echo "<input type='text' name='address' value=\"$info[VEN_St_Addr]\" ";
 		if(1 == $auth) echo "disabled "; 
 		echo "/>\n<br />\n";
+		
+		//venue City
 		echo "<label>City: <br /></label>\n";
-		echo "<input type='text' name='city' value='$info[VEN_City]' ";
+		echo "<input type='text' name='city' value=\"$info[VEN_City]\" ";
 		if(1 == $auth) echo "disabled ";
 		echo "/>\n<br />\n";
+		
+		//Venue Province
 		echo "<label>Province: <br /></label>\n";
-		echo "<input type='test' name='province' value='$info[VEN_Province]' ";
+		echo "<input type='test' name='province' value=\"$info[VEN_Province]\" ";
 		if(1 == $auth) echo "disabled";
 		echo "/>\n<br />\n";
+		
+		//Venue postal code
 		echo "<label>Postal Code: <br /></label>\n";	
-		echo "<input type='text' name='post' value='$info[VEN_Pcode]' ";
+		echo "<input type='text' name='post' value=\"$info[VEN_Pcode]\" ";
 		if(1 == $auth) echo "disabled ";
 		echo "/>\n<br />\n";
 
+		//Venue region, hidden for venue owner
 		if(0 == $auth)
 		{		
 			echo "<label>Region: <br /></label>\n";
@@ -77,14 +91,18 @@
 		}
 		else
 		{
-			echo "<input type='hidden' vame='region' value='$info[Region_REG_ID]' />\n";
+			echo "<input type='hidden' vame='region' value=\"$info[Region_REG_ID]\" />\n";
 		}
 		
+		// Venue phone number
 		echo "<label>Phone: <br /></label>\n";
-		echo "<input type='text' name='phone' value='$info[VEN_Phone]' />\n<br />\n";
-		echo "<label>Contact: <br /></label>\n";
-		echo "<input type='text' name='liason' value='$info[VEN_Liason]' />\n<br />\n";
+		echo "<input type='text' name='phone' value=\"$info[VEN_Phone]\" />\n<br />\n";
 		
+		// Venue primary contact
+		echo "<label>Contact: <br /></label>\n";
+		echo "<input type='text' name='liason' value=\"$info[VEN_Liason]\" />\n<br />\n";
+		
+		//Venue create owner permissions, hidden for owner
 		if(0 == $auth)
 		{
 			echo "<label>Create Owners:</label>\n<br />\n";
@@ -103,6 +121,7 @@
 			echo "<input type='hidden' name='owner' value='$info[VEN_Can_Make_Owner]' />\n";
 		}
 		
+		//Submit/save and cancel buttons
 		echo "<input type='submit' name='submit' value='$info[button]' />\n";
 		if('New' == $info['VEN_ID']) echo "<input type='submit' name='submit' value='Add users' />\n";
 		echo "<input type='submit' name='submit' value='Cancel' />\n";
@@ -193,9 +212,9 @@
 		$sql = "select * from Auth_level_lookup;";
 		$authLevels = mysqli_query($con, $sql);
 		echo "<tr id='$user[USE_ID]' >\n";
-		echo "<td><input id='user$user[USE_ID]' type='text' value='$user[USE_Name]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-		echo "<td><input id='first$user[USE_ID]' type='text' value='$user[USE_Fname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
-		echo "<td><input id='last$user[USE_ID]' type='text' value='$user[USE_Lname]' onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+		echo "<td><input id='user$user[USE_ID]' type='text' value=\"$user[USE_Name]\" onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+		echo "<td><input id='first$user[USE_ID]' type='text' value=\"$user[USE_Fname]\" onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
+		echo "<td><input id='last$user[USE_ID]' type='text' value=\"$user[USE_Lname]\" onchange=\"enableSaveButton($user[USE_ID])\"/></td>\n";
 		echo "<td><select ID='auth$user[USE_ID]' onchange=\"enableSaveButton($user[USE_ID])\">\n";
 			foreach($authLevels as $auth)
 			{
