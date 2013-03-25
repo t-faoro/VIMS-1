@@ -37,8 +37,6 @@
     $css = "";
     $js = "";
     
-    //TEST VALUE
-    $verifyUser = TRUE;
 
     //:: Draws Head HTML with Stylesheets, Javascript, Doctype, and Title already implemented.
     createHead($css, $js);

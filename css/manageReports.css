@@ -16,11 +16,14 @@
 }
 */
 #Button_NewReport {
+	margin-top: 25px;
+	margin-bottom: 25px;
 	float: left;
-	margin: 1.8em 0 0 1.8em;
+	margin-left: 10%;
 }
+
 #ReportPeriod {
-	margin: 3em 0 0 0;
+	margin-left: 10%;
 }
 
 

@@ -35,9 +35,12 @@ div#clear {
 }
 
 table#DashReports {
+	margin-left: auto;
+	margin-right: auto;	
 	color: #FFF;
 	width: 100%;
 }
+
 #AdminGraphs p {
 	float: left;
 	padding: 2.0em;

@@ -147,6 +147,7 @@ $result = mysqli_query($con, $sql);
 					$html .= '	' . $row['NEW_Content'];
 			        $html .= "<br />\n";
 		        }
+				
 mysqli_close($con);
 $html .= "</div>\n"; // close NewsReel
 
