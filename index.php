@@ -111,16 +111,19 @@ if(isset($_POST['submit']))
 createHead("index.css");
 createHeader();
 echo "<div id='content'>\n";
+echo "<div id='login'>";
 echo "<div id='error'>$error</div>\n";
 echo "<form method='post'>\n";
-echo "User Name: <input type='text' name='username' value='$userName'>\n";
+echo '<div align="center"><p class="yellow">Please Log In:</p></div>';
+echo "<label>User Name:</label> <input type='text' name='username' value='$userName'>\n";
 echo "<br />\n";
-echo "Password: <input type='password' name='password'>\n";
+echo "<label>Password:</label> <input type='password' name='password'>\n";
 echo "<br />\n";
-echo "Venue Number: <input type='text' name='venue' value='$venueNumber'>\n";
+echo "<label>Venue Number:</label> <input type='text' name='venue' value='$venueNumber'>\n";
 echo "<br />\n";
-echo "<input type='submit' value='submit' name='submit'>";
+echo "<input type='submit' value='Login &gt;&gt;' name='submit'>";
 echo "</form>\n";
+echo "</div>";
 echo"</div>\n";
 createFoot();
 

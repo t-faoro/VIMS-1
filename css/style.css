@@ -51,6 +51,12 @@ h1 h2 h3 h4{
 .center{
 	text-align: center;
 }
+.right{
+	text-align: right;
+}
+.left{
+	text-align: left;
+}
 
 .tableCenter{
 	margin-left: 35%;
@@ -63,6 +69,24 @@ h1 h2 h3 h4{
 	font-family:Arial, Helvetica, sans-serif;
 	font-weight: bold;
 }
+
+a:link{
+	color: #FF0
+	
+}
+a:hover{
+	color: #AAA;
+	
+}
+
+a:active{
+	color: #FF0;
+}
+
+a:visited {
+	color: #AAA;
+}
+
 
 /*==============Default Styles End===============*/
 
@@ -384,7 +408,8 @@ h1 h2 h3 h4{
 #content form{
 	/*margin: 5px 5px 5px 5px;*/
 	margin-bottom: 25px;
-	/*margin-left: 15%;*/
+	margin-left: auto;
+	margin-right: auto;
 	position:inherit;
 	float: left;
 	display: inline;
@@ -396,9 +421,101 @@ h1 h2 h3 h4{
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-#content form input{
-	width: 12%;
+
+/*
+
+ //:: Login Box Styling
+
+*/
+#login form{
+	margin-top: 10%;
+	margin-bottom: 25px;
+	margin-left: 30%;
+	border: solid;
+	border-color: #FF0;
+	border-width: 1px; 
+	margin-right: auto;
+	position:inherit;
+	float: left;
+	display: inline;
+	padding: 25px;
+	width: 35%;
+	background-color: #333;
+	font-size:20px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
 }
+#login p{
+	margin-top: -10px;
+}
+#login input[type=text]{
+	margin-top: 15px;
+	width: 175px !important;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+}
+#login input[type=password]{
+	margin-top: 15px;
+	width: 175px !important;
+}
+#login input[type=submit]{
+	margin-left: 33%;
+	margin-right: 33%;
+	margin-top: 20px;
+	width: 100px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+#login label{
+	margin-top: 15px;
+	width: 150px;
+}
+
+/*
+	//:: Venues Form Styling 
+*/
+
+#venue form{
+	margin-top: 25px;
+	margin-left: 10%;
+	margin-right: auto;
+	position:inherit;
+	float: left;
+	display: inline;
+	padding: 2px;
+	width: 100%;
+	font-size:20px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;	
+}
+#venue label{
+	margin-top: 5px;
+	margin-left: 5%;	
+	width: 150px;
+}
+#venue input[type=text]{
+	margin-top: 7px;
+}
+#venue input[type=hidden]{
+	margin-top: 5px;
+}
+#venue input[type=submit]{
+	margin-top: 35px;
+	margin-right: 25px;
+	min-width: 100px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;	
+}
+
+/*
+	//:: General Content Form Styling 
+*/
+/*#content form input{
+	width: 12%;
+}*/
 
 #content textarea{
 	width: 25%;
@@ -415,9 +532,9 @@ h1 h2 h3 h4{
 label{
 	clear:both;
 	float: left;
+	min-width: 150px;
 	padding: 2px;
-	width: 15%;
-	font-size:20px;
+	font-size:16px;
 	color: #FFF;
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
@@ -471,6 +588,7 @@ label{
 	margin-right: 5px;
 	margin-left: 5px;
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
 	color: #999;
 	text-transform:uppercase;	
 }
