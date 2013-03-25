@@ -246,7 +246,9 @@
 				echo ">$auth[AUT_Def]</option>\n";
 			}
 		echo "</select></td>\n";
-		echo "<td><button onclick=\"deleteUser($user[USE_ID], $venue)\">Delete</button></td>\n";
+		echo "<td><button onclick=\"deleteUser($user[USE_ID], $venue)\"";
+		if($user['USE_ID'] == $_SESSION['userId']) echo " disabled ";
+		echo ">Delete</button></td>\n";
 		echo "<td><button onclick=\"updateUser($user[USE_ID], $venue)\" id='update$user[USE_ID]' disabled>Update user</button></td>\n";
 		echo "</tr>\n";
 	}
