@@ -218,7 +218,7 @@ if($porID != null)
 			$porDetails[6] = $ineID;
 			$porDetails[7] = $varID;
 			
-			$Por[0] = new Por(1, $porDetails);
+			$Por[0] = new Por('of record', $porDetails);
 		}
 	}
 	mysqli_close($con);

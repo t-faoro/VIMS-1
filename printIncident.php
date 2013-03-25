@@ -261,8 +261,67 @@ $html .= "		</div>\n"; // close smallRightField
 
 $html .= "		<div id='clear'></div>\n"; // close clear
 
+$sql  = "SELECT * FROM person_of_record";
+$sql .= " WHERE (incident_entry_INE_ID=$ineID";
+$sql .= " AND POR_Reason_for_Del IS NULL)";
 
-
+$disabled = " disabled ";
+$num = 1;
+$con = $myCon->connect();
+$result = mysqli_query($con, $sql);
+if(mysqli_num_rows($result) != 0)
+{
+	while($row = mysqli_fetch_array($result))
+	{
+		$html .= "<form action='managePor.php' method='GET'>\n";
+		$html .= "<div id='PorLines'>\n";
+		$html .= "	<div class='porRec'>\n";
+		$html .= "		<span id='PorRec" . $num . "'>\n";
+		$html .= "		<div class='PorLabel'>Person " . $num . "</div><br />\n"; // close PorLabel
+		$html .= "			<span>Name: </span><input " . $disabled . "type='textbox' value='" . $row['POR_Name'] . "' name='porName'>\n";
+		$html .= " 			<span>Involvement: </span><select " . $disabled . "name='porInv'>\n";
+		$html .= "											<option value='1'";
+		if($row['Involvement_Lookup_INV_Level'] == 1) $html .= " selected='selected'";
+		$html .= ">Witness</option>\n";
+		$html .= "											<option value='2'";
+		if($row['Involvement_Lookup_INV_Level'] == 2) $html .= " selected='selected'";
+		$html .= ">Victim</option>\n";
+		$html .= "											<option value='3'";
+		if($row['Involvement_Lookup_INV_Level'] == 3) $html .= " selected='selected'";
+		$html .= ">Instigator</option>\n";
+		$html .= "											<option value='4'";
+		if($row['Involvement_Lookup_INV_Level'] == 4) $html .= " selected='selected'";
+		$html .= ">Agressor</option>\n";
+		$html .= "										</select>\n";
+		$html .= " 			<span>Phone: </span><input " . $disabled . "type='textbox' value='" . $row['POR_Phone'] . "' name='porPhone'>\n";
+		$html .= " 			<span>License: </span><input  " . $disabled . "type='textbox' value='" . $row['POR_License'] . "' name='porLicense'><br />\n";
+		$html .= "			<span>Notes: </span><br />\n";
+		$html .= "			<textarea " . $disabled . "name='porNotes'>" . $row['POR_Notes'] . "</textarea>\n";
+		
+		/*
+		if($disabled == null)
+		{
+			$html .= "<input class='floatButton' type='submit' name='action' value='Cancel'>\n";
+			$html .= "<input class='floatButton' type='submit' name='action' value='Save'>\n";
+		} else 
+		{
+			$link  = "deletePor.php?ineID=$this->ineID&varID=$this->varID&porID=$this->id";
+			$html .= "<a href='$link'><button class='floatButton'>Delete</button></a>\n";
+			$html .= "<input class='floatButton' type='submit' name='action' value='Delete'>\n";
+			$html .= "<input class='floatButton' type='submit' name='action' value='Update'>\n";
+		}
+		if($this->id != null) $html .= "<input type='hidden' name='porID' value='$this->id'>\n";
+		*/
+		$html .= "		</span>\n";
+		$html .= "	</div>\n"; // close PorRec
+		$html .= "</div>"; // close PorLines
+		//$html .= "<input type='hidden' name='ineID' value='$this->ineID'>";
+		//$html .= "<input type='hidden' name='varID' value='$this->varID'>";
+		$html .= "</form>\n";
+		$num++;
+	}
+	mysqli_close($con);
+}
 
 $html .= "</div>\n";
 $html .= "</span>\n";
