@@ -18,7 +18,7 @@
 	session_start();
 
 	//get user information
-	$_POST['user'] = mysqli_real_escape_string($_POST['user']);
+	$_POST['user'] = mysqli_real_escape_string($con, $_POST['user']);
 	$sql = "SELECT * FROM User WHERE USE_Name = '$_POST[user]'"; 
 	$result = mysqli_query($con, $sql);
 	$result = mysqli_fetch_assoc($result);
@@ -30,7 +30,10 @@
 	if(NULL == mysqli_fetch_assoc(mysqli_query($con, $sql)))
 	{
 		//create new association
-		$sql = venue_user_asscCreate($venue, $user, 2);
+		$auth = 2;
+		if(100 == $venue) $auth = 0;
+		else $auth = 2;
+		$sql = venue_user_asscCreate($venue, $user, $auth);
 		mysqli_query($con, $sql);
 	}
 	else 
@@ -43,6 +46,6 @@
 	//Create and return table row
 	$sql = findUser($user, $venue);
 	$result = mysqli_query($con, $sql);
-	echo createUserRow(mysqli_fetch_assoc($result), $venue, $_SESSION['userAuth']);
+	echo createUserRow(mysqli_fetch_assoc($result), $venue, $_SESSION['userAuth'], $_SESSION['createOwner']);
 	mysqli_close($con);
 ?>

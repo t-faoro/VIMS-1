@@ -213,7 +213,7 @@
 			USE_Lname the users last name
 			Auth_Level_Lookup_AUT_Level 
 		@param $venue the id number of the venue associatied with the user
-		@param $userAuth the authorization level of the user
+		@param $userAuth the authorization level of the user loged in
 		@param $makeOwner wether or not the venue can make owners
 		@return a single table row, with text boxs for the user name, first name, last name a selection box
 			for the authorization level, and a delete and save button
