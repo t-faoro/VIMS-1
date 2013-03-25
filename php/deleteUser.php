@@ -11,10 +11,15 @@
 	$con = $myCon->connect();
 	
 	//don't delete the owner if their is only one owner
-	$sql = ownerList($_POST['venue']);
-	$response = mysqli_fetch_array(mysqli_query($con, $sql));
-	if($response[0] == 1)
-		return false;
+	$sql = findUser($_POST['id'], $_POST['venue']);
+	$responce = mysqli_fetch_array(mysqli_query($con, $sql));
+	if(1 == $responce['Auth_Level_Lookup_AUT_Level'])
+	{
+		$sql = ownerList($_POST['venue']);
+		$response = mysqli_fetch_array(mysqli_query($con, $sql));
+		if($response[0] == 1)
+			return false;
+	}
 	
 	date_default_timezone_set('America/Edmonton');
 	$date = date('Y-m-d H:i:s');

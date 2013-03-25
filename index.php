@@ -73,6 +73,7 @@ if(isset($_POST['submit']))
 	{
 		$sql = userRead($userName, $password, $venueNumber, $con);
 		$result = mysqli_query($con, $sql);
+		echo $sql;
 		$row = mysqli_fetch_assoc($result);
 		//if user doesn't exist, display a error message
 		if($row == null)
@@ -95,16 +96,16 @@ if(isset($_POST['submit']))
 				//Make sure venue is still active.
 				if($venue['VEN_Status'])
 				{
-				//Set the session variables
-				$_SESSION['userId'] = $row['USE_ID'];
-				$_SESSION['userName'] = $row['USE_Name'];
-				$_SESSION['userFname'] = $row['USE_Fname'];
-				$_SESSION['userLname'] = $row['USE_Lname'];
-				$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
-				$_SESSION['venueId'] = $row['Venue_VEN_ID'];
-				$_SESSION['venueName'] = $venue['VEN_Name'];
-				$_SESSION['createOwner'] = $venue['VEN_Can_Make_Owner'];
-				header('Location: dashboard.php');
+					//Set the session variables
+					$_SESSION['userId'] = $row['USE_ID'];
+					$_SESSION['userName'] = $row['USE_Name'];
+					$_SESSION['userFname'] = $row['USE_Fname'];
+					$_SESSION['userLname'] = $row['USE_Lname'];
+					$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
+					$_SESSION['venueId'] = $row['Venue_VEN_ID'];
+					$_SESSION['venueName'] = $venue['VEN_Name'];
+					$_SESSION['createOwner'] = $venue['VEN_Can_Make_Owner'];
+					header('Location: dashboard.php');
 				}
 				else
 				{
