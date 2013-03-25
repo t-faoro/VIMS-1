@@ -112,7 +112,25 @@
 		echo "<div id='footer_container'>\n";
 		echo "<div id='bottomLeft'><p>Developed By: <span class='yellow'>Excelsior Systems</span></p></div>\n";
 		echo "<div id='bottomMiddle' align='center'><p>&#169; 2013 Excelsior Systems - All Rights Reserved</p></div>\n";
-		echo "<div id='bottomRight'>&nbsp;</div>\n";
+		echo "<div id='bottomRight'>";
+		echo "<p>";
+		if(isset($_SESSION['userAuth'])) 
+		{
+			$authLvl   = $_SESSION['userAuth'];
+			$javaLink  = "<script type='text/javascript'>\n";
+			$javaLink .= "function helpPopup(url) {\n";
+			$javaLink .= "popupWindow = window.open(\n";
+			$javaLink .= "url,'popUpWindow','height=700,width=1100,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')\n";
+			$javaLink .= "}\n";
+			$javaLink .= "</script>\n";
+			if($authLvl == 0 ? $link = "'adminHelp.html'" : $link = "'userHelp.html'");
+			echo $javaLink;
+			echo '<a href="JavaScript:helpPopup(' . $link . ');">[HELP]</a>' . "\n";
+		}
+		echo "<br /><a href='BBN Venue Checklist.pdf'>BBN Security Checklist</a>";
+		echo "<br /><a href='VAR_hardcopyPrintouts.pdf'>Report Templates</a>";
+		echo "</p>";
+		echo "</div>\n";
 		echo "</div>\n";
 		echo "</body>\n";
 		echo "</html>";
