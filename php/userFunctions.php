@@ -64,6 +64,7 @@ function userList($venueID)
 	$sql .= " JOIN venue_user_assc";
 	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
 	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID . "";
+	$sql .= " AND VUA_Sys_Status = 1";
 	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
 
 	return $sql;
