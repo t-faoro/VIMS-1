@@ -34,13 +34,18 @@ if(isset($_POST['submit']))
 {
 	//Verfiy user has entered all nesisary information
 	//verify a venue number was entered.
-	if($_POST['venue'] != "")
+	echo is_numeric($_POST['venue']);
+	if("" == $_POST['venue'])
 	{
-		$venueNumber = $_POST['venue'];
+		$error = "You must enter a venue number.";
+	}
+	else if(0 == is_numeric($_POST['venue']))
+	{
+		$error = "The venue number should only contain numeric (0-9) characters";
 	}
 	else
 	{
-		$error = "You must enter a venue number.";
+		$venueNumber = $_POST['venue'];
 	}
 	
 	//Verify a password was entered
