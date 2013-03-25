@@ -27,6 +27,29 @@
 	text-align: center;
 }
 
+#VarInputForm table{
+	margin-left: 0;
+	margin-right: auto;
+	clear: both;
+	width: 65%;
+}
+#VarInputForm td{
+	padding: 5px;
+}
+#VarInputForm input[type=text]{
+	min-width: 175px !important;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+
+#VarInputForm form{
+	margin-left: 20%;
+	margin-right: auto;
+	width: 100%;
+}
+
 #IneList {
 	margin-left: auto;
 	margin-right: auto;

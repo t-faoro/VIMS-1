@@ -122,6 +122,7 @@
 	createNav($_SESSION['userAuth']);
 	echo "<div class='clear' ></div>\n";
 	echo "<div id ='content'>\n";
+	echo '<div id="venue">'."\n";
 	echo "<div class='error'>$error</div>\n";
 	createForm($venInfo, $_SESSION['userAuth']);
 	//only show add users for existing venues

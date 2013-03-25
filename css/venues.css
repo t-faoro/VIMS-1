@@ -17,5 +17,6 @@ form{
 
 #users{
 	width: 70%;
+	clear: both;
 	float: right;
 }

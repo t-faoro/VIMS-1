@@ -63,7 +63,7 @@
 		
 		//Venue Province
 		echo "<label>Province: <br /></label>\n";
-		echo "<input type='test' name='province' value=\"$info[VEN_Province]\" ";
+		echo "<input type='text' name='province' value=\"$info[VEN_Province]\" ";
 		if(1 == $auth) echo "disabled";
 		echo "/>\n<br />\n";
 		

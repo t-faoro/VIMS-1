@@ -116,8 +116,8 @@ if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 	
 	echo '	<table id="DashReports">' . "\n";
 	echo '		<tr>' . "\n";
-	echo '			<td>Date</td><td>Event</td><td>Attendance</td>';
-	echo '			<td>Incidents.</td><td>Police Inv.</td>' . "\n";
+	echo '			<th>Date</th><th>Event</th><th>Attendance</th>';
+	echo '			<th>Incidents.</th><th>Police Inv.</th>' . "\n";
 	echo '		</tr>' . "\n";
 	
 		        while($row = mysqli_fetch_array($result))

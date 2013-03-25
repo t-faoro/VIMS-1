@@ -124,7 +124,7 @@ class Incident {
 		$html .= "		<div id='clear'></div>"; // close clear
 		
 		$html .= "		<div id='TimeField'>\n";
-		$html .= "		<div class='label'>Time Incident Occurred: </div><br />\n";
+		$html .= "		<div class='label'>*Time Incident Occurred: </div><br />\n";
 		$html .= "		<input type='text' name='time' value='" . $this->hourMin . "'>\n";
 		$html .= "		<input type='radio' name='pm' value=0";
 		if($this->pm == 0)$html .= " checked='checked'";
@@ -162,7 +162,7 @@ class Incident {
 		$html .= "		</div>\n"; // close PoliceField
 		
 		$html .= "		<div id='SummaryField'>\n";
-		$html .= "		<div class='label'>Provide a description of the incident</div><br />\n";
+		$html .= "		<div class='label'>*Provide a description of the incident</div><br />\n";
 		$html .= "		<textarea name='Summary'>" . $this->content . "</textarea>\n";
 		$html .= "		</div>\n"; // close SummaryField
 		
