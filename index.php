@@ -34,7 +34,6 @@ if(isset($_POST['submit']))
 {
 	//Verfiy user has entered all nesisary information
 	//verify a venue number was entered.
-	echo is_numeric($_POST['venue']);
 	if("" == $_POST['venue'])
 	{
 		$error = "You must enter a venue number.";
@@ -92,6 +91,10 @@ if(isset($_POST['submit']))
 									)
 								);
 				
+				
+				//Make sure venue is still active.
+				if($venue['VEN_Status'])
+				{
 				//Set the session variables
 				$_SESSION['userId'] = $row['USE_ID'];
 				$_SESSION['userName'] = $row['USE_Name'];
@@ -102,6 +105,11 @@ if(isset($_POST['submit']))
 				$_SESSION['venueName'] = $venue['VEN_Name'];
 				$_SESSION['createOwner'] = $venue['VEN_Can_Make_Owner'];
 				header('Location: dashboard.php');
+				}
+				else
+				{
+					$error = "That venue has been deacivated. Please contact ClubWatch for more information.";
+				}
 			}
 			else
 			{
