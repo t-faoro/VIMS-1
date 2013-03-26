@@ -60,6 +60,16 @@ if($action == 'Update')
 	$sql .= " AND VAR_Reason_for_Del IS NULL)";
 	
 	$result = mysqli_query($con, $sql);
+	
+	$attendance = mysqli_real_escape_string($con, $attendance);
+	$sec_chklst = mysqli_real_escape_string($con, $sec_chklst);
+	$supervisor = substr(mysqli_real_escape_string($con, $supervisor), 0, 45);
+	$event	    = substr(mysqli_real_escape_string($con, $event), 0, 45);
+	if(!is_numeric($attendance) || is_numeric($sec_chklst))
+	{
+		header('location: manageVars.php?action=create&error=2');
+	}
+	
 	$counter = 0;
 	$field[0] = null;
 	while($row = mysqli_fetch_array($result))
@@ -140,24 +150,35 @@ if($action == 'Finished'
 	// check for duplicate var
 	if($check[0] == 0)
 	{
-		$sql = varCreate($reportDate, $attendance, $sec_chklst, $supervisor, $event, $venueID, $userID, $con);
-		mysqli_query($con, $sql);
-		$sql = "SELECT MAX(VAR_ID) AS VAR_ID FROM var WHERE venue_VEN_ID=$venueID";
-		$result = mysqli_query($con, $sql);
-		while($row = mysqli_fetch_array($result))
+		$attendance = mysqli_real_escape_string($con, $attendance);
+		$sec_chklst = mysqli_real_escape_string($con, $sec_chklst);
+		$supervisor = substr(mysqli_real_escape_string($con, $supervisor), 0, 45);
+		$event	    = substr(mysqli_real_escape_string($con, $event), 0, 45);
+		if(!is_numeric($attendance) || !is_numeric($sec_chklst))
 		{
-			$newVar = $row['VAR_ID'];
+			header('location:manageVars.php?action=create&error=2');
 		}
-		$page = "location:";
-		$ine  = "incident.php?varID=$newVar";
-		if($action == 'Finished' ? $page .= 'manageReports.php' : $page .= $ine)
-		mysqli_close($con);
-		header($page);
+		else
+		{
+			$sql = varCreate($reportDate, $attendance, $sec_chklst, $supervisor, $event, $venueID, $userID, $con);
+			mysqli_query($con, $sql);
+			$sql = "SELECT MAX(VAR_ID) AS VAR_ID FROM var WHERE venue_VEN_ID=$venueID";
+			$result = mysqli_query($con, $sql);
+			while($row = mysqli_fetch_array($result))
+			{
+				$newVar = $row['VAR_ID'];
+			}
+			$page = "location:";
+			$ine  = "incident.php?varID=$newVar";
+			if($action == 'Finished' ? $page .= 'manageReports.php' : $page .= $ine)
+			mysqli_close($con);
+			header($page);
+		}
 	}
 
 	else 
 	{
-		header('location: manageVars.php?action=create&error=1');
+		header('location:manageVars.php?action=create&error=1');
 	} 
 }
 
@@ -188,6 +209,7 @@ echo "<div id='content'>\n";
 
 echo "	<h3>Venue Activity Report</h3>\n";
 if($error == 1) echo "A report for that night already exists!";
+if($error == 2) echo "Please verify valid input is being used!";
 $html  = "	<div id='VarInputForm'>\n";
 $html .= "		<form action='manageVars.php' method='GET'>\n";
 $html .= "			<table id='VarInputFormTable'>";

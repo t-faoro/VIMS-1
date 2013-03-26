@@ -33,7 +33,7 @@ form {
 	padding: 0  !important;
 	position: relative !important;
 	float: none !important;
-	/*display: none !important;*/
+	display: inline-block !important;
 }
 
 h4 {
@@ -183,7 +183,7 @@ input {
 
 .bottomButton {
 	
-	
+	display: inline;
 	float: left !important;
 	width: 20% !important;
 	height: 3em;
