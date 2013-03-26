@@ -35,9 +35,7 @@
 		//open form
 		echo "<form method='post'>\n";
 		echo "Venue: $info[VEN_ID]<br />\n";
-		echo "<input type='hidden' name='id' value=$info[VEN_ID] ";
-		if(1 == $auth) echo "disabled ";
-		echo "/>\n";
+		echo "<input type='hidden' name='id' value=$info[VEN_ID] />\n";
 		
 		//Venue name
 		echo "<label for='name'>Name: </label>\n";
@@ -46,32 +44,57 @@
 		//Venue unit address
 		echo "<label>Unit: <br /></label>\n";
 		echo "<input type='text' name='unit' value=\"$info[VEN_Unit_Addr]\" ";
-		if(1 == $auth) echo "disabled ";
-		echo "/>\n<br />\n";
+		if(1 == $auth)
+		{
+			echo "disabled />\n<br />\n";
+			echo "<input type='hidden' name='unit' value=\"$info[VEN_Unit_Addr]\">\n";
+		}
+		else
+			echo "/>\n<br />\n";
 		
 		//venue address
 		echo "<label>Address: <br /></label>\n";
 		echo "<input type='text' name='address' value=\"$info[VEN_St_Addr]\" ";
-		if(1 == $auth) echo "disabled "; 
-		echo "/>\n<br />\n";
+		if(1 == $auth)
+		{
+			echo "disabled />\n<br />\n"; 
+			echo "<input type='hidden' name='address' value=\"$info[VEN_St_Addr]\">\n";
+		}
+		else
+			echo "/>\n<br />\n";
 		
 		//venue City
 		echo "<label>City: <br /></label>\n";
 		echo "<input type='text' name='city' value=\"$info[VEN_City]\" ";
-		if(1 == $auth) echo "disabled ";
-		echo "/>\n<br />\n";
+		if(1 == $auth)
+		{
+			echo "disabled />\n<br />\n";
+			echo "<input type='hidden' name='city' value=\"$info[VEN_City]\">\n";
+		}
+		else
+			echo "/>\n<br />\n";
 		
 		//Venue Province
 		echo "<label>Province: <br /></label>\n";
 		echo "<input type='text' name='province' value=\"$info[VEN_Province]\" ";
-		if(1 == $auth) echo "disabled";
-		echo "/>\n<br />\n";
+		if(1 == $auth)
+		{
+			echo "disabled />\n<br />\n";
+			echo "<input type='hidden' name='province' value=\"$info[VEN_Province]\">\n";
+		}
+		else
+			echo "/>\n<br />\n";
 		
 		//Venue postal code
 		echo "<label>Postal Code: <br /></label>\n";	
 		echo "<input type='text' name='post' value=\"$info[VEN_Pcode]\" ";
-		if(1 == $auth) echo "disabled ";
-		echo "/>\n<br />\n";
+		if(1 == $auth)
+		{
+			echo "disabled />\n<br />\n";
+			echo "<input type='hidden' name='post' value=\"$info[VEN_Pcode]\" >\n";
+		}
+		else
+			echo "/>\n<br />\n";
 
 		//Venue region, hidden for venue owner
 		if(0 == $auth)
@@ -91,7 +114,7 @@
 		}
 		else
 		{
-			echo "<input type='hidden' vame='region' value=\"$info[Region_REG_ID]\" />\n";
+			echo "<input type='hidden' name='region' value=\"$info[Region_REG_ID]\" />\n";
 		}
 		
 		// Venue phone number

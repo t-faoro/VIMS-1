@@ -6,18 +6,18 @@
 	Date: March 19, 2013
 */
 
-	//verify user has been authenticated, and create the neccessary page header.
+	//verify user has been authenticated, and has the correct permissions.
 	include_once "php/config.php";
 	session_start();
 	if(!verifyUser()) header("Location: index.php");
+	if(0 != $_SESSION['userAuth']) header("Location: index.php");
+	
+	// create the neccessary page header.
 	createHead(null, "manageVenue.js");
 	createHeader(($_SESSION['userFname'])." ".$_SESSION['userLname']);
 	createNav($_SESSION['userAuth']);
 	echo "<div style='clear:both; color: red;' id='error'></div>\n";
 	echo "<div id ='content' style='color: white;'>\n";
-	
-	//Link to create a new venue
-	//echo "<a href='Venues.php?id=new'><button>New venue</button></a>\n";
 	
 	//create table header
 	$myCon = new Connection();

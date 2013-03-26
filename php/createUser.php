@@ -9,6 +9,7 @@
 		@param POST['auth'] the users authorization level for the venue
 		@return returns the user name, user's first name, last name, and authorization level as a table row
 			returns a error if user can not be created
+		@author Justin Werre
 	*/
 	include_once "connection.php";
 	include_once "userFunctions.php";

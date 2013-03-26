@@ -1,5 +1,5 @@
 <?php
-	/*
+	/**
 		pageFuncions.php
 		Purpose: A set of functions to help create a page.
 		By: Justin Werre

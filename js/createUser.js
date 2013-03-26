@@ -1,4 +1,4 @@
-/*
+/**
  * CreateUser.js
  * Purpose: creates a dialog box from which the user can create new users
  * By: Justin Werre
@@ -23,10 +23,15 @@ $(function(){
 		modal: true,
 		buttons: {
 			"Create an user": function(){
-				console.log(password.val().length);
+				$('#pError').text('');
+				$('#uError').text('');
 				if(7 > password.val().length)
 				{
 					$('#pError').text('Password must be at least 7 characters long.');
+				}
+				else if("" == uName.val())
+				{
+					$('#uError').text("User must have a user name.");
 				}
 				else
 				{

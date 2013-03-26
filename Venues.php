@@ -9,9 +9,12 @@
 	include_once "php/config.php";
 	include_once "php/justinsFunctions.php";
 
-	//Verify user is authenticated
+	//Verify user is authenticated and has permission to access the page
 	session_start();
-	if(!verifyUser()) header("Location: index.php");
+	// if(!verifyUser()) header("Location: index.php");
+	if(0 == $_SESSION['userAuth']){}
+	else if(1 == $_SESSION['userAuth'] && $_GET['id'] == $_SESSION['venueId']){}
+	// else header('Location: index.php');
 
 	$venInfo = array('VEN_Name'=>'',
 									 'VEN_ID'=>'New',
@@ -45,6 +48,7 @@
 	//if post back create or update venue
 	if(isset($_POST['name']))
 	{	
+		var_dump($_POST);
 		$venue = array(
 			$_POST['name'],
 			$_POST['unit'],
@@ -61,7 +65,7 @@
 		//if user wanted to cancel changes
 		if("Cancel" == $_POST['submit'])
 		{
-			header('Location: ManageVenues.php');
+			// header('Location: ManageVenues.php');
 		}
 		//if no venue name, show a error
 		else if('' == $_POST['name'])
@@ -95,6 +99,7 @@
 				}
 			}
 		}
+		
 		//modifying a existing venue
 		else
 		{
@@ -112,7 +117,10 @@
 			);
 			$sql = venueUpdate($fields, $venue, $_POST['id'], $con);
 			mysqli_query($con, $sql);
-			header('Location: manageVenues.php');
+			if(0 == $_SESSION['userAuth'])
+				header('Location: manageVenues.php');
+			else
+				header('Location: dashboard.php');
 		}
 	}
 
