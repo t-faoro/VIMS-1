@@ -5,6 +5,7 @@
 
 /* Main Style Sheet Developed by Excelsior Systems for
  * ClubWatch's Venue Information Management System.
+ * @author Tylor Faoro
  *
  * This system is NOT open source and should be treated appropriately.
  *
@@ -12,7 +13,7 @@
  *			Maxwell Clyke
  *			James Smith
  *			Justin Werre
- *			Tylor Faoro
+ *			
 */
 
 
@@ -70,6 +71,10 @@ h1 h2 h3 h4{
 	font-weight: bold;
 }
 
+#forbidden{
+	margin-left: 10%;
+}
+
 a:link{
 	color: #FF0
 	
@@ -90,8 +95,9 @@ a:visited {
 
 /*==============Default Styles End===============*/
 
+
 /*
- * Styles for Content Blocks of VIMS site
+ 	//:: Content Block Styling
 */
 
 /*==============Header Start=============*/
@@ -270,6 +276,11 @@ a:visited {
 
 /*==============Footer End===============*/
 
+
+/*
+	//:: Navigation Styling
+*/
+
 /*==============Navigation Start=============*/
 
 /*:: Admin Navigation Start ::*/
@@ -379,10 +390,12 @@ a:visited {
 /*:: No Navigation End     ::*/
 
 /*==============Navigation End===============*/
-{
-	
-}
 
+/*
+	//:: Styling for individual content blocks
+	//:: ID Names should be self documenting to what page is being worked with
+	//:: NOTE: Some CSS is located within a secondary file named the same as the page it's associated with
+*/
 #accountManage{	
 	margin-left: 10%;
 	margin-right: 0;
@@ -404,7 +417,9 @@ a:visited {
 	
 }
 
+
 /*:: Form Decoration */
+
 #content form{
 	/*margin: 5px 5px 5px 5px;*/
 	margin-bottom: 25px;
@@ -508,6 +523,17 @@ a:visited {
 	min-width: 100px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;	
+}
+
+#manageNews form{
+	margin-left: 10%;
+	margin-right: auto;
+}
+#manageNews input[type=text]{
+	min-width: 175px;
+}
+#manageNews select{
+	min-width: 185px;
 }
 
 /*
