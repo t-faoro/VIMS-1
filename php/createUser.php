@@ -20,7 +20,9 @@
 	
 	//Create the user and join them to a venue, returning a table row on success, and a error message on failure.
 	$sql = userCreate($_POST['user'], $_POST['password'], $_POST['first'], $_POST['last'], $_SESSION['userId'], $con);
-	if(!mysqli_query($con, $sql))
+	$result = mysqli_query($con, $sql);
+	// var_dump($result);
+	if(!$result)
 	{
 		$error = mysqli_error($con);
 		mysqli_close($con);

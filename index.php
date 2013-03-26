@@ -73,7 +73,6 @@ if(isset($_POST['submit']))
 	{
 		$sql = userRead($userName, $password, $venueNumber, $con);
 		$result = mysqli_query($con, $sql);
-		echo $sql;
 		$row = mysqli_fetch_assoc($result);
 		//if user doesn't exist, display a error message
 		if($row == null)

@@ -9,11 +9,10 @@ $(function(){
 	fName = $('#fName'),
 	lName = $('#lName'),
 	auth = $('#auth'),
-	venue = $('#venue'),
+	venue = $('#venueId'),
 	password = $('#password'),
-	allFields = $( [] ).add(uName).add(fName).add(lName).add(auth),
+	allFields = $( [] ).add(uName).add(fName).add(lName).add(auth).add(password),
 	tips = $(".validateTips");
-	var created = false;
 
 	//Turns the html form into a dialog box, and ajaxs to the server to create the user
 	//account
@@ -24,29 +23,34 @@ $(function(){
 		modal: true,
 		buttons: {
 			"Create an user": function(){
-				$.ajax({
-					type: "POST", 	
-					data: { 
-						user: uName.val(),
-						first: fName.val(),
-						last: lName.val(),
-						auth: auth.val(),
-						venue: venue.val(),
-						password: password.val()
-					},
-					url: "php/createUser.php"
-				}).done(function(msg){
+				console.log(password.val().length);
+				if(7 > password.val().length)
+				{
+					$('#pError').text('Password must be at least 7 characters long.');
+				}
+				else
+				{
+					$.ajax({
+						type: "POST", 	
+						data: { 
+							user: uName.val(),
+							first: fName.val(),
+							last: lName.val(),
+							auth: auth.val(),
+							venue: venue.val(),
+							password: password.val()
+						},
+						url: "php/createUser.php"
+					}).done(function(msg){
 						if('false' == msg){
 							$("#uError").text("That username is taken. Please chose a different username.");
-							created = false;
 						}
 						else{
 							$('#users').append(msg);
 							$('#uError').text("");
-							created = true;
 						}
 					});
-				if(created) { $(this).dialog("close"); }
+				}
 			},
 			Cancel: function() {
 			$(this).dialog("close");

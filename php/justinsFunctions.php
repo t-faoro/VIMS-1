@@ -154,7 +154,7 @@
 			createUserRow($user, $venue, $userAuth, $makeOwners);
 		echo "</table>\n";
 		
-		//New user form
+		//Create user form
 		$myCon = new Connection();
 		$con = $myCon->connect();
 		$sql = "select * from Auth_level_lookup;";
@@ -179,6 +179,7 @@
 		//Password
 		echo "<label for='password'>Password:</label>\n";
 		echo "<input type='password' name='password' id='password'/>\n";
+		echo "<div class='error' id='pError'></div>";
 		
 		//authorization
 		echo "<label for='auth'>Authorization level:</label>\n";
@@ -196,7 +197,9 @@
 			}
 		echo "</select>\n";
 		echo "</form>\n";
-		echo "</div>\n";	
+		echo "</div>\n";
+
+		//The join user form
 		echo "<div id='join-form' title='join new user'>\n"; 
 		echo "<input type='hidden' id='venueId' value=$venue>\n";
 		echo "<label>User name</label>\n";
