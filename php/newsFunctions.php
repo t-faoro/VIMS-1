@@ -12,14 +12,15 @@
 	 *
 	 * @return none
 	*/
-	function setNews($con, $title, $date, $comments, $regID, $uID){
+	function setNews($con, $title, $date, $type, $comments, $regID, $uID){
 		global $error;		
 		
 		$sql  = 'INSERT INTO news ';
-		$sql .= '(NEW_Title, NEW_Date, NEW_Content, User_USE_ID)';
+		$sql .= '(NEW_Title, NEW_Date, NEW_Type, NEW_Content, User_USE_ID)';
 		$sql .= ' VALUES(';
 		$sql .= " '".$title."', ";
 		$sql .= " '".$date."', ";
+		$sql .= " '".$type."', ";
 		$sql .= " '".$comments."', ";
 		$sql .= " '".$uID."' ";
 		$sql .= ')';
@@ -111,6 +112,13 @@
 		$form .= '<label>Date:</label>';
 		$form .= '<input type="text" id="datepicker" value="'.currDate().'" name="newsDate" />';
 		$form .= '<br /><br />';
+		$form .= '<label>News Type:</label>';		
+		$form .= '<select name="newsType">';
+		$form .= '<option selected="selected">-- Select One --</option>';
+		$form .= '<option value="1">Industry</option>';
+		$form .= '<option value="2">Clubwatch News</option>';
+		$form .= '</select>';
+		$form .= '<br /><br />';
 		$form .= '<label>Region:</label>';
 		$form .= '<select name="regID"><span>'.selectElementRegionOption($con).'</span></select>';
 		$form .= '<br /><br />';
@@ -149,8 +157,10 @@
 		
 		$p = $_GET['id'];
 				
-		$defaults = array( getNews($con, "NEW_Title", $p), getNews($con, "NEW_Date", $p), getNews($con, "REG_Name", $p), getNews($con, "NEW_Content", $p));
-				
+		$defaults = array( getNews($con, "NEW_Title", $p), getNews($con, "NEW_Date", $p), getNews($con, "NEW_Type", $p), getNews($con, "REG_Name", $p), getNews($con, "NEW_Content", $p));
+		$defaultRegion = getRegionID($con, $defaults[3]);
+		$type = "";	
+	
 		$form  = '<div id="manageNews" >';
         $form .= '<form method="POST" action="manageNews.php?action=modify">'."\n";
 		$form .= '<input type="hidden" name="newsID" value='.$p.' />';
@@ -162,13 +172,35 @@
 		$form .= '<input type="text" id="datepicker" value="'.$defaults[1].'" name="newsDate" />';
 		$form .= '<br /><br />';
 		
+		$form .= '<label>News Type:</label>';		
+		
+		// Hacked in Select to show one currently residing within the database
+		$form .= '<select name="newsType">';		
+			if($defaults[2] == 1){ // Industry News
+				$form .= '<option value="1" selected="selected">Industry</option>';
+				$form .= '<option value="2">Clubwatch News</option>';
+			}
+			elseif($defaults[2] == 2){ // Clubwatch News
+				$form .= '<option value="1">Industry</option>';
+				$form .= '<option value="2" selected="selected">Clubwatch News</option>';
+			}
+			else{ // No Type Chosen (value = 0)
+				$form .= '<option value="0" selected="selected">-- Select One --</option>';
+				$form .= '<option value="1">Industry</option>';
+				$form .= '<option value="2">Clubwatch News</option>';	
+			}			
+		$form .= '</select>';
+		$form .= '<br /><br />';
+		
 		$form .= '<label>Region:</label>';
-		$form .= '<select name="regID" value=""><span>'.selectElementRegionOption($con).'</span></select>';
+		$form .= '<select name="regID" value="">';
+		$form .= '<span>'.selectElementRegionOption($con, $defaultRegion).'</span>';
+		$form .= '</select>';
 		$form .= '<br /><br />';
 		
 		$form .= '<label>Comments: </label>';
 		$form .= '<textarea class="textarea" name="comments">';
-		$form .= $defaults[3];
+		$form .= $defaults[4];
 		$form .= '</textarea>';
 		$form .= '<br /><br />';
 		
@@ -179,6 +211,7 @@
 		
 		return $form;
 	}
+
 	
 	
 	/**
@@ -194,7 +227,7 @@
 		$p = $_GET['id'];
 				
 		$defaults = array( getNews($con, "NEW_Title", $p), getNews($con, "NEW_Date", $p), getNews($con, "REG_Name", $p), getNews($con, "NEW_Content", $p) );
-				
+	
 		
 		$form  = '<div id="manageNews" >';
         $form .= '<form method="POST" action="manageNews.php?action=delete&id='.$p.'">'."\n";
@@ -242,21 +275,23 @@
 	 * 
 	 * @return nothing
 	*/
-	function modifyNews($con, $newsID, $title, $date, $content, $regID){
+	function modifyNews($con, $newsID, $title, $date, $type, $content, $regID){
 		global $createNews;
 		global $modifyNews;
+		
 		
 		$title = mysqli_real_escape_string($con, $title);
 		$content = mysqli_real_escape_string($con, $content);
 		
 		$sql  = "UPDATE news ";
-		$sql .= 'SET NEW_Title = "'.$title.'", NEW_Date = "'.$date.'", NEW_Content = "'.$content.'" ';
+		$sql .= 'SET NEW_Title = "'.$title.'", NEW_Date = "'.$date.'", NEW_Type = "'.$type.'", NEW_Content = "'.$content.'" ';
 		$sql .= 'WHERE NEW_ID = "'.$newsID.'" ';
 		
 		$sql2  = "UPDATE news_region_assc ";
 		$sql2 .= "SET Region_REG_ID = ".$regID." ";
 		$sql2 .= "WHERE News_NEW_ID = ".$newsID." ";
 		
+
 		
 			if(!mysqli_query($con, $sql)){
 				die('Error: $SQL '.mysqli_error($con));
@@ -330,23 +365,54 @@
 	 * @param Object $con The database connection object
 	 * @return static mixed $data The options which can be selected from the Region select form element.
 	*/
-	function selectElementRegionOption($con){
+	function selectElementRegionOption($con, $default = NULL){
 		static $data;
 		 
 		$sql  = "SELECT * ";
 		$sql .= "FROM region ";
+		$sql .= "ORDER BY reg_id DESC";
 						
 		$query = mysqli_query($con, $sql);
 		
 		$results = array();
-			
+		
+		if($default == NULL){
+			$data .= '<option value="0">-- Select One --</option>';
+		}
+		
 			while($row = mysqli_fetch_array($query)){
 				$results[] = $row;
-					$data .= '<option value='.$row['REG_ID'].'>'.$row['REG_Name'].'</option>';	
+	
+					if($default != NULL && $default == $row['REG_ID']){
+						$data .= '<option selected = "selected" value="'.$default.'">'.$row['REG_Name'].'</option>';
+					}
+					else{						
+						$data .= '<option value='.$row['REG_ID'].'>'.$row['REG_Name'].'</option>';
+					}
+				
+				
+				
 			}
-			
-			return $data;	
+			return $data;		
 	}
+	
+	function getRegionID($con, $regName){
+		$regID = "";
+		
+		$sql = "SELECT REG_ID ";
+		$sql .= "FROM region ";
+		$sql .= 'WHERE REG_Name = "'.$regName.'"';
+		
+		
+		$query = mysqli_query($con, $sql);
+		while($row = mysqli_fetch_array($query)){
+			$regID = $row['REG_ID'];
+		}
+		
+		return $regID;
+	}
+	
+
 	
 	/**
 	 * Draws out the default page Table if a month IS selected, which will show all desired news entries into the database.
@@ -393,7 +459,8 @@
 					echo '<td>'.getNewsPosterName($con, $newsID).'</td>';
 					echo '<td class="hiddenEffects">'; 
 					echo '<div class="helperTray">';
-					echo '<a href="manageNews.php?action=view&id='.$data['NEW_ID'].'">'.IMG("view2.gif", "View News Entry").'</a>';
+					//:: Took out View news case because action is being completed on the Dashboard.
+					//echo '<a href="manageNews.php?action=view&id='.$data['NEW_ID'].'">'.IMG("view2.gif", "View News Entry").'</a>';
 					echo '<a href="manageNews.php?action=modify&id='.$data['NEW_ID'].'">'.IMG("edit.gif", "Edit News Entry").'</a>';			
 					echo '<a href="manageNews.php?action=delete&id='.$data['NEW_ID'].'">'.IMG("delete.gif", "Delete News Entry").'</a>';
 					echo '</div>';
@@ -450,7 +517,8 @@
 					echo '<td>'.getNewsPosterName($con, $newsID).'</td>';
 					echo '<td class="hiddenEffects">'; 
 					echo '<div class="helperTray">';
-					echo '<a href="manageNews.php?action=view&id='.$data['NEW_ID'].'">'.IMG("view2.gif", "View News Entry").'</a>';
+					//:: Took out View news case because action is being completed on the Dashboard.
+					//echo '<a href="manageNews.php?action=view&id='.$data['NEW_ID'].'">'.IMG("view2.gif", "View News Entry").'</a>';
 					echo '<a href="manageNews.php?action=modify&id='.$data['NEW_ID'].'">'.IMG("edit.gif", "Edit News Entry").'</a>';			
 					echo '<a href="manageNews.php?action=delete&id='.$data['NEW_ID'].'">'.IMG("delete.gif", "Delete News Entry").'</a>';
 					echo '</div>';
