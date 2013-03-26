@@ -1,5 +1,5 @@
 <?php
-	/*
+	/**
 		pageFuncions.php
 		Purpose: A set of functions to help create a page.
 		By: Justin Werre
@@ -125,10 +125,11 @@
 			$javaLink .= "</script>\n";
 			if($authLvl == 0 ? $link = "'adminHelp.html'" : $link = "'userHelp.html'");
 			echo $javaLink;
-			echo '<a href="JavaScript:helpPopup(' . $link . ');">Site Help</a>' . "\n";
+			echo '<a href="JavaScript:helpPopup(' . $link . ');">[HELP]</a>' . "\n";
 		}
 		echo "<br /><a href='BBN Venue Checklist.pdf'>BBN Security Checklist</a>";
 		echo "<br /><a href='VAR_hardcopyPrintouts.pdf'>Report Templates</a>";
+		echo "<br /><a href='about.php'>about</a>";
 		echo "</p>";
 		echo "</div>\n";
 		echo "</div>\n";

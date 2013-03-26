@@ -29,14 +29,16 @@
 		//If everything is filed out, update database
 		if("" == $errorId && "" == $errorName)
 		{
+			$id = mysqli_real_escape_string($con, $_POST['regionId']);
+			$region = mysqli_real_escape_string($con, $_POST['region']);
 			if('new' == $_POST['id'])
 			{
-				$sql = "INSERT INTO Region(REG_ID, REG_Name) VALUES ($_POST[regionId]	, '$_POST[region]')";
+				$sql = "INSERT INTO Region(REG_ID, REG_Name) VALUES ('$id'	, '$region')";
 			}
 			else
 			{
-				$sql = "UPDATE Region SET REG_Name = '$_POST[region]'";
-				$sql .= "WHERE REG_ID = $_POST[id]";
+				$sql = "UPDATE Region SET REG_Name = '$region'";
+				$sql .= "WHERE REG_ID = $id";
 			}
 			$result = mysqli_query($con, $sql);
 			if($result)
@@ -67,14 +69,40 @@
 	echo "<form method='post'>\n";
 	echo "<input type='hidden' name='id' value='$results[REG_ID]'>\n";
 	echo "<label for='regionId'>Region Number</label>\n";
-	if('new' == $_GET['id']){ echo "<input type='number' name='regionId' >";}
-	else echo "<input type='number' name='regionId' value='$results[REG_ID]' disabled>\n";
+	
+	if('new' == $_GET['id'])
+	{ 
+		echo "<input type='number' name='regionId' >";
+	}
+	else 
+	{
+		echo "<input type='number' name='regionId' value='$results[REG_ID]' disabled>\n";
+		echo "<input type='hidden' name='regionId' value='$results[REG_ID]' >\n";
+	}
+	
 	echo "<div class='error'>$errorId</div>\n";
 	echo "<label for='region'>Region: </label>\n";
-	echo "<input type='text' name='region' value='$results[REG_Name]'>\n";
+	echo "<input type='text' name='region' value=\"$results[REG_Name]\">\n";
 	echo "<div class='error'>$errorName</div>\n";
 	echo "<input type='submit' name='submit' value='submit'>\n";
-	echo "</div>";
+	
+	//show existing region id's
+	$sql = "SELECT * FROM Region";
+	$result = mysqli_query($con, $sql);
+	echo "<table>\n";
+	echo "<tr>\n";
+	echo "<td colspan='2'>Existing Regions</td>";
+	echo "</tr>";
+	foreach($result as $region)
+	{	
+		echo "<tr>\n";
+		echo "<td>$region[REG_ID]</td>\n";
+		echo "<td>$region[REG_Name]</td>\n";
+		echo "</tr>\n";
+	}
+	echo "</table>\n";
+	
+	echo "</div>\n";
 	createFoot();
 	mysqli_close($con);
 ?>

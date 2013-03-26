@@ -22,12 +22,14 @@
 	echo "<div id='content'>\n";
 	echo "<table>\n";
 	echo "<tr>\n";
+	echo "<th>Region Id</td>\n";
 	echo "<th>Region Name</th>\n";
 	echo "<th><a href='regions.php?id=new'><button>New Region</button></a></th>\n";
 	echo "</tr>\n";
 	foreach($results as $region)
 	{
 		echo "<tr>\n";
+		echo "<td>$region[REG_ID]</td>\n";
 		echo "<td>$region[REG_Name]</td>\n";
 		echo "<td><a href='regions.php?id=$region[REG_ID]'><button>Modify</button></td>\n";
 		echo "<tr>\n";

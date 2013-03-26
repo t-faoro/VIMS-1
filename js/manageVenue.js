@@ -48,9 +48,14 @@ function deleteUser(user, venue){
 	xmlhttp.send("id="+user+"&venue="+venue); 
 	xmlhttp.onreadystatechange=function(){
 		if(4 == xmlhttp.readyState){
+			console.log(xmlhttp.responseText);
 			if(xmlhttp.responseText){
 				var userRow = document.getElementById(user);
 				userRow.parentNode.removeChild(userRow);
+			}
+			else
+			{
+				alert("Your venue must have at least one owner");
 			}
 		}
 	};

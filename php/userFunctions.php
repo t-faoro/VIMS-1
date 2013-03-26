@@ -64,6 +64,26 @@ function userList($venueID)
 	$sql .= " JOIN venue_user_assc";
 	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
 	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID . "";
+	$sql .= " AND VUA_Sys_Status = 1";
+	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
+
+	return $sql;
+}
+
+/*
+	ownerList() builds an sql statement to list active owners of a venue
+	@param $venueID the venue ID number
+	@return string containing sql select statment
+*/
+function ownerList($venueID)
+{
+	// build statement
+	$sql  = "SELECT count(*) FROM user";
+	$sql .= " JOIN venue_user_assc";
+	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
+	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID;
+	$sql .= " AND venue_user_assc.Auth_Level_Lookup_AUT_Level = 1";
+	$sql .= " AND VUA_Sys_Status = 1";
 	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
 
 	return $sql;
@@ -75,7 +95,7 @@ function findUser($userID, $venueID)
 	$sql  = "SELECT * FROM user";
 	$sql .= " JOIN venue_user_assc";
 	$sql .= " ON (user.USE_ID = venue_user_assc.user_USE_ID)";
-	$sql .= " WHERE venue_user_assc.venue_VEN_ID=" . $venueID ;
+	$sql .= " WHERE venue_user_assc.venue_VEN_ID = $venueID" ;
 	$sql .= " AND venue_user_assc.user_USE_ID = $userID";
 	$sql .= " ORDER BY venue_user_assc.Auth_Level_Lookup_AUT_Level";
 

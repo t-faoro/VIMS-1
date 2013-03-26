@@ -9,9 +9,12 @@
 	include_once "php/config.php";
 	include_once "php/justinsFunctions.php";
 
-	//Verify user is authenticated
+	//Verify user is authenticated and has permission to access the page
 	session_start();
 	if(!verifyUser()) header("Location: index.php");
+	if(0 == $_SESSION['userAuth']){}
+	else if(1 == $_SESSION['userAuth'] && $_GET['id'] == $_SESSION['venueId']){}
+	else header('Location: index.php');
 
 	$venInfo = array('VEN_Name'=>'',
 									 'VEN_ID'=>'New',
@@ -44,7 +47,7 @@
 
 	//if post back create or update venue
 	if(isset($_POST['name']))
-	{
+	{	
 		$venue = array(
 			$_POST['name'],
 			$_POST['unit'],
@@ -61,7 +64,10 @@
 		//if user wanted to cancel changes
 		if("Cancel" == $_POST['submit'])
 		{
-			header('Location: ManageVenues.php');
+			if(0 == $_SESSION['userAuth'])
+				header('Location: manageVenues.php');
+			else
+				header('Location: dashboard.php');
 		}
 		//if no venue name, show a error
 		else if('' == $_POST['name'])
@@ -72,20 +78,30 @@
 		else if('New' == $_POST['id'])
 		{	
 			$sql = venueCreate($venue, $con);
-			$result = mysqli_query($con, $sql);
 			
-			//not adding users, send back to manageVenues.php
-			if('Create' == $_POST['submit'])
+			//Display an error message, or create the venue
+			if(stristr($sql, 'Error'))
 			{
-				header('Location: manageVenues.php');
+				$error = $sql;
 			}
-			//adding users, post back with venue id
 			else
 			{
-				$id = mysqli_insert_id($con);
-				header('Location: Venues.php?id='.$id);
+				$result = mysqli_query($con, $sql);
+				
+				//not adding users, send back to manageVenues.php
+				if('Create' == $_POST['submit'])
+				{
+					header('Location: manageVenues.php');
+				}
+				//adding users, post back with venue id
+				else
+				{
+					$id = mysqli_insert_id($con);
+					header('Location: Venues.php?id='.$id);
+				}
 			}
 		}
+		
 		//modifying a existing venue
 		else
 		{
@@ -103,7 +119,10 @@
 			);
 			$sql = venueUpdate($fields, $venue, $_POST['id'], $con);
 			mysqli_query($con, $sql);
-			header('Location: manageVenues.php');
+			if(0 == $_SESSION['userAuth'])
+				header('Location: manageVenues.php');
+			else
+				header('Location: dashboard.php');
 		}
 	}
 
@@ -117,8 +136,8 @@
 	echo "<div class='error'>$error</div>\n";
 	createForm($venInfo, $_SESSION['userAuth']);
 	//only show add users for existing venues
-	if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID'], $_SESSION['userAuth']);
-	echo '</div>'."\n";
+	if('New' != $venInfo['VEN_ID']) listUsers($users, $venInfo['VEN_ID'], $_SESSION['userAuth'], $venInfo['VEN_Can_Make_Owner']);
+	echo "</div>\n";
 	echo "</div>\n";
 	createFoot();
 	mysqli_close($con);

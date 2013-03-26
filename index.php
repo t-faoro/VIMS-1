@@ -34,13 +34,17 @@ if(isset($_POST['submit']))
 {
 	//Verfiy user has entered all nesisary information
 	//verify a venue number was entered.
-	if($_POST['venue'] != "")
+	if("" == $_POST['venue'])
 	{
-		$venueNumber = $_POST['venue'];
+		$error = "You must enter a venue number.";
+	}
+	else if(0 == is_numeric($_POST['venue']))
+	{
+		$error = "The venue number should only contain numeric (0-9) characters";
 	}
 	else
 	{
-		$error = "You must enter a venue number.";
+		$venueNumber = $_POST['venue'];
 	}
 	
 	//Verify a password was entered
@@ -87,15 +91,25 @@ if(isset($_POST['submit']))
 									)
 								);
 				
-				//Set the session variables
-				$_SESSION['userId'] = $row['USE_ID'];
-				$_SESSION['userName'] = $row['USE_Name'];
-				$_SESSION['userFname'] = $row['USE_Fname'];
-				$_SESSION['userLname'] = $row['USE_Lname'];
-				$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
-				$_SESSION['venueId'] = $row['Venue_VEN_ID'];
-				$_SESSION['venueName'] = $venue['VEN_Name'];
-				header('Location: dashboard.php');
+				
+				//Make sure venue is still active.
+				if($venue['VEN_Status'])
+				{
+					//Set the session variables
+					$_SESSION['userId'] = $row['USE_ID'];
+					$_SESSION['userName'] = $row['USE_Name'];
+					$_SESSION['userFname'] = $row['USE_Fname'];
+					$_SESSION['userLname'] = $row['USE_Lname'];
+					$_SESSION['userAuth'] = $row['Auth_Level_Lookup_AUT_Level'];
+					$_SESSION['venueId'] = $row['Venue_VEN_ID'];
+					$_SESSION['venueName'] = $venue['VEN_Name'];
+					$_SESSION['createOwner'] = $venue['VEN_Can_Make_Owner'];
+					header('Location: dashboard.php');
+				}
+				else
+				{
+					$error = "That venue has been deacivated. Please contact ClubWatch for more information.";
+				}
 			}
 			else
 			{
