@@ -2,7 +2,7 @@
 	/**
 	 * manageNews.php
 	 * @author Tylor Faoro
-	  Edited by: Justin Werre March 23, 2013
+	 * Edited by: Justin Werre March 23, 2013
 	*/	
 	
 	session_start();
@@ -19,7 +19,7 @@
 	
 	//:: Program Variable Declarations
 	$userAuth   = $_SESSION['userAuth'];
-	$userName  	=  $_SESSION['userName'];
+	$userName  	= $_SESSION['userName'];
 	$venueID  	= $_SESSION['venueId'];
 	$venueName  = $_SESSION['venueName'];
     $userFname  = $_SESSION['userFname'];
@@ -28,6 +28,7 @@
 	
 	$title = NULL;
 	$date  = NULL;
+	$dateTime = $date." "."00:00:00";
 	$comments = NULL;
 	static $month = 0;
 
@@ -48,12 +49,24 @@
         echo "Forbidden: You do not have access to view that page";
         header('Location: index.php');	
     }
+	elseif ($userAuth != 0) {
+		echo '<div id="content">'."\n";
+		echo '<div id="forbidden"'."\n";
+		echo "<br /><br /><br />"."\n";
+		echo "<h1>Forbidden:</h1>"."\n";
+		echo "<p>You do not have permission to view that page<br /><br />"."\n";
+		echo 'Click <a href="dashboard.php">here</a> to return to the dashboard.</p>'."\n";
+		echo "<br /><br /><br />"."\n";
+		echo '</div>'."\n";
+		echo '</div>'."\n";
+	}
 	else{
 		$uID = getUserID($con, $userName);
 	
 		if(isset($_POST['createNews'])){
 			$title 		= $_POST['title'];
 			$date  		= $_POST['newsDate'];
+			$type		= $_POST['newsType'];
 			$comments 	= $_POST['comments'];
 			$regID 		= $_POST['regID'];
 			//$newsID     = $_POST['newsID'];
@@ -65,7 +78,7 @@
 			
 			}
 			else{
-				setNews($con, $title, $date, $comments, $regID, $uID);
+				setNews($con, $title, $date, $type, $comments, $regID, $uID);
 				header('Location: manageNews.php?action=default');
 																							
 			}
@@ -73,12 +86,13 @@
 		if(isset($_POST['modifyNews'])){
 			$title 		= $_POST['title'];
 			$date  		= $_POST['newsDate'];
+			$type		= $_POST['newsType'];
 			$comments 	= $_POST['comments'];
 			$regID 		= $_POST['regID'];
 			$newsID     = $_POST['newsID'];
 			
 
-				modifyNews($con, $newsID, $title, $date, $comments, $regID);
+				modifyNews($con, $newsID, $title, $date, $type, $comments, $regID);
 				header('Location: manageNews.php?action=default');																						
 			
 		}
@@ -131,6 +145,8 @@
 				echo deleteNewsFlashForm($con);					
 			break;
 			
+			/*
+			//:: Took View out because this action is being completed on the Dashboard
 			case "view":
 				$title = getNews($con, "NEW_Title", $p);
 				
@@ -151,6 +167,7 @@
 				echo "<br /><br /><br />";
 				echo "</div>";					
 			break;
+			*/
 			
 			default:
 			
