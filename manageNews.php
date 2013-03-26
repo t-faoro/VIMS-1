@@ -63,6 +63,7 @@
 	else{
 		$uID = getUserID($con, $userName);
 	
+		//:: If Create News Button is pressed.
 		if(isset($_POST['createNews'])){
 			$title 		= $_POST['title'];
 			$date  		= $_POST['newsDate'];
@@ -83,6 +84,8 @@
 																							
 			}
 		}
+		
+		//:: If Modify News Button is pressed
 		if(isset($_POST['modifyNews'])){
 			$title 		= $_POST['title'];
 			$date  		= $_POST['newsDate'];
@@ -91,12 +94,17 @@
 			$regID 		= $_POST['regID'];
 			$newsID     = $_POST['newsID'];
 			
-
+			if(strlen($title) <= 0 || strlen($date) <= 0 || strlen($comments) <=0 ){
+				$error = "Error: All Fields are Mandatory.";			
+			}
+			else{
 				modifyNews($con, $newsID, $title, $date, $type, $comments, $regID);
-				header('Location: manageNews.php?action=default');																						
+				header('Location: manageNews.php?action=default');
+			}																						
 			
 		}
 		
+		//:: If the delete news button is pressed
 		if(isset($_POST['deleteNews'])){
 			$reason = $_POST['reason'];
 		
