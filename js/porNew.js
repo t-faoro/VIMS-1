@@ -73,7 +73,7 @@ $(document).ready(function(){
 
   
 //=============================================================================
-*/
+
 
 window.onload = InitAll;
 
@@ -112,3 +112,4 @@ function removeButton(){
 			counter--;
 			$("#PorRec" + counter).remove();
 	}
+*/
