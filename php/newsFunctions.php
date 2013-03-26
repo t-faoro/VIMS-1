@@ -162,7 +162,7 @@
 		$type = "";	
 	
 		$form  = '<div id="manageNews" >';
-        $form .= '<form method="POST" action="manageNews.php?action=modify">'."\n";
+        $form .= '<form method="POST" action="manageNews.php?action=modify&id='.$p.'">'."\n";
 		$form .= '<input type="hidden" name="newsID" value='.$p.' />';
 		$form .= '<label>Title:</label>';
 		$form .= '<input type="text" value="'.$defaults[0].'" name="title" />'."\n";

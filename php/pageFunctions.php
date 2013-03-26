@@ -23,7 +23,7 @@
 			$adminNav .= "<ul>\n";
 			$adminNav .= "<li><a href='dashboard.php'>Home</a></li>\n";
 			$adminNav .= "<li><a href='manageNews.php?action=default'>Manage News</a></li>\n";
-			$adminNav .= "<li><a href='manageRegions.php'>Manage regions</a></li>\n";
+			$adminNav .= "<li><a href='manageRegions.php'>Manage Regions</a></li>\n";
 			$adminNav .= "<li><a href='manageVenues.php'>Manage Venue</a></li>\n";
 			$adminNav .= "</ul>\n";
 			$adminNav .= "</div>\n";
