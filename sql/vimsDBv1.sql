@@ -407,3 +407,104 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- ****************************************************************************
+--		Startup data for vims system
+-- ****************************************************************************
+
+
+DROP USER 'vimsfrontend'@'localhost';
+DROP USER 'vimsfrontend'@'%';
+
+-- Create use for V.I.M.S. Web Portal
+
+CREATE USER 'vimsfrontend'@'localhost' 
+	 IDENTIFIED BY 'poweroverwhelming';
+GRANT SELECT, INSERT, UPDATE ON vims.* TO 'vimsfrontend'@'localhost';
+CREATE USER 'vimsfrontend'@'%'
+	 IDENTIFIED BY 'poweroverwhelming';
+GRANT SELECT, INSERT, UPDATE ON vims.* TO 'vimsfrontend'@'%';
+
+-- Select database
+USE vims;
+
+-- Clear database
+DELETE FROM venue_user_assc;
+DELETE FROM venue;
+DELETE FROM user;
+DELETE FROM auth_level_lookup;
+DELETE FROM involvement_lookup;
+DELETE FROM incident_level_lookup;
+
+-- ----------------------------------------------------------------------------
+ -- Startup data for vims.incident_level_lookup
+ -- ----------------------------------------------------------------------------
+ 
+INSERT INTO incident_level_lookup (ILL_Level, ILL_Def)
+						   VALUES (1, 		  'Notable');
+
+INSERT INTO incident_level_lookup (ILL_Level, ILL_Def)
+						   VALUES (2, 		  'Minor');
+
+INSERT INTO incident_level_lookup (ILL_Level, ILL_Def)
+						   VALUES (3, 		  'Serious');
+
+INSERT INTO incident_level_lookup (ILL_Level, ILL_Def)
+						   VALUES (4, 		  'Severe');
+
+ -- ----------------------------------------------------------------------------
+ -- Startup data for vims.involement_lookup
+ -- ----------------------------------------------------------------------------
+ 
+INSERT INTO involvement_lookup (INV_Level, INV_Def)
+							VALUES (1, 		  'Witness');
+
+INSERT INTO involvement_lookup (INV_Level, INV_Def)
+							VALUES (2, 		  'Victim');
+
+INSERT INTO involvement_lookup (INV_Level, INV_Def)
+							VALUES (3, 		  'Instigator');
+
+INSERT INTO involvement_lookup (INV_Level, INV_Def)
+							VALUES (4, 		  'Agressor');
+
+ 
+-- ----------------------------------------------------------------------------
+-- Startup data for vims.auth_level_lookup
+-- ----------------------------------------------------------------------------
+
+INSERT INTO auth_level_lookup (AUT_Level, AUT_Def)
+						VALUES(0,		 'Clubwatch');
+
+INSERT INTO auth_level_lookup (AUT_Level, AUT_Def)
+						VALUES(1,		 'Owner');
+
+INSERT INTO auth_level_lookup (AUT_Level, AUT_Def)
+						VALUES(2,		 'Supervisor');
+
+
+-- ----------------------------------------------------------------------------
+-- Startup data for vims.user
+-- ----------------------------------------------------------------------------
+
+ALTER TABLE user AUTO_INCREMENT=1000;
+
+INSERT INTO user (USE_Name, USE_passwd, USE_Fname, USE_Lname, USE_Creator)
+		   VALUES('almighty', MD5('genesis'), 'DBA', 'System', 1000);
+
+-- ----------------------------------------------------------------------------
+-- Startup data for vims.venue
+-- ----------------------------------------------------------------------------
+
+ALTER TABLE venue AUTO_INCREMENT=100;
+
+INSERT INTO venue (VEN_Name, Region_REG_ID)
+		   VALUES('Clubwatch', 099);
+		   
+-- ----------------------------------------------------------------------------
+-- Startup data for vims.venue_user_assc
+-- ----------------------------------------------------------------------------
+
+INSERT INTO venue_user_assc (Venue_VEN_ID, User_USE_ID, Auth_Level_Lookup_AUT_Level)
+					 VALUES (100,		   1000,		0);
