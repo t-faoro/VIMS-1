@@ -127,8 +127,8 @@
 			echo $javaLink;
 			echo '<a href="JavaScript:helpPopup(' . $link . ');">[HELP]</a>' . "\n";
 		}
-		echo "<br /><a href='BBN Venue Checklist.pdf'>BBN Security Checklist</a>";
-		echo "<br /><a href='VAR_hardcopyPrintouts.pdf'>Report Templates</a>";
+		echo "<br /><a href='BBN Venue Checklist.pdf' target='blank'>BBN Security Checklist</a>";
+		echo "<br /><a href='VAR_hardcopyPrintouts.pdf' target='blank'>Report Templates</a>";
 		echo "<br /><a href='about.php'>about</a>";
 		echo "</p>";
 		echo "</div>\n";
