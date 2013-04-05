@@ -430,6 +430,7 @@ GRANT SELECT, INSERT, UPDATE ON vims.* TO 'vimsfrontend'@'%';
 USE vims;
 
 -- Clear database
+DELETE FROM region;
 DELETE FROM venue_user_assc;
 DELETE FROM venue;
 DELETE FROM user;
@@ -437,6 +438,13 @@ DELETE FROM auth_level_lookup;
 DELETE FROM involvement_lookup;
 DELETE FROM incident_level_lookup;
 
+-- ----------------------------------------------------------------------------
+ -- Startup data for vims.region
+ -- ----------------------------------------------------------------------------
+
+INSERT INTO region (REG_ID, REG_Name)
+VALUES(099, 'System');
+ 
 -- ----------------------------------------------------------------------------
  -- Startup data for vims.incident_level_lookup
  -- ----------------------------------------------------------------------------
