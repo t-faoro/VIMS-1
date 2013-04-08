@@ -53,7 +53,8 @@ $(function(){
 						else{
 							$('#users').append(msg);
 							$('#uError').text("");
-							closeDialog();
+							allFields.val('');
+							$("#createStatus").append("User Created").css("color", "green");
 						}
 					});
 				}
@@ -76,6 +77,3 @@ $(function(){
 		});
 });
 
-function closeDialog(){
-	$("create-form").dialog("close");
-}

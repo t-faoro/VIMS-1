@@ -185,7 +185,8 @@
 		echo "<div id='create-form' title='Create new user'>\n";
 		echo "<form>\n";
 		echo "<input type='hidden' name='venue' id='venue' value='$venue' />\n"; 
-		
+		echo "<div id='createStatus'></div>";
+
 		//user name
 		echo "<label for='uName'>User name:</label>\n";
 		echo "<input type='text' name='uName' id='uName' />\n";
