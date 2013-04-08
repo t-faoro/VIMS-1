@@ -53,6 +53,7 @@ $(function(){
 						else{
 							$('#users').append(msg);
 							$('#uError').text("");
+							closeDialog();
 						}
 					});
 				}
@@ -74,3 +75,7 @@ $(function(){
 			$("#create-form").dialog("open");
 		});
 });
+
+function closeDialog(){
+	$("create-form").dialog("close");
+}
