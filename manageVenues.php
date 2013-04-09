@@ -51,7 +51,7 @@
 				echo "<option value='1'>Active</option>\n";
 				echo "<option value='0' ";
 				if(0 == $venue['VEN_Status']) echo "selected";
-				echo">Deactive</option>\n";
+				echo">Inactive</option>\n";
 			echo "</select>\n";
 		echo "</td>\n";
 		echo "<td><a href='venues.php?id=$venue[VEN_ID]'><button>Modify</button></a></td>\n";
