@@ -40,7 +40,7 @@ mysqli_close($con);
 if($userAuth > 0 && $userAuth < 99)			// User Dashboard
 {
 	$graph  = "class='inlinesparkline' sparkWidth='250px'"; 
-	$graph .= " sparkHeight='125px' sparkLineColor='orange' sparkFillColor='yellow'";
+	$graph .= " sparkHeight='125px' sparkLineColor='orange' sparkFillColor='yellow' sparkChartRangeMin='0'";
 	$con = $myCon->connect();							// call db connection
 	echo '<div id="DashboardGraphs">' . "\n";
 	echo '	<p>' . "\n";
@@ -145,7 +145,7 @@ else {
 	
 												// Create Admin home view
 	$graph  = "class='inlinesparkline' sparkWidth='250px'"; 
-	$graph .= " sparkHeight='125px' sparkLineColor='orange' sparkFillColor='yellow'";
+	$graph .= " sparkHeight='125px' sparkLineColor='orange' sparkFillColor='yellow' sparkChartRangeMin='0'";
 	$con = $myCon->connect();							// call db connection
 	echo '<div id="AdminGraphs">' . "\n";
 	
