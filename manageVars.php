@@ -199,7 +199,7 @@ if($action == 'Delete')
 if($action == 'Done') header('location: manageReports.php');
 
 //*****************************************************************************
-createHead('manageVars.css', 'datepicker.js');
+createHead(array('manageVars.css','darkness.css'), 'datepicker.js');
 createHeader($fullName);
 createNav($userAuth);
 //*****************************************************************************
