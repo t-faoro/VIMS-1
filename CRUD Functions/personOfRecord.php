@@ -29,13 +29,13 @@
 	}
 	
 	function porUpdate($fieldName, $value, $por_id, $reason_for_delete = NULL, $con ){
-		$fieldName = mysqli_real_escape_string($fieldName);
-		$value = mysqli_real_escape_string($value);
-		$reason_for_delete = mysqli_real_escape_string($reason_for_delete);
+		$fieldName = mysqli_real_escape_string($con, $fieldName);
+		$value = mysqli_real_escape_string($con, $value);
+		$reason_for_delete = mysqli_real_escape_string($con, $reason_for_delete);
 		
 		$sql  = "UPDATE Person_of_Record";
-		$sql .= "SET ".$fieldName." = ".$value."";
-		$sql .= "WHERE POR_ID = ".$por_id." ";
+		$sql .= " SET ".$fieldName."='".$value."'";
+		$sql .= " WHERE POR_ID = ".$por_id." ";
 		
 		if($reason_for_delete != NULL){
 			

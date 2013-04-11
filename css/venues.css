@@ -1,0 +1,22 @@
+#content{
+	color: white;
+}
+
+.clear{
+	clear: both;
+}
+
+.error{
+	color: red;
+}
+
+form{
+	width: 185px;
+	float: left;
+}
+
+#users{
+	width: 70%;
+	clear: both;
+	float: right;
+}

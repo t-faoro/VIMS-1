@@ -5,6 +5,7 @@
 
 /* Main Style Sheet Developed by Excelsior Systems for
  * ClubWatch's Venue Information Management System.
+ * @author Tylor Faoro
  *
  * This system is NOT open source and should be treated appropriately.
  *
@@ -12,13 +13,14 @@
  *			Maxwell Clyke
  *			James Smith
  *			Justin Werre
- *			Tylor Faoro
+ *			
 */
 
 
 /*==============Default Styles Start=============*/
 body{
 	background-color: #333;	
+	color: #fff;
 }
 
 p{
@@ -32,10 +34,70 @@ p{
 	color: yellow;	
 }
 
+h1 h2 h3 h4{
+	color: #FFF;
+	font-family:Arial, Helvetica, sans-serifl;
+}
+
+.headingDiv{
+	margin-left: 35%;
+	margin-bottom: 10px;
+	text-align:center;
+	width: 25%;
+	border-bottom:groove;
+	border-color: yellow;
+	border-width: 3px;
+}
+
+.center{
+	text-align: center;
+}
+.right{
+	text-align: right;
+}
+.left{
+	text-align: left;
+}
+
+.tableCenter{
+	margin-left: 35%;
+	margin-right: auto;
+}
+
+#error{
+	margin-left: 10%;
+	color: #F00;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+#forbidden{
+	margin-left: 10%;
+}
+
+a:link{
+	color: #FF0
+	
+}
+a:hover{
+	color: #AAA;
+	
+}
+
+a:active{
+	color: #FF0;
+}
+
+a:visited {
+	color: #AAA;
+}
+
+
 /*==============Default Styles End===============*/
 
+
 /*
- * Styles for Content Blocks of VIMS site
+ 	//:: Content Block Styling
 */
 
 /*==============Header Start=============*/
@@ -43,7 +105,8 @@ p{
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 2%;
-	display:box; 
+	display:box;
+	position: inherit; 
 	width: 75%; 
 }
 
@@ -58,6 +121,7 @@ p{
 	 
 	
 }
+
 
 #topRight{
 	float: left;
@@ -105,23 +169,62 @@ p{
 /*==============Header End===============*/
 
 /*==============Content Start=============*/
-#content{
-	margin-left: 10%; 
+#content  { 
+	clear: both;
+	float: left;
+	margin-bottom: 25px;
+	margin-left: 10%;
 	margin-right: 10%; 
 	width: 73.75%; 
-	height: 62%; 
+	min-height: 62%; 
 	background-color: #000; 
 	border: solid; 
 	border-color: #FF0; 
 	border-width: 1px;
 }
+
+#leftContent{
+	display: inline-block;
+	position: inherit;
+	float: left;
+	padding: 5px;
+	width: 50%;
+	color: #FFF;
+	border:solid;
+	border-width: 1px;
+	border-color: #ff0;
+
+}
+
+#rightContent{
+	display: inline-block;
+	position: inherit;
+	float: left;
+	width: 30%;
+}
+
+#singleContent{
+	float: left;
+	display: inline-block;
+	width: 100%;
+}
+
+#rightContent img{
+	display: inline-block;
+	width: 550px;
+	height: 450px;
+}
+
 /*==============Content End===============*/
 
 /*==============Footer Start=============*/
 #footer_container{
+	clear: both;
+	float: left;
 	margin-left: 10%;
 	margin-right: 10%;
-	display:box; 
+	display:box;
+	position:inherit; 
 	width: 75%; 
 }
 
@@ -173,6 +276,11 @@ p{
 
 /*==============Footer End===============*/
 
+
+/*
+	//:: Navigation Styling
+*/
+
 /*==============Navigation Start=============*/
 
 /*:: Admin Navigation Start ::*/
@@ -220,14 +328,14 @@ p{
 }
 
 #adminNavigation a:active{
-	background-color: #009;
+	background-color: #AAA;
 }
 /*:: Admin Navigation End ::*/
 
 /*:: User Navigation Start ::*/
 #userNavigation{
-	margin-left: 23.5%;
-	margin-right: 10%;
+	margin-left: 15%;
+	margin-right: 15%;
 	width: 100%;
 }
 
@@ -244,6 +352,7 @@ p{
 	width: 18%; 
 	font-family:Arial, Helvetica, sans-serif; 
 	font-size: 16px;
+	text-wrap:suppress;
 	border: solid;
 	border-color: #FF0;
 	background-color: #000;
@@ -258,7 +367,7 @@ p{
 	font-weight: bold;
 	/*margin-top: 4%;*/
 	height: 30px;
-	font-size:24px;
+	font-size:22px;
 	text-decoration: none;
 	color: #FF0;	
 }
@@ -269,7 +378,7 @@ p{
 }
 
 #userNavigation a:active{
-	background-color: #009;
+	background-color: #AAA;
 }
 /*:: User Navigation End   ::*/
 
@@ -281,3 +390,263 @@ p{
 /*:: No Navigation End     ::*/
 
 /*==============Navigation End===============*/
+
+/*
+	//:: Styling for individual content blocks
+	//:: ID Names should be self documenting to what page is being worked with
+	//:: NOTE: Some CSS is located within a secondary file named the same as the page it's associated with
+*/
+#accountManage{	
+	margin-left: 10%;
+	margin-right: 0;
+	margin-top: 25px;
+	margin-bottom: 5%;
+	color: #FFF;
+}
+
+
+#accountManage .button{
+	margin-left: 15%;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 150px;
+	height: 35px;
+}
+
+#manageNews{
+	
+}
+
+
+/*:: Form Decoration */
+
+#content form{
+	/*margin: 5px 5px 5px 5px;*/
+	margin-bottom: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	position:inherit;
+	float: left;
+	display: inline;
+	padding: 2px;
+	width: 100%;
+	font-size:20px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/*
+
+ //:: Login Box Styling
+
+*/
+#login form{
+	margin-top: 10%;
+	margin-bottom: 25px;
+	margin-left: 30%;
+	border: solid;
+	border-color: #FF0;
+	border-width: 1px; 
+	margin-right: auto;
+	position:inherit;
+	float: left;
+	display: inline;
+	padding: 25px;
+	width: 35%;
+	background-color: #333;
+	font-size:20px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#login p{
+	margin-top: -10px;
+}
+#login input[type=text]{
+	margin-top: 15px;
+	width: 175px !important;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+}
+#login input[type=password]{
+	margin-top: 15px;
+	width: 175px !important;
+}
+#login input[type=submit]{
+	margin-left: 33%;
+	margin-right: 33%;
+	margin-top: 20px;
+	width: 100px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+#login label{
+	margin-top: 15px;
+	width: 150px;
+}
+
+/*
+	//:: Venues Form Styling 
+*/
+
+#venue form{
+	margin-top: 25px;
+	margin-left: 10%;
+	margin-right: auto;
+	position:inherit;
+	float: left;
+	display: inline;
+	padding: 2px;
+	width: 100%;
+	font-size:20px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;	
+}
+#venue label{
+	margin-top: 5px;
+	margin-left: 5%;	
+	width: 150px;
+}
+#venue input[type=text]{
+	margin-top: 7px;
+}
+#venue input[type=hidden]{
+	margin-top: 5px;
+}
+#venue input[type=submit]{
+	margin-top: 35px;
+	margin-right: 25px;
+	min-width: 100px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;	
+}
+
+#manageNews form{
+	margin-left: 10%;
+	margin-right: auto;
+}
+#manageNews input[type=text]{
+	min-width: 175px;
+}
+#manageNews select{
+	min-width: 185px;
+}
+
+/*
+	//:: General Content Form Styling 
+*/
+/*#content form input{
+	width: 12%;
+}*/
+
+#content textarea{
+	width: 25%;
+	height: 150px;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#content select{
+	/*width: 13%;*/
+}
+
+
+label{
+	clear:both;
+	float: left;
+	min-width: 150px;
+	padding: 2px;
+	font-size:16px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.readOnly{
+	float: left;
+	font-size: 20px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #FF0;
+	
+}
+
+
+.passField{
+	padding: 2px;
+	min-width: 25px;
+	
+}
+
+/*:: Table Starts */
+#content table{
+	position: inherit;
+	margin-left: 10%;
+	margin-right: 5%;
+	margin-bottom: 5%;
+	margin-right: 5%;
+	float:none;
+	display:table;
+	width: 90%;
+	padding: 10px;
+	color: #FFF;
+	text-align: center;	
+}
+
+#content .newNewsButton{
+	position: inherit;
+	margin-left: 10%;
+}
+
+#content td{	
+	width: 15%;
+	border: solid;
+	border-color: #FF0;
+	border-width: 1px;
+	padding: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+
+}
+#content th{
+	margin-right: 5px;
+	margin-left: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #999;
+	text-transform:uppercase;	
+}
+
+
+
+#content .hiddenEffects{
+	border: none;
+	width: 10%;
+	
+	
+	
+}
+
+#content .helperTray{
+	float: left;
+	display:inline;
+	height: auto;
+	width: auto;
+	text-align:left;
+}
+
+#subhead h3{
+	float: left;
+	margin-left: 10%;
+	margin-bottom: 3%;
+	
+}
+
+#content a{
+	text-decoration: none;	
+}
+
+
+

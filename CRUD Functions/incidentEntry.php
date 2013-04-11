@@ -43,7 +43,7 @@
 	function incEntUpdate($fieldName, $value, $ine_id, $reason_for_delete = NULL, $con) {
 		
 		$sql  = "UPDATE Incident_Entry";
-		$sql .= "SET '".$fieldName."' = '".$value."' ";
+		$sql .= " SET ".$fieldName." = '".$value."' ";
 		$sql .= "WHERE INE_ID = '".$ine_id."' ";
 				
 		

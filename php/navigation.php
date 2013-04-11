@@ -12,18 +12,13 @@ function buildAdminNav(){
 global $adminNav;
 
 	$adminNav = '<div id="adminNavigation" >';
-	
 	$adminNav .= '<ul>';
-	
 	$adminNav .= '<li><a href="#">Home</a></li>';
 	$adminNav .= '<li><a href="#">News</a></li>';
 	$adminNav .= '<li><a href="#">Manage News</a></li>';
 	$adminNav .= '<li><a href="#">Manage Venue</a></li>';
-	
 	$adminNav .= '</ul>';
-	
 	$adminNav .= '</div>';
-	
 	return $adminNav;
 }
 
@@ -38,18 +33,12 @@ function buildUserNav(){
 global $userNav;
 
 	$userNav = '<div id="userNavigation" >';
-	
 	$userNav  .= '<ul>';
-	
 	$userNav  .= '<li><a href="#">Home</a></li>';
 	$userNav  .= '<li><a href="#">News</a></li>';
 	$userNav  .= '<li><a href="#">Post Report</a></li>';
-	
-	
 	$userNav  .= '</ul>';
-	
 	$userNav  .= '</div>';
-	
 	return $userNav;
 }
 

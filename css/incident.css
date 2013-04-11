@@ -1,0 +1,197 @@
+/*
+ * incident.css
+ * stylesheet for incident page elements
+ * Programmed by James P. Smith March 2013  
+ * */
+
+/*==============incident page Start===============*/
+/*
+#content {
+	color: #FFF;
+	margin-left: 10%; 
+	margin-right: 10%; 
+	min-height: 62%; 
+	text-align: center;
+}
+*/
+#IncidentForm {
+	background-color: #FFF;
+	color: #000;
+	text-align: left;
+	width: 90%;
+	font-family: Arial;
+	margin: 2% auto 2% auto;
+	padding-right: 2%;
+	padding-left: 2%;
+	border: ridge 4px;
+}
+form {
+	color: #000  !important;
+	margin-bottom: 0 !important;
+	font-weight: normal !important;
+	font-size: 100% !important;
+	padding: 0  !important;
+	position: relative !important;
+	float: none !important;
+	display: inline-block !important;
+}
+
+h4 {
+	color: #000;
+}
+
+#IneTitle h3{
+	color: #333;
+	font-size: 65pt;
+	margin-top: 17%;
+	margin-bottom: auto;
+}
+
+#IneTitle {
+	float: left;
+	width: 25%;
+	margin: 3% 6% 3% 6%;
+	height: 15em;
+}
+
+#clear {
+	clear: both;
+}
+
+.tab {
+	margin: 0 0 0 3em;
+	padding: 0;
+	color: #000;
+}
+
+#TimeField{
+	float: left;
+	border-left: ridge 2px;
+	border-right: ridge 2px;
+	border-bottom: ridge 2px;
+	padding: 0.5em;
+	width: 47%;
+	margin-top: 0.5em;
+	height: 4em;
+	color: #000;
+}
+
+#SeverityField, .smallRightField {
+	float: right;
+	border-left: ridge 2px;
+	border-right: ridge 2px;
+	border-bottom: ridge 2px;
+	padding: 0.5em;
+	width: 47%;
+	margin-top: 0.5em;
+	height: 4em;
+	color: #000;
+}
+
+.smallLeftField {
+	float: left;
+	border-left: ridge 2px;
+	border-right: ridge 2px;
+	border-bottom: ridge 2px;
+	padding: 0.5em;
+	width: 47%;
+	margin-top: 0.5em;
+	height: 4em;
+	color: #000;
+}
+
+#PoliceField, #SummaryField, #DamagesField, #PorField, #ImgField {
+	clear: both;
+	float: left;
+	border-left: ridge 2px;
+	border-right: ridge 2px;
+	border-bottom: ridge 2px;
+	padding: 0.5em;
+	width: 98%;
+	margin-top: 0.5em;
+	color: #000;
+}
+
+#PoliceField {
+	height: 4em;
+}
+
+#CompletedField {
+	clear: both;
+	border-left: ridge 2px;
+	border-right: ridge 2px;
+	border-bottom: ridge 2px;
+	padding: 0.5em;
+	width: 98%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	height: 4em;
+}
+
+.label {
+	width: 99%;
+	background-color: #CCC;
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
+
+
+input {
+	margin-top: 0;
+}
+
+#IncidentForm textarea {
+	width: 98%;
+	height: 60px;
+	resize: none;
+	font-family: Tahoma, sans-serif;
+}
+
+.PorLabel, .ImgLabel {
+	font-weight: bold;
+	background-color: #222;
+	color: #FFF;
+	width: 99%;
+	/*border: solid 2px;*/
+	border-radius: 4px 4px 0 0;
+	margin: 0.2%;
+	padding: 2px;
+}
+
+#PorLines textarea, #ImgField textarea {
+	margin: 0 0 2px 4px;
+	width: 50%;
+}
+
+.floatButton {
+	float: right;
+	width: 15%;
+	height: 4em;
+	margin-top: 4px;
+}
+
+.porRec, .imgRec {
+	border: ridge 2px;
+	padding: 0;
+	border-radius: 4px;
+}
+
+.porRec label, .imgRec label, .imgRec input {
+	margin-left: 4px;
+}
+
+.bottomButton {
+	
+	display: inline;
+	float: left !important;
+	width: 20% !important;
+	height: 3em;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	padding: 0 !important;
+}
+
+/*==============incident page End===============*/
